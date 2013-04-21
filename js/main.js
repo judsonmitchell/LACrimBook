@@ -43,28 +43,24 @@ var updateContent = function(State) {
     }
 };
 
-//Handle clicks
-$('.container').on('click', 'a.nav-link', function (event) {
-    event.preventDefault();
-    var target = $(this).attr('data-id');
-    History.pushState({type: 'list', id: target}, target, '?target=' + target);
-});
 
-$('.container').on('click', 'a.law-link', function (event) {
-    event.preventDefault();
-    var target = $(this).attr('data-id');
-    History.pushState({type: 'law', id: target}, target, '?target=' + target);
-});
-
- $(function() {      
-      //Enable swiping...
-      $(".container").swipe( {
-        //Generic swipe handler for all directions
-        swipe:function(event, direction, distance, duration, fingerCount) {
-          alert("You swiped " + direction );  
-        },
-        //Default is 75px, set to 0 for demo so any distance triggers swipe
-         threshold:0
-      });
+$(document).ready(function () {
+    //Handle clicks
+    $('.container').on('click', 'a.nav-link', function (event) {
+        event.preventDefault();
+        var target = $(this).attr('data-id');
+        History.pushState({type: 'list', id: target}, target, '?target=' + target);
     });
-  
+
+    $('.container').on('click', 'a.law-link', function (event) {
+        event.preventDefault();
+        var target = $(this).attr('data-id');
+        History.pushState({type: 'law', id: target}, target, '?target=' + target);
+    });
+
+    //Handle swipes
+    $(document).wipetouch({
+        wipeLeft:function(result) {History.go(1)},
+        wipeRight:function(result) {History.back()}
+    });
+});

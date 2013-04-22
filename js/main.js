@@ -19,7 +19,8 @@ $(function () {
 
 //Get the data
 var myData;
-$.ajax({url: 'data/data.json'}).done(function (data) { myData = data; });
+$.ajax({url: 'data/data.json',beforeSend: function () {$('.loading').show(); $('.main').hide();}})
+.done(function (data) {$('.loading').toggle();$('.main').toggle(); myData = data; });
 
 //Change content depending on state
 var updateContent = function(State) {

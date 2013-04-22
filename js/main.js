@@ -4,13 +4,15 @@ $(function () {
     if (History.enabled) {
         State = History.getState();
         // set initial state to first page that was loaded
+        //need to get url vals here, and then put them in push state data
+        //like {type: 'law', id: target}
         History.pushState({urlPath: window.location.pathname}, $('title').text(), State.urlPath);
+        updateContent(History.getState());
     } else {
         return false;
     }
 
     History.Adapter.bind(window, 'statechange', function () {
-        console.log(History.getState());
         updateContent(History.getState());
     });
 });
@@ -23,7 +25,6 @@ $.ajax({url: 'data/data.json'}).done(function (data) { myData = data; });
 var updateContent = function(State) {
     var target = State.data.id;
     var view = State.data.type;
-    var titles = [{'RS 000014': 'Title 14', 'RS 000015': 'Title 15'}];
     switch (view) {
     case 'list':
         var items = ' <ul class="nav nav-tabs nav-stacked display-rows">';
@@ -36,6 +37,7 @@ var updateContent = function(State) {
         break;
     case 'law':
         var law = jlinq.from(myData).equals('id', target).select();
+        $('title').text(law[0].description + ' ' + law[0].title);
         $('.well').html('<h3>' + law[0].description + '</h3>' + law[0].law_text);
         break;
     default:
@@ -50,13 +52,13 @@ $(document).ready(function () {
     $('.container').on('click', 'a.nav-link', function (event) {
         event.preventDefault();
         var target = $(this).attr('data-id');
-        History.pushState({type: 'list', id: target}, target, '?target=' + target);
+        History.pushState({type: 'list', id: target}, target, '?target=' + target + '&view=list');
     });
 
     $('.container').on('click', 'a.law-link', function (event) {
         event.preventDefault();
         var target = $(this).attr('data-id');
-        History.pushState({type: 'law', id: target}, target, '?target=' + target);
+        History.pushState({type: 'law', id: target}, target, '?target=' + target + '&view=law');
     });
 
     //Handle swipes

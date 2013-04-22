@@ -59,7 +59,7 @@ $(document).ready(function () {
     });
 
     //Handle swipes
-    $('container.main').wipetouch({
+    $('div.main').wipetouch({
         wipeLeft: function (result) {History.go(1); },
         wipeRight: function (result) {History.back(); }
     });

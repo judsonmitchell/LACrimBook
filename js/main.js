@@ -6,7 +6,8 @@ $(function () {
         // set initial state to first page that was loaded
         //need to get url vals here, and then put them in push state data
         //like {type: 'law', id: target}
-        History.pushState({urlPath: window.location.pathname}, $('title').text(), State.urlPath);
+        var t = State.url.queryStringToJSON();
+        History.pushState({type: t.view, id: t.target}, $('title').text(), State.urlPath);
         updateContent(History.getState());
     } else {
         return false;

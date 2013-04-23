@@ -162,7 +162,7 @@ $(document).ready(function () {
         if (saveState === 'unsaved') {
             var title = $(this).prev().html();
             localStorage.setItem(target, title);
-            $('.alert').html('Saved to favorites.').show();
+            $('.alert').html('<button type="button" class="close" data-dismiss="alert">&times;</button> Saved to favorites.').show();
             $('.favorite').html('<i class="icon-ok-sign"></i>');
             $(this).attr('data-state', 'saved');
             updateFavoritesList();
@@ -170,7 +170,7 @@ $(document).ready(function () {
         else {
             localStorage.removeItem(target);
             $(this).attr('data-state', 'unsaved');
-            $('.alert').html('Removed from favorites.').show();
+            $('.alert').html(' <button type="button" class="close" data-dismiss="alert">&times;</button> Removed from favorites.').show();
             $('.favorite').html('<i class="icon-ok-circle"></i>');
             updateFavoritesList();
         }

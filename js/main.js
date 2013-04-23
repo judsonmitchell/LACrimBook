@@ -20,8 +20,9 @@ $(function () {
 
 //Get the data
 var myData;
-$.ajax({url: 'data/data.json',beforeSend: function () { $('.well').hide();}})
-.done(function (data) {$('.loading').hide();$('.well').show(); myData = data; });
+
+$.ajax({url: 'data/data.json', beforeSend: function () { $('.well').hide(); }})
+.done(function (data) {$('.loading').hide(); $('.well').show(); myData = data; });
 
 //Change content depending on state
 var updateContent = function(State) {

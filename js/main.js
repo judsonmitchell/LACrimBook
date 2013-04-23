@@ -2,11 +2,23 @@ function updateFavoritesList() {
 
     if (localStorage.length > 0) {
         var favList = '';
-        for (var i = 0; i < localStorage.length; i++) {
-            var key = localStorage.key(i);
-            var value = localStorage.getItem(key);
-            favList += '<li><a class="fav-link" href="#" data-id="' + key + '">' + value + '</a></li>';
-            console.log(key + ' ' + value);
+        
+        if (localStorage.length > 4) {
+
+            for (var i = 0; i < 5; i++) {
+                var key = localStorage.key(i);
+                var value = localStorage.getItem(key);
+                favList += '<li><a class="fav-link" href="#" data-id="' + key + '">' + value + '</a></li>';
+            }
+            favList += '<li class="divider"></li><li><a class="fav-all" href="#">View All</a></li>';
+        }
+        else {
+
+            for (var i = 0; i < localStorage.length; i++) {
+                var key = localStorage.key(i);
+                var value = localStorage.getItem(key);
+                favList += '<li><a class="fav-link" href="#" data-id="' + key + '">' + value + '</a></li>';
+            }
         }
 
         $('.dropdown-menu').html(favList);
@@ -94,6 +106,24 @@ var updateContent = function(State) {
         $('input').val(target);
         $(document).scrollTop(pos);
         break;
+    case 'favorites':
+        items = ' <ul class="nav nav-tabs nav-stacked display-rows">';
+        if (localStorage.length > 0) {
+            for (var i = 0; i < localStorage.length; i++) {
+                var key = localStorage.key(i);
+                laws = jlinq.from(myData).equals('id', key).select();
+                items += '<li><a class="law-link" href="#" data-id="' + laws[0].id + '">' + laws[0].description 
+                + ' ' + laws[0].title + '</a></li>';
+            }
+        }
+        else {
+            items += '<li>You don\'t have any favorited laws</li>';
+        }
+
+        items += '</ul>';
+        $('.well').html(items);
+        $(document).scrollTop(pos);
+        break;
     default:
         var menu = ' <ul class="nav nav-tabs nav-stacked display-rows"> <li><a class="nav-link" data-id="RS 000014" href="#"><i class="icon-chevron-right"></i> Title 14</a></li> <li><a class="nav-link" data-id="RS 000015" href="#"><i class="icon-chevron-right"></i> Title 15</a></li> <li><a class="nav-link" data-id="RS 000032" href="#"><i class="icon-chevron-right"></i> Title 32</a></li> <li><a class="nav-link" data-id="RS 000040" href="#"><i class="icon-chevron-right"></i> Title 40</a></li> <li><a class="nav-link" data-id="RS 000046" href="#"><i class="icon-chevron-right"></i> Title 46</a></li> <li><a class="nav-link" data-id="RS 000056" href="#"><i class="icon-chevron-right"></i> Title 56</a></li> <li><a class="nav-link" data-id="CCRP" href="#"><i class="icon-chevron-right"></i> Code of Criminal Procedure </a></li> <li><a class="nav-link" data-id="CE" href="#"><i class="icon-chevron-right"></i> Code of Evidence </a></li> <li><a class="nav-link" data-id="CHC" href="#"><i class="icon-chevron-right"></i> Childrens Code</a></li> <li><a class="nav-link" data-id="CONST" href="#"><i class="icon-chevron-right"></i> Constitution</a></li> </ul>';
         $('.well').html(menu);
@@ -151,6 +181,13 @@ $(document).ready(function () {
         var scroll = $(document).scrollTop();
         History.pushState({type: 'law', id: target, pos: scroll}, target, '?target=' + target + '&view=law');
     });
+
+    $('.navbar-headnav').on('click', 'a.fav-all', function (event) {
+        event.preventDefault();
+        var scroll = $(document).scrollTop();
+        History.pushState({type: 'favorites', id: null, pos: scroll}, 'Favorites', '?view=favorites');
+    });
+
     //Handle swipes
    // $('.main').wipetouch({
    //     wipeLeft: function (result) {History.go(1); },

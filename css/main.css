@@ -4,11 +4,22 @@
    Author's custom styles
    ========================================================================== */
 
+/* Large desktop */
+@media (min-width: 1200px) { ... }
+ 
+/* Portrait tablet to landscape and desktop */
+@media (min-width: 768px) and (max-width: 979px) { ... }
+ 
+/* Landscape phone to portrait tablet */
+@media (max-width: 767px) { body{padding-top:130px;}}
+ 
+/* Landscape phones and down */
+@media (max-width: 480px) { body{padding-top:130px;}}
 
 /* Nudge the search button */
 .search-btn{margin-top:0px !important}
 
-
+.navbar{position: fixed; padding: 0px; margin: 0px;}
 
 
 

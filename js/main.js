@@ -33,6 +33,7 @@ $.ajax({url: 'data/data.json', beforeSend: function () { $('.well').hide(); }})
 var updateContent = function(State) {
     var target = State.data.id;
     var view = State.data.type;
+    var pos = State.data.pos;
     var items;
     var laws;
     switch (view) {
@@ -44,23 +45,27 @@ var updateContent = function(State) {
         });
         items += '</ul>';
         $('.well').html(items);
+        $(document).scrollTop(pos);
         break;
     case 'law':
         laws = jlinq.from(myData).equals('id', target).select();
         $('title').text(laws[0].description + ' ' + laws[0].title);
         $('.well').html('<h3>' + laws[0].description + '</h3>' + laws[0].law_text);
+        $(document).scrollTop(pos);
         break;
     case 'search':
         laws = jlinq.from(myData).contains('law_text', target).select();
         items = '<div class="continer">';
         $.each(laws, function (key, value) {
+            var snippet = getExcerpt(value.law_text, target, 5); 
             items += '<h4><a class="law-link" href="#" data-id="' + value.id +
             '">' + value.description + ' ' + value.title + '</a></h4>' +
-            '<p>' + value.law_text + '</p';
+            '<p>...' + snippet + '...</p>';
         });
         items += '</div>';
         $('.well').html(items);
         $('input').val(target);
+        $(document).scrollTop(pos);
         break;
     default:
         var menu = ' <ul class="nav nav-tabs nav-stacked display-rows"> <li><a class="nav-link" data-id="RS 000014" href="#"><i class="icon-chevron-right"></i> Title 14</a></li> <li><a class="nav-link" data-id="RS 000015" href="#"><i class="icon-chevron-right"></i> Title 15</a></li> <li><a class="nav-link" data-id="RS 000032" href="#"><i class="icon-chevron-right"></i> Title 32</a></li> <li><a class="nav-link" data-id="RS 000040" href="#"><i class="icon-chevron-right"></i> Title 40</a></li> <li><a class="nav-link" data-id="RS 000046" href="#"><i class="icon-chevron-right"></i> Title 46</a></li> <li><a class="nav-link" data-id="RS 000056" href="#"><i class="icon-chevron-right"></i> Title 56</a></li> <li><a class="nav-link" data-id="CCRP" href="#"><i class="icon-chevron-right"></i> Code of Criminal Procedure </a></li> <li><a class="nav-link" data-id="CE" href="#"><i class="icon-chevron-right"></i> Code of Evidence </a></li> <li><a class="nav-link" data-id="CHC" href="#"><i class="icon-chevron-right"></i> Childrens Code</a></li> <li><a class="nav-link" data-id="CONST" href="#"><i class="icon-chevron-right"></i> Constitution</a></li> </ul>';
@@ -74,19 +79,22 @@ $(document).ready(function () {
     $('.main').on('click', 'a.nav-link', function (event) {
         event.preventDefault();
         var target = $(this).attr('data-id');
-        History.pushState({type: 'list', id: target}, target, '?target=' + target + '&view=list');
+        var scroll = $(document).scrollTop();
+        History.pushState({type: 'list', id: target, pos: scroll}, target, '?target=' + target + '&view=list');
     });
 
     $('.main').on('click', 'a.law-link', function (event) {
         event.preventDefault();
         var target = $(this).attr('data-id');
-        History.pushState({type: 'law', id: target}, target, '?target=' + target + '&view=law');
+        var scroll = $(document).scrollTop();
+        History.pushState({type: 'law', id: target, pos: scroll}, target, '?target=' + target + '&view=law');
     });
 
     $('.search-btn').click(function (event) {
         event.preventDefault();
         var target = $(this).prev().val();
-        History.pushState({type: 'search', id: target}, target, '?target=' + target + '&view=search');
+        var scroll = $(document).scrollTop();
+        History.pushState({type: 'search', id: target, pos: scroll}, target, '?target=' + target + '&view=search');
     });
 
     //Handle swipes

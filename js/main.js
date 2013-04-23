@@ -33,10 +33,12 @@ $.ajax({url: 'data/data.json', beforeSend: function () { $('.well').hide(); }})
 var updateContent = function(State) {
     var target = State.data.id;
     var view = State.data.type;
+    var items;
+    var laws;
     switch (view) {
     case 'list':
-        var items = ' <ul class="nav nav-tabs nav-stacked display-rows">';
-        var laws = jlinq.from(myData).starts('sortcode', target + ' ').select();
+        items = ' <ul class="nav nav-tabs nav-stacked display-rows">';
+        laws = jlinq.from(myData).starts('sortcode', target + ' ').select();
         $.each(laws, function (key, value) {
             items += '<li><a class="law-link" href="#" data-id="' + value.id + '">' + value.description + ' ' + value.title + '</a></li>';
         });
@@ -44,9 +46,21 @@ var updateContent = function(State) {
         $('.well').html(items);
         break;
     case 'law':
-        var law = jlinq.from(myData).equals('id', target).select();
-        $('title').text(law[0].description + ' ' + law[0].title);
-        $('.well').html('<h3>' + law[0].description + '</h3>' + law[0].law_text);
+        laws = jlinq.from(myData).equals('id', target).select();
+        $('title').text(laws[0].description + ' ' + laws[0].title);
+        $('.well').html('<h3>' + laws[0].description + '</h3>' + laws[0].law_text);
+        break;
+    case 'search':
+        laws = jlinq.from(myData).contains('law_text', target).select();
+        items = '<div class="continer">';
+        $.each(laws, function (key, value) {
+            items += '<h4><a class="law-link" href="#" data-id="' + value.id +
+            '">' + value.description + ' ' + value.title + '</a></h4>' +
+            '<p>' + value.law_text + '</p';
+        });
+        items += '</div>';
+        $('.well').html(items);
+        $('input').val(target);
         break;
     default:
         var menu = ' <ul class="nav nav-tabs nav-stacked display-rows"> <li><a class="nav-link" data-id="RS 000014" href="#"><i class="icon-chevron-right"></i> Title 14</a></li> <li><a class="nav-link" data-id="RS 000015" href="#"><i class="icon-chevron-right"></i> Title 15</a></li> <li><a class="nav-link" data-id="RS 000032" href="#"><i class="icon-chevron-right"></i> Title 32</a></li> <li><a class="nav-link" data-id="RS 000040" href="#"><i class="icon-chevron-right"></i> Title 40</a></li> <li><a class="nav-link" data-id="RS 000046" href="#"><i class="icon-chevron-right"></i> Title 46</a></li> <li><a class="nav-link" data-id="RS 000056" href="#"><i class="icon-chevron-right"></i> Title 56</a></li> <li><a class="nav-link" data-id="CCRP" href="#"><i class="icon-chevron-right"></i> Code of Criminal Procedure </a></li> <li><a class="nav-link" data-id="CE" href="#"><i class="icon-chevron-right"></i> Code of Evidence </a></li> <li><a class="nav-link" data-id="CHC" href="#"><i class="icon-chevron-right"></i> Childrens Code</a></li> <li><a class="nav-link" data-id="CONST" href="#"><i class="icon-chevron-right"></i> Constitution</a></li> </ul>';
@@ -57,20 +71,26 @@ var updateContent = function(State) {
 
 $(document).ready(function () {
     //Handle clicks
-    $('.container').on('click', 'a.nav-link', function (event) {
+    $('.main').on('click', 'a.nav-link', function (event) {
         event.preventDefault();
         var target = $(this).attr('data-id');
         History.pushState({type: 'list', id: target}, target, '?target=' + target + '&view=list');
     });
 
-    $('.container').on('click', 'a.law-link', function (event) {
+    $('.main').on('click', 'a.law-link', function (event) {
         event.preventDefault();
         var target = $(this).attr('data-id');
         History.pushState({type: 'law', id: target}, target, '?target=' + target + '&view=law');
     });
 
+    $('.search-btn').click(function (event) {
+        event.preventDefault();
+        var target = $(this).prev().val();
+        History.pushState({type: 'search', id: target}, target, '?target=' + target + '&view=search');
+    });
+
     //Handle swipes
-    $('div.main').wipetouch({
+    $('.main').wipetouch({
         wipeLeft: function (result) {History.go(1); },
         wipeRight: function (result) {History.back(); }
     });

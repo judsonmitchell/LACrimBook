@@ -96,7 +96,8 @@ var updateContent = function(State) {
         laws = jlinq.from(myData).contains('law_text', target).select();
         items = '<div class="container">';
         $.each(laws, function (key, value) {
-            var snippet = getExcerpt(value.law_text, target, 5);
+            //var snippet = getExcerpt(value.law_text, target, 5);
+            var snippet = "Working on generating statute preview.  Check back soon.";
             items += '<h4><a class="law-link" href="#" data-id="' + value.id +
             '">' + value.description + ' ' + value.title + '</a></h4>' +
             '<p>...' + snippet + '...</p>';

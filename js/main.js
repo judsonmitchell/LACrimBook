@@ -4,11 +4,8 @@ $(function () {
     if (History.enabled) {
         State = History.getState();
         // set initial state to first page that was loaded
-        //need to get url vals here, and then put them in push state data
-        //like {type: 'law', id: target}
         var t = State.url.queryStringToJSON();
         History.pushState({type: t.view, id: t.target}, $('title').text(), State.urlPath);
-        updateContent(History.getState());
     } else {
         return false;
     }
@@ -22,7 +19,15 @@ $(function () {
 var myData;
 
 $.ajax({url: 'data/data.json', beforeSend: function () { $('.well').hide(); }})
-.done(function (data) {$('.loading').hide(); $('.well').show(); myData = data; });
+.done(function (data) {
+    $('.loading').hide();
+    $('.well').show();
+    myData = data;
+    State = History.getState();
+    var t = State.url.queryStringToJSON();
+    History.pushState({type: t.view, id: t.target}, $('title').text(), State.urlPath);
+    updateContent(History.getState());
+});
 
 //Change content depending on state
 var updateContent = function(State) {

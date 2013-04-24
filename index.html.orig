@@ -38,11 +38,19 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </a>
-                    <a class="brand" href="/crimbook">Lousiana Statutory Criminal Law</a>
+<<<<<<< HEAD
+                    <a class="brand go-home" href="#">Lousiana Statutory Criminal Law</a>
+                    <div class="nav-collapse collapse">
+                        <ul class="nav">
+                            <li class="active"><a class="go-home" href="#">Home</a></li>
+                            <li><a href="#about">About</a></li>
+=======
+                    <a class="brand" href="/crimbook">Louisiana <span class="hidden-phone">Statutory </span>Criminal Law</a>
                     <div class="nav-collapse collapse">
                         <ul class="nav">
                             <li class="active"><a href="/crimbook">Home</a></li>
                             <li><a href="about.html">About</a></li>
+>>>>>>> 41013e4bd2897085cd170d85dc8ce75e7abc19ce
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Favorites <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
@@ -64,7 +72,7 @@
         </div>
 
         <div class="container main">
-            <div class="alert alert-info loading">Downloading laws to your system. Please wait.</div>
+            <div class="alert alert-info loading"> Downloading laws to your system. Please wait.  </div>
             <div class="well">
                 <ul class="nav nav-tabs nav-stacked display-rows"> 
                     <li><a class="nav-link" data-id="RS 000014" href="#"><i class="icon-chevron-right"></i> Title 14</a></li>

@@ -53,6 +53,10 @@ var updateContent = function(State) {
     var pos = State.data.pos;
     var items;
     var laws;
+
+    //Ensure that any alert messages are hidden
+    $('.alert').hide();
+
     switch (view) {
     case 'list':
         items = ' <ul class="nav nav-tabs nav-stacked display-rows">';
@@ -97,6 +101,7 @@ var updateContent = function(State) {
     default:
         var menu = ' <ul class="nav nav-tabs nav-stacked display-rows"> <li><a class="nav-link" data-id="RS 000014" href="#"><i class="icon-chevron-right"></i> Title 14</a></li> <li><a class="nav-link" data-id="RS 000015" href="#"><i class="icon-chevron-right"></i> Title 15</a></li> <li><a class="nav-link" data-id="RS 000032" href="#"><i class="icon-chevron-right"></i> Title 32</a></li> <li><a class="nav-link" data-id="RS 000040" href="#"><i class="icon-chevron-right"></i> Title 40</a></li> <li><a class="nav-link" data-id="RS 000046" href="#"><i class="icon-chevron-right"></i> Title 46</a></li> <li><a class="nav-link" data-id="RS 000056" href="#"><i class="icon-chevron-right"></i> Title 56</a></li> <li><a class="nav-link" data-id="CCRP" href="#"><i class="icon-chevron-right"></i> Code of Criminal Procedure </a></li> <li><a class="nav-link" data-id="CE" href="#"><i class="icon-chevron-right"></i> Code of Evidence </a></li> <li><a class="nav-link" data-id="CHC" href="#"><i class="icon-chevron-right"></i> Childrens Code</a></li> <li><a class="nav-link" data-id="CONST" href="#"><i class="icon-chevron-right"></i> Constitution</a></li> </ul>';
         $('.well').html(menu);
+        $(document).scrollTop(pos);
     }
 };
 
@@ -151,6 +156,14 @@ $(document).ready(function () {
         var scroll = $(document).scrollTop();
         History.pushState({type: 'law', id: target, pos: scroll}, target, '?target=' + target + '&view=law');
     });
+
+    $('.navbar-headnav').on('click', 'a.go-home', function (event) {
+        event.preventDefault();
+        var target = null;
+        var scroll = '0';
+        History.pushState({type: 'home', id: target, pos: scroll}, target, '/crimbook');
+    });
+
     //Handle swipes
    // $('.main').wipetouch({
    //     wipeLeft: function (result) {History.go(1); },

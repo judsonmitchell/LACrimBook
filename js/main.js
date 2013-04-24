@@ -175,7 +175,7 @@ $(document).ready(function () {
         else {
             localStorage.removeItem(target);
             $(this).attr('data-state', 'unsaved');
-            $('.alert').html(' <button type="button" class="close" data-dismiss="alert">&times;</button> Removed from favorites.').show();
+            $('.alert').html('Removed from favorites.').show();
             $('.favorite').html('<i class="icon-ok-circle"></i>');
             updateFavoritesList();
         }

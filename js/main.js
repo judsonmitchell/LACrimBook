@@ -1,3 +1,22 @@
+// Check if a new cache is available on page load.
+window.addEventListener('load', function () {
+
+    window.applicationCache.addEventListener('updateready', function () {
+        if (window.applicationCache.status === window.applicationCache.UPDATEREADY) {
+        // Browser downloaded a new app cache.
+        // Swap it in and reload the page to get the new code.
+            window.applicationCache.swapCache();
+            if (confirm('A new version of LaCrimBook is available. Load it?')) {
+                window.location.reload();
+            }
+        }
+        else {
+        // Manifest didn't changed. Nothing new to server.
+        }
+    }, false);
+
+}, false);
+
 function updateFavoritesList() {
 
     if (localStorage.length > 0) {

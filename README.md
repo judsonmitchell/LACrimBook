@@ -10,7 +10,7 @@ The project uses many open source tools including:
 * [Twitter Bootstrap](https://github.com/twitter/bootstrap.git)
 * [Initializr](http://www.initializr.com/)
 
-View a working instance of this project [here](http://loyolalawtech.org/lacrimbook).
+View a working instance of this project [here](http://loyolalawtech.org/crimbook).
 
 LACrimBook was created as a part of the [Litigation and Technology Clinic](http://loyolalawtech.org) of 
 [Loyola College of Law, New Orleans](http://law.loyno.edu).

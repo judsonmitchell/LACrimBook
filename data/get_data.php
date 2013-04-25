@@ -2,7 +2,7 @@
 
 //setup database
 try {
-        $dbh = new PDO("mysql:host=localhost;dbname=lalaws" , 'root', 'likes69');
+        $dbh = new PDO("mysql:host=localhost;dbname=lalaws" , 'root', '');
     }
 catch(PDOException $e)
     {

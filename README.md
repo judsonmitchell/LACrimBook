@@ -1,8 +1,8 @@
 LACrimBook
 ===============
 
-LACrimBook aims to replace West's big and expensive handbook of criminal laws with
-a free, digital alternative.
+LACrimBook aims to replace West's big and expensive handbook of Louisiana 
+criminal laws with a free, digital alternative.
 
 The project uses many open source tools including:
 

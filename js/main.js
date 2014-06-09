@@ -72,15 +72,14 @@ $.ajax({url: 'data/data.json', beforeSend: function () { $('.well').hide(); }})
     $('.well').show();
     myData = data;
     State = History.getState();
-    alert(State);
     var t = State.url.queryStringToJSON();
-    alert(t);
     History.pushState({type: t.view, id: t.target}, $('title').text(), State.urlPath);
     updateContent(History.getState());
 })
 .fail(function(jqXHR, textStatus, errorThrown){
     $('.alert').html('Error Retrieving Laws:' + errorThrown).show();
 });
+
 //Change content depending on state
 var updateContent = function(State) {
     var target = State.data.id;
@@ -100,6 +99,7 @@ var updateContent = function(State) {
             items += '<li><a class="law-link" href="#" data-id="' + value.id + '">' + value.title + ' ' + value.description + '</a></li>';
         });
         items += '</ul>';
+        alert(items.length);
         $('.well').html(items);
         $(document).scrollTop(pos);
         break;
@@ -162,7 +162,7 @@ var updateContent = function(State) {
 
 $(document).ready(function () {
     //Handle clicks
-    alert('debug6');
+    alert('debug7');
     $('.main').on('click', 'a.nav-link', function (event) {
         event.preventDefault();
         console.log(window.History);

@@ -124,7 +124,7 @@ var updateContent = function(State) {
             //var snippet = getExcerpt(value.law_text, target, 5);
             //var snippet = "Working on generating statute preview.  Check back soon.";
             items += '<h4><a class="law-link" href="#" data-id="' + value.id +
-            '">' + value.description + ' ' + value.title + '</a></h4>';
+            '">' + value.title + ' ' + value.description + '</a></h4>';
             //'<p>...' + snippet + '...</p>';
         });
         items += '</div>';
@@ -218,7 +218,7 @@ $(document).ready(function () {
     $('.navbar-headnav').on('click', 'a.go-home', function (event) {
         event.preventDefault();
         var scroll = '0';
-        History.pushState({type: 'home', id: null, pos: scroll}, 'Home', '/crimbook');
+        History.pushState({type: 'home', id: null, pos: scroll}, 'Home', '/');
     });
 
     //Handle swipes

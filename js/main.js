@@ -87,7 +87,6 @@ var updateContent = function(State) {
     var pos = State.data.pos;
     var items;
     var laws;
-    alert('pos: ' + pos + 'view: ' + view);
     //Ensure that any alert messages are hidden
     $('.alert').hide();
 
@@ -95,6 +94,7 @@ var updateContent = function(State) {
     case 'list':
         items = ' <ul class="nav nav-tabs nav-stacked display-rows">';
         laws = jlinq.from(myData).starts('sortcode', target + ' ').select();
+        alert(laws[0]);
         $.each(laws, function (key, value) {
             items += '<li><a class="law-link" href="#" data-id="' + value.id + '">' + value.title + ' ' + value.description + '</a></li>';
         });
@@ -161,7 +161,7 @@ var updateContent = function(State) {
 
 $(document).ready(function () {
     //Handle clicks
-    alert('debug9');
+    alert('debug10');
     $('.main').on('click', 'a.nav-link', function (event) {
         event.preventDefault();
         console.log(window.History);

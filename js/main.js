@@ -48,12 +48,14 @@ function updateFavoritesList() {
 $(function () {
     var History = window.History;
     if (History.enabled) {
+    console.log('history is enabled);
         State = History.getState();
         // set initial state to first page that was loaded
         var t = State.url.queryStringToJSON();
         History.pushState({type: t.view, id: t.target}, $('title').text(), State.urlPath);
         updateFavoritesList();
     } else {
+    console.log('history is not enabled);
         return false;
     }
 
@@ -94,7 +96,6 @@ var updateContent = function(State) {
     case 'list':
         items = ' <ul class="nav nav-tabs nav-stacked display-rows">';
         laws = jlinq.from(myData).starts('sortcode', target + ' ').select();
-        console.log(laws);
         $.each(laws, function (key, value) {
             items += '<li><a class="law-link" href="#" data-id="' + value.id + '">' + value.title + ' ' + value.description + '</a></li>';
         });

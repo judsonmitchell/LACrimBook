@@ -93,7 +93,7 @@ var updateContent = function(State) {
     switch (view) {
     case 'list':
         alert('at list');
-        alert(jlinq);
+        alert(myData.length);
         items = ' <ul class="nav nav-tabs nav-stacked display-rows">';
         laws = jlinq.from(myData).starts('sortcode', target + ' ').select();
         $.each(laws, function (key, value) {
@@ -162,7 +162,7 @@ var updateContent = function(State) {
 
 $(document).ready(function () {
     //Handle clicks
-    alert('debug14');
+    alert('debug15');
     $('.main').on('click', 'a.nav-link', function (event) {
         event.preventDefault();
         var target = $(this).attr('data-id');
@@ -225,10 +225,10 @@ $(document).ready(function () {
     });
 
     //Handle swipes
-    //$('.main').wipetouch({
-    //    wipeLeft: function (result) {History.go(1); },
-    //    wipeRight: function (result) {History.back(); }
-    //});
+    $('.main').wipetouch({
+        wipeLeft: function (result) {History.go(1); },
+        wipeRight: function (result) {History.back(); }
+    });
 
 });
 

@@ -47,16 +47,13 @@ function updateFavoritesList() {
 //Handle history
 $(function () {
     var History = window.History;
-    console.log('this fired');
     if (History.enabled) {
-        console.log('history is enabled');
         State = History.getState();
         // set initial state to first page that was loaded
         var t = State.url.queryStringToJSON();
         History.pushState({type: t.view, id: t.target}, $('title').text(), State.urlPath);
         updateFavoritesList();
     } else {
-        console.log('history is not enabled');
         return false;
     }
 
@@ -165,6 +162,7 @@ $(document).ready(function () {
     //Handle clicks
     $('.main').on('click', 'a.nav-link', function (event) {
         event.preventDefault();
+        console.log(window.History);
         var target = $(this).attr('data-id');
         var scroll = $(document).scrollTop();
         History.pushState({type: 'list', id: target, pos: scroll}, target, '?target=' + target + '&view=list');
@@ -225,10 +223,10 @@ $(document).ready(function () {
     });
 
     //Handle swipes
-    $('.main').wipetouch({
-        wipeLeft: function (result) {History.go(1); },
-        wipeRight: function (result) {History.back(); }
-    });
+    //$('.main').wipetouch({
+    //    wipeLeft: function (result) {History.go(1); },
+    //    wipeRight: function (result) {History.back(); }
+    //});
 
 });
 

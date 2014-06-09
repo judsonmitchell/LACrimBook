@@ -47,6 +47,7 @@ function updateFavoritesList() {
 //Handle history
 $(function () {
     var History = window.History;
+    console.log('this fired');
     if (History.enabled) {
         console.log('history is enabled');
         State = History.getState();
@@ -162,6 +163,7 @@ var updateContent = function(State) {
 
 $(document).ready(function () {
     //Handle clicks
+    console.log('doc ready');
     $('.main').on('click', 'a.nav-link', function (event) {
         event.preventDefault();
         var target = $(this).attr('data-id');

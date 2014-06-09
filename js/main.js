@@ -58,7 +58,6 @@ $(function () {
     }
 
     History.Adapter.bind(window, 'statechange', function () {
-        console.log('this is state' + History.getState());
         updateContent(History.getState());
         updateFavoritesList();
     });
@@ -95,6 +94,7 @@ var updateContent = function(State) {
     case 'list':
         items = ' <ul class="nav nav-tabs nav-stacked display-rows">';
         laws = jlinq.from(myData).starts('sortcode', target + ' ').select();
+        console.log(laws);
         $.each(laws, function (key, value) {
             items += '<li><a class="law-link" href="#" data-id="' + value.id + '">' + value.title + ' ' + value.description + '</a></li>';
         });

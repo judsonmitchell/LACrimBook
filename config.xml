@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+    <widget xmlns   = "http://www.w3.org/ns/widgets"
+        xmlns:gap   = "http://phonegap.com/ns/1.0"
+        id          = "org.loyolalawtech.crimbook"
+        versionCode = "2"
+        version     = "2.0.0">
+
+    <!-- versionCode is optional and Android only -->
+
+    <name>CrimBook</name>
+
+    <description>LACrimBook aims to replace West's big and expensive handbook of criminal laws with a free, digital alternative. </description>
+
+    <author href="http://loyolalawtech.org" email="judson@loyolalawtech.org">
+        Judson Mitchell
+    </author>
+
+    <gap:plugin name="com.phonegap.plugin.statusbar" version="1.1.0" />
+    <gap:plugin name="org.apache.cordova.inappbrowser" />    
+
+    <preference name="permissions" value="none" />
+    <preference name="phonegap-version" value="3.4.0" />         
+    <preference name="android-targetSdkVersion" value="14" />
+
+    <preference name="fullscreen" value="true" />           <!-- all: hides the status bar at the top of the screen -->
+
+</widget>

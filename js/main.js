@@ -54,12 +54,10 @@ $(function () {
         History.pushState({type: t.view, id: t.target}, $('title').text(), State.urlPath);
         updateFavoritesList();
     } else {
-        alert('history problem')
         return false;
     }
 
     History.Adapter.bind(window, 'statechange', function () {
-        alert('state change fired');
         updateContent(History.getState());
         updateFavoritesList();
     });
@@ -88,7 +86,7 @@ var updateContent = function(State) {
     var pos = State.data.pos;
     var items;
     var laws;
-alert(target);
+alert(view);
     //Ensure that any alert messages are hidden
     $('.alert').hide();
 
@@ -162,7 +160,7 @@ alert(target);
 
 $(document).ready(function () {
     //Handle clicks
-    alert('debug2');
+    alert('debug3');
     $('.main').on('click', 'a.nav-link', function (event) {
         event.preventDefault();
         console.log(window.History);

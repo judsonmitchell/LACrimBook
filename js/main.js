@@ -92,9 +92,6 @@ var updateContent = function(State) {
 
     switch (view) {
     case 'list':
-        alert('at list');
-        alert(myData.length);
-        console.log(myData[0]);
         items = ' <ul class="nav nav-tabs nav-stacked display-rows">';
         laws = jlinq.from(myData).starts('sortcode', target + ' ').select();
         $.each(laws, function (key, value) {
@@ -163,7 +160,6 @@ var updateContent = function(State) {
 
 $(document).ready(function () {
     //Handle clicks
-    alert('debug16');
     $('.main').on('click', 'a.nav-link', function (event) {
         event.preventDefault();
         var target = $(this).attr('data-id');

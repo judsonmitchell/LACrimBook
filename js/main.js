@@ -48,14 +48,14 @@ function updateFavoritesList() {
 $(function () {
     var History = window.History;
     if (History.enabled) {
-    console.log('history is enabled);
+        console.log('history is enabled');
         State = History.getState();
         // set initial state to first page that was loaded
         var t = State.url.queryStringToJSON();
         History.pushState({type: t.view, id: t.target}, $('title').text(), State.urlPath);
         updateFavoritesList();
     } else {
-    console.log('history is not enabled);
+        console.log('history is not enabled');
         return false;
     }
 

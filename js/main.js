@@ -71,10 +71,10 @@ $.ajax({url: 'data/data.json', beforeSend: function () { $('.well').hide(); }})
     $('.loading').hide();
     $('.well').show();
     myData = data;
-    alert('data coming');
-    alert(myData.length);
     State = History.getState();
+    alert(State);
     var t = State.url.queryStringToJSON();
+    alert(t);
     History.pushState({type: t.view, id: t.target}, $('title').text(), State.urlPath);
     updateContent(History.getState());
 })
@@ -162,7 +162,7 @@ var updateContent = function(State) {
 
 $(document).ready(function () {
     //Handle clicks
-    alert('debug5');
+    alert('debug6');
     $('.main').on('click', 'a.nav-link', function (event) {
         event.preventDefault();
         console.log(window.History);

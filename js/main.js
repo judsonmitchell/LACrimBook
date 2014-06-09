@@ -66,7 +66,7 @@ $(function () {
 //Get the data
 var myData;
 
-$.ajax({url: 'data/data.json', beforeSend: function () { $('.well').hide(); }})
+$.ajax({url: 'data/data.json', dataType: 'json', beforeSend: function () { $('.well').hide(); }})
 .done(function (data) {
     $('.loading').hide();
     $('.well').show();
@@ -94,6 +94,7 @@ var updateContent = function(State) {
     case 'list':
         alert('at list');
         alert(myData.length);
+        console.log(myData[0]);
         items = ' <ul class="nav nav-tabs nav-stacked display-rows">';
         laws = jlinq.from(myData).starts('sortcode', target + ' ').select();
         $.each(laws, function (key, value) {
@@ -162,7 +163,7 @@ var updateContent = function(State) {
 
 $(document).ready(function () {
     //Handle clicks
-    alert('debug15');
+    alert('debug16');
     $('.main').on('click', 'a.nav-link', function (event) {
         event.preventDefault();
         var target = $(this).attr('data-id');

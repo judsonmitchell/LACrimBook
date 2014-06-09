@@ -163,7 +163,7 @@ var updateContent = function(State) {
 
 $(document).ready(function () {
     //Handle clicks
-    console.log('doc ready');
+    alert('doc ready');
     $('.main').on('click', 'a.nav-link', function (event) {
         event.preventDefault();
         var target = $(this).attr('data-id');

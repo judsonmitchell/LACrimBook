@@ -92,6 +92,7 @@ var updateContent = function(State) {
 
     switch (view) {
     case 'list':
+        alert('at list');
         items = ' <ul class="nav nav-tabs nav-stacked display-rows">';
         laws = jlinq.from(myData).starts('sortcode', target + ' ').select();
         alert(laws[0]);
@@ -161,10 +162,9 @@ var updateContent = function(State) {
 
 $(document).ready(function () {
     //Handle clicks
-    alert('debug10');
+    alert('debug11');
     $('.main').on('click', 'a.nav-link', function (event) {
         event.preventDefault();
-        console.log(window.History);
         var target = $(this).attr('data-id');
         var scroll = $(document).scrollTop();
         History.pushState({type: 'list', id: target, pos: scroll}, target, '?target=' + target + '&view=list');

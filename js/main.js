@@ -47,7 +47,7 @@ function updateFavoritesList() {
 //Handle history
 $(function () {
     var History = window.History;
-    alert('this fired');
+    console.log('this fired');
     if (History.enabled) {
         console.log('history is enabled');
         State = History.getState();

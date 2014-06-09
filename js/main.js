@@ -54,10 +54,12 @@ $(function () {
         History.pushState({type: t.view, id: t.target}, $('title').text(), State.urlPath);
         updateFavoritesList();
     } else {
+        alert('history problem')
         return false;
     }
 
     History.Adapter.bind(window, 'statechange', function () {
+        alert('state change fired');
         updateContent(History.getState());
         updateFavoritesList();
     });
@@ -160,6 +162,7 @@ var updateContent = function(State) {
 
 $(document).ready(function () {
     //Handle clicks
+    alert('debug1');
     $('.main').on('click', 'a.nav-link', function (event) {
         event.preventDefault();
         console.log(window.History);

@@ -58,6 +58,7 @@ $(function () {
     }
 
     History.Adapter.bind(window, 'statechange', function () {
+        console.log('this is state' + History.getState());
         updateContent(History.getState());
         updateFavoritesList();
     });
@@ -165,7 +166,6 @@ $(document).ready(function () {
         var target = $(this).attr('data-id');
         var scroll = $(document).scrollTop();
         History.pushState({type: 'list', id: target, pos: scroll}, target, '?target=' + target + '&view=list');
-        console.log('test' + History);
     });
 
     $('.main').on('click', 'a.law-link', function (event) {

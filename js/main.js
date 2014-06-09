@@ -75,8 +75,10 @@ $.ajax({url: 'data/data.json', beforeSend: function () { $('.well').hide(); }})
     var t = State.url.queryStringToJSON();
     History.pushState({type: t.view, id: t.target}, $('title').text(), State.urlPath);
     updateContent(History.getState());
+})
+.fail(function(jqXHR, textStatus, errorThrown){
+    $('.alert').html('Error Retrieving Laws:' + errorThrown).show();
 });
-
 //Change content depending on state
 var updateContent = function(State) {
     var target = State.data.id;
@@ -93,7 +95,7 @@ var updateContent = function(State) {
         items = ' <ul class="nav nav-tabs nav-stacked display-rows">';
         laws = jlinq.from(myData).starts('sortcode', target + ' ').select();
         $.each(laws, function (key, value) {
-            items += '<li><a class="law-link" href="#" data-id="' + value.id + '">' + value.description + ' ' + value.title + '</a></li>';
+            items += '<li><a class="law-link" href="#" data-id="' + value.id + '">' + value.title + ' ' + value.description + '</a></li>';
         });
         items += '</ul>';
         $('.well').html(items);
@@ -220,10 +222,10 @@ $(document).ready(function () {
     });
 
     //Handle swipes
-   // $('.main').wipetouch({
-   //     wipeLeft: function (result) {History.go(1); },
-   //     wipeRight: function (result) {History.back(); }
-   // });
+    $('.main').wipetouch({
+        wipeLeft: function (result) {History.go(1); },
+        wipeRight: function (result) {History.back(); }
+    });
 
 });
 

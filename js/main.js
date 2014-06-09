@@ -88,7 +88,7 @@ var updateContent = function(State) {
     var pos = State.data.pos;
     var items;
     var laws;
-
+alert(target);
     //Ensure that any alert messages are hidden
     $('.alert').hide();
 
@@ -162,7 +162,7 @@ var updateContent = function(State) {
 
 $(document).ready(function () {
     //Handle clicks
-    alert('debug1');
+    alert('debug2');
     $('.main').on('click', 'a.nav-link', function (event) {
         event.preventDefault();
         console.log(window.History);

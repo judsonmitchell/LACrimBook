@@ -66,10 +66,10 @@ $(function () {
 //Get the data
 var myData;
 
-$.ajax({url: 'data/data.json', dataType: 'json', beforeSend: function () { $('.well').hide(); }})
+$.ajax({url: 'data/data.json', dataType: 'json', beforeSend: function () { $('.panel').hide(); }})
 .done(function (data) {
     $('.loading').hide();
-    $('.well').show();
+    $('.panel').show();
     myData = data;
     State = History.getState();
     var t = State.url.queryStringToJSON();
@@ -92,13 +92,13 @@ var updateContent = function(State) {
 
     switch (view) {
     case 'list':
-        items = ' <ul class="nav nav-tabs nav-stacked display-rows">';
+        items = ' <div class="list-group display-rows">';
         laws = jlinq.from(myData).starts('sortcode', target + ' ').select();
         $.each(laws, function (key, value) {
-            items += '<li><a class="law-link" href="#" data-id="' + value.id + '">' + value.title + ' ' + value.description + '</a></li>';
+            items += '<a class="law-link list-group-item" href="#" data-id="' + value.id + '">' + value.title + ' ' + value.description + '</a>';
         });
-        items += '</ul>';
-        $('.well').html(items);
+        items += '</div>';
+        $('.panel').html(items);
         $(document).scrollTop(pos);
         break;
     case 'law':
@@ -106,53 +106,53 @@ var updateContent = function(State) {
         //check to see if this law has been favorited
         var fav;
         if (localStorage.getItem(target)){
-            fav = '<a href="#" class="favorite" data-state="saved" data-id="' + target +
-            '" title="Favorite This"><span class="glyphicon glyphicon-star-empty"></span></a>';
-        }
-        else {
-            fav = '<a href="#" class="favorite" data-state="unsaved" data-id="' + target +
+            fav = '<a href="#" class="favorite upper-right-corner" data-state="saved" data-id="' + target +
             '" title="Favorite This"><span class="glyphicon glyphicon-star"></span></a>';
         }
+        else {
+            fav = '<a href="#" class="favorite upper-right-corner" data-state="unsaved" data-id="' + target +
+            '" title="Favorite This"><span class="glyphicon glyphicon-star-empty"></span></a>';
+        }
         $('title').text(laws[0].description + ' ' + laws[0].title);
-        $('.well').html('<h3><span class="lawTitle">' + laws[0].description + '</span>' + fav + '</h3>' + laws[0].law_text);
+        $('.panel').css({'padding':'10px'}).html('<h3><span class="lawTitle">' + laws[0].description + '</span>' + fav + '</h3>' + laws[0].law_text);
         $(document).scrollTop(0);
         break;
     case 'search':
         laws = jlinq.from(myData).contains('law_text', target).select();
-        items = '<div class="container">';
+        items = '<div class="list-group">';
         $.each(laws, function (key, value) {
             //var snippet = getExcerpt(value.law_text, target, 5);
             //var snippet = "Working on generating statute preview.  Check back soon.";
-            items += '<h4><a class="law-link" href="#" data-id="' + value.id +
-            '">' + value.title + ' ' + value.description + '</a></h4>';
+            items += '<a class="law-link list-group-item" href="#" data-id="' + value.id +
+            '">' + value.title + ' ' + value.description + '</a>';
             //'<p>...' + snippet + '...</p>';
         });
         items += '</div>';
-        $('.well').html(items);
+        $('.panel').html(items);
         $('input').val(target);
         $(document).scrollTop(pos);
         break;
     case 'favorites':
-        items = ' <ul class="nav nav-tabs nav-stacked display-rows">';
+        items = ' <div class="list-group display-rows">';
         if (localStorage.length > 0) {
             for (var i = 0; i < localStorage.length; i++) {
                 var key = localStorage.key(i);
                 laws = jlinq.from(myData).equals('id', key).select();
-                items += '<li><a class="law-link" href="#" data-id="' + laws[0].id + '">' + laws[0].description 
-                + ' ' + laws[0].title + '</a></li>';
+                items += '<a class="law-link list-group-item" href="#" data-id="' + laws[0].id + '">' + laws[0].description +
+                ' ' + laws[0].title + '</a>';
             }
         }
         else {
             items += '<li>You don\'t have any favorited laws</li>';
         }
 
-        items += '</ul>';
-        $('.well').html(items);
+        items += '</div>';
+        $('.panel').html(items);
         $(document).scrollTop(pos);
         break;
     default:
-        var menu = ' <ul class="nav nav-tabs nav-stacked display-rows"> <li><a class="nav-link" data-id="RS 000014" href="#"><span class="glyphicon glyphicon-chevron-right"></i> Title 14</a></li> <li><a class="nav-link" data-id="RS 000015" href="#"><span class="glyphicon glyphicon-chevron-right"></i> Title 15</a></li> <li><a class="nav-link" data-id="RS 000032" href="#"><span class="glyphicon glyphicon-chevron-right"></i> Title 32</a></li> <li><a class="nav-link" data-id="RS 000040" href="#"><span class="glyphicon glyphicon-chevron-right"></i> Title 40</a></li> <li><a class="nav-link" data-id="RS 000046" href="#"><span class="glyphicon glyphicon-chevron-right"></i> Title 46</a></li> <li><a class="nav-link" data-id="RS 000056" href="#"><span class="glyphicon glyphicon-chevron-right"></i> Title 56</a></li> <li><a class="nav-link" data-id="CCRP" href="#"><span class="glyphicon glyphicon-chevron-right"></i> Code of Criminal Procedure </a></li> <li><a class="nav-link" data-id="CE" href="#"><span class="glyphicon glyphicon-chevron-right"></i> Code of Evidence </a></li> <li><a class="nav-link" data-id="CHC" href="#"><span class="glyphicon glyphicon-chevron-right"></i> Childrens Code</a></li> <li><a class="nav-link" data-id="CONST" href="#"><span class="glyphicon glyphicon-chevron-right"></i> Constitution</a></li> </ul>';
-        $('.well').html(menu);
+        var menu = ' <div class="list-group"> <a class="nav-link list-group-item list-group-item " data-id="RS 000014" href="#"><span class="glyphicon glyphicon-chevron-right"></i> Title 14</a> <a class="nav-link list-group-item" data-id="RS 000015" href="#"><span class="glyphicon glyphicon-chevron-right"></i> Title 15</a> <a class="nav-link list-group-item" data-id="RS 000032" href="#"><span class="glyphicon glyphicon-chevron-right"></i> Title 32</a> <a class="nav-link list-group-item" data-id="RS 000040" href="#"><span class="glyphicon glyphicon-chevron-right"></i> Title 40</a> <a class="nav-link list-group-item" data-id="RS 000046" href="#"><span class="glyphicon glyphicon-chevron-right"></i> Title 46</a> <a class="nav-link list-group-item" data-id="RS 000056" href="#"><span class="glyphicon glyphicon-chevron-right"></i> Title 56</a> <a class="nav-link list-group-item" data-id="CCRP" href="#"><span class="glyphicon glyphicon-chevron-right"></i> Code of Criminal Procedure </a> <a class="nav-link list-group-item" data-id="CE" href="#"><span class="glyphicon glyphicon-chevron-right"></i> Code of Evidence </a> <a class="nav-link list-group-item" data-id="CHC" href="#"><span class="glyphicon glyphicon-chevron-right"></i> Childrens Code</a> <a class="nav-link list-group-item" data-id="CONST" href="#"><span class="glyphicon glyphicon-chevron-right"></i> Constitution</a> </div>';
+        $('.panel').html(menu);
         $(document).scrollTop(pos);
     }
 };

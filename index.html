@@ -11,7 +11,7 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link rel="stylesheet" href="css/bootstrap.css">
+        <link rel="stylesheet" href="css/bootstrap3.css">
         <style>
             body {
                 padding-top: 120px;
@@ -27,40 +27,38 @@
             <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
         <![endif]-->
         <nav class="navbar navbar-inverse navbar-fixed-top navbar-headnav" role="navigation">
-            <div class="container">
+            <div class="container-fluid">
                 <div class="navbar-header">
-                    <div class="navbar-header">
-                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                                <span class="sr-only">Toggle navigation</span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                            </button>
-                            <a class="navbar-brand go-home" href="index.html">LaCrimBook</a>
-                    </div>
-        <!-- Collect the nav links, forms, and other content for toggling -->
-                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <ul class="nav navbar-nav navbar-right">
-                            <li class="active"><a class="go-home" href="#">Home</a></li>
-                            <li><a href="about.html">About</a></li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Favorites <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">No Favorites Saved</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="#">See All</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div><!--/.nav-collapse -->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand go-home" href="index.html">LaCrimBook</a>
                 </div>
-                <div class="container">
-                    <form class="form-search">
-                        <input type="text" class="input-medium search-query" placeholder="Search Statutes">
-                        <button type="submit" class="btn search-btn"><i class="icon-search"></i></button>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="active"><a class="go-home" href="#">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Favorites <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">No Favorites Saved</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">See All</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div><!--/.nav-collapse -->
+                <div class="container search-form">
+                    <form>
+                        <input type="text" class="input-sm search-query" placeholder="Search Statutes">
+                        <button type="submit" class="btn btn-sm search-btn"><span class="glyphicon glyphicon-search"></span></button>
                     </form>
                 </div>
-            </div>
+            </div><!--/.container-fluid -->
         </nav>
 
         <div class="container main">
@@ -84,7 +82,7 @@
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.0.min.js"><\/script>')</script>
 
-        <script src="js/vendor/bootstrap.min.js"></script>
+        <script src="js/vendor/bootstrap3.min.js"></script>
 
         <script src="js/plugins.js"></script>
         <script src="js/vendor/jlinq.js"></script>

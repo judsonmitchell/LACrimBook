@@ -17,10 +17,7 @@
 @media (max-width: 480px) { body{padding-top:130px;}}
 
 /* Nudge the search button */
-.search-btn{margin-top:0px !important}
-
-.navbar{position: fixed; padding: 0px; margin: 0px;}
-
+.search-form{margin-bottom:20px}
 
 
 

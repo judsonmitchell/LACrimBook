@@ -208,6 +208,7 @@ $(document).ready(function () {
         event.preventDefault();
         setCurrentPosition();
         History.pushState({type: 'favorites', id: null}, 'Favorites', '?view=favorites');
+        $('.collapse').collapse('hide');
     });
 
     $('.navbar-headnav').on('click', 'a.go-home', function (event) {

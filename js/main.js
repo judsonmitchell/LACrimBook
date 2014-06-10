@@ -18,7 +18,9 @@ window.addEventListener('load', function () {
 }, false);
 
 //Get the data
-var myData;
+var myData,
+    State,
+    History;
 
 $.ajax({url: 'data/data.json', dataType: 'json', beforeSend: function () { $('.panel').hide(); }})
 .done(function (data) {
@@ -112,43 +114,41 @@ var updateContent = function(State) {
 },
 
 setCurrentPosition = function () {
-
     var currentView = window.location.toString().queryStringToJSON();
     var scroll = $(document).scrollTop();
     History.replaceState({type: currentView.view, id: currentView.target, pos: scroll}, currentView.target, '?target=' + currentView.target + '&view=' + currentView.view);
-
 },
 
 updateFavoritesList = function () {
-
     if (localStorage.length > 0) {
-        var favList = '';
+        var favList = '',
+        key,
+        value,
+        i;
 
         if (localStorage.length > 4) {
-
-            for (var i = 0; i < 5; i++) {
-                var key = localStorage.key(i);
-                var value = localStorage.getItem(key);
+            for (i = 0; i < 5; i++) {
+                key = localStorage.key(i);
+                value = localStorage.getItem(key);
                 favList += '<li><a class="fav-link" href="#" data-id="' + key + '">' + value + '</a></li>';
             }
             favList += '<li class="divider"></li><li><a class="fav-all" href="#">View All</a></li>';
         }
         else {
-
-            for (var i = 0; i < localStorage.length; i++) {
-                var key = localStorage.key(i);
-                var value = localStorage.getItem(key);
+            for (i = 0; i < localStorage.length; i++) {
+                key = localStorage.key(i);
+                value = localStorage.getItem(key);
                 favList += '<li><a class="fav-link" href="#" data-id="' + key + '">' + value + '</a></li>';
             }
         }
 
         $('.dropdown-menu').html(favList);
     }
-}
+};
 
 $(document).ready(function () {
     //Handle History
-    var History = window.History;
+    History = window.History;
     History.Adapter.bind(window, 'statechange', function () {
         updateContent(History.getState());
         updateFavoritesList();

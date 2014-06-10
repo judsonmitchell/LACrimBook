@@ -20,7 +20,7 @@ window.addEventListener('load', function () {
 //Get the data
 var myData,
     State,
-    History;
+    History = window.History;
 
 $.ajax({url: 'data/data.json', dataType: 'json', beforeSend: function () { $('.panel').hide(); }})
 .done(function (data) {
@@ -148,7 +148,6 @@ updateFavoritesList = function () {
 
 $(document).ready(function () {
     //Handle History
-    History = window.History;
     History.Adapter.bind(window, 'statechange', function () {
         updateContent(History.getState());
         updateFavoritesList();
@@ -202,6 +201,7 @@ $(document).ready(function () {
         setCurrentPosition();
         var target = $(this).attr('data-id');
         History.pushState({type: 'law', id: target}, target, '?target=' + target + '&view=law');
+        $('.collapse').collapse('hide');
     });
 
     $('.navbar-headnav').on('click', 'a.fav-all', function (event) {
@@ -223,4 +223,3 @@ $(document).ready(function () {
     });
 
 });
-

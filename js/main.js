@@ -17,52 +17,6 @@ window.addEventListener('load', function () {
 
 }, false);
 
-function updateFavoritesList() {
-
-    if (localStorage.length > 0) {
-        var favList = '';
-        
-        if (localStorage.length > 4) {
-
-            for (var i = 0; i < 5; i++) {
-                var key = localStorage.key(i);
-                var value = localStorage.getItem(key);
-                favList += '<li><a class="fav-link" href="#" data-id="' + key + '">' + value + '</a></li>';
-            }
-            favList += '<li class="divider"></li><li><a class="fav-all" href="#">View All</a></li>';
-        }
-        else {
-
-            for (var i = 0; i < localStorage.length; i++) {
-                var key = localStorage.key(i);
-                var value = localStorage.getItem(key);
-                favList += '<li><a class="fav-link" href="#" data-id="' + key + '">' + value + '</a></li>';
-            }
-        }
-
-        $('.dropdown-menu').html(favList);
-    }
-}
-
-//Handle history
-$(function () {
-    var History = window.History;
-    if (History.enabled) {
-        State = History.getState();
-        // set initial state to first page that was loaded
-        var t = State.url.queryStringToJSON();
-        History.pushState({type: t.view, id: t.target}, $('title').text(), State.urlPath);
-        updateFavoritesList();
-    } else {
-        return false;
-    }
-
-    History.Adapter.bind(window, 'statechange', function () {
-        updateContent(History.getState());
-        updateFavoritesList();
-    });
-});
-
 //Get the data
 var myData;
 
@@ -155,30 +109,71 @@ var updateContent = function(State) {
         $('.panel').html(menu);
         $(document).scrollTop(pos);
     }
-};
+},
 
+setCurrentPosition = function () {
+
+    var currentView = window.location.toString().queryStringToJSON();
+    var scroll = $(document).scrollTop();
+    History.replaceState({type: currentView.view, id: currentView.target, pos: scroll}, currentView.target, '?target=' + currentView.target + '&view=' + currentView.view);
+
+},
+
+updateFavoritesList = function () {
+
+    if (localStorage.length > 0) {
+        var favList = '';
+
+        if (localStorage.length > 4) {
+
+            for (var i = 0; i < 5; i++) {
+                var key = localStorage.key(i);
+                var value = localStorage.getItem(key);
+                favList += '<li><a class="fav-link" href="#" data-id="' + key + '">' + value + '</a></li>';
+            }
+            favList += '<li class="divider"></li><li><a class="fav-all" href="#">View All</a></li>';
+        }
+        else {
+
+            for (var i = 0; i < localStorage.length; i++) {
+                var key = localStorage.key(i);
+                var value = localStorage.getItem(key);
+                favList += '<li><a class="fav-link" href="#" data-id="' + key + '">' + value + '</a></li>';
+            }
+        }
+
+        $('.dropdown-menu').html(favList);
+    }
+}
 
 $(document).ready(function () {
+    //Handle History
+    var History = window.History;
+    History.Adapter.bind(window, 'statechange', function () {
+        updateContent(History.getState());
+        updateFavoritesList();
+    });
+
     //Handle clicks
     $('.main').on('click', 'a.nav-link', function (event) {
         event.preventDefault();
         var target = $(this).attr('data-id');
         var scroll = $(document).scrollTop();
-        History.pushState({type: 'list', id: target, pos: scroll}, target, '?target=' + target + '&view=list');
+        History.pushState({type: 'list', id: target}, target, '?target=' + target + '&view=list');
     });
 
     $('.main').on('click', 'a.law-link', function (event) {
         event.preventDefault();
+        setCurrentPosition();
         var target = $(this).attr('data-id');
-        var scroll = $(document).scrollTop();
-        History.pushState({type: 'law', id: target, pos: scroll}, target, '?target=' + target + '&view=law');
+        History.pushState({type: 'law', id: target}, target, '?target=' + target + '&view=law');
     });
 
     $('.search-btn').click(function (event) {
         event.preventDefault();
         var target = $(this).prev().val();
         var scroll = $(document).scrollTop();
-        History.pushState({type: 'search', id: target, pos: scroll}, target, '?target=' + target + '&view=search');
+        History.pushState({type: 'search', id: target}, target, '?target=' + target + '&view=search');
     });
 
     $('.main').on('click', 'a.favorite', function (event) {
@@ -204,15 +199,15 @@ $(document).ready(function () {
 
     $('.navbar-headnav').on('click', 'a.fav-link', function (event) {
         event.preventDefault();
+        setCurrentPosition();
         var target = $(this).attr('data-id');
-        var scroll = $(document).scrollTop();
-        History.pushState({type: 'law', id: target, pos: scroll}, target, '?target=' + target + '&view=law');
+        History.pushState({type: 'law', id: target}, target, '?target=' + target + '&view=law');
     });
 
     $('.navbar-headnav').on('click', 'a.fav-all', function (event) {
         event.preventDefault();
-        var scroll = $(document).scrollTop();
-        History.pushState({type: 'favorites', id: null, pos: scroll}, 'Favorites', '?view=favorites');
+        setCurrentPosition();
+        History.pushState({type: 'favorites', id: null}, 'Favorites', '?view=favorites');
     });
 
     $('.navbar-headnav').on('click', 'a.go-home', function (event) {

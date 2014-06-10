@@ -107,11 +107,11 @@ var updateContent = function(State) {
         var fav;
         if (localStorage.getItem(target)){
             fav = '<a href="#" class="favorite" data-state="saved" data-id="' + target +
-            '" title="Favorite This"><i class="icon-ok-sign"></i></a>';
+            '" title="Favorite This"><span class="glyphicon glyphicon-star-empty"></span></a>';
         }
         else {
             fav = '<a href="#" class="favorite" data-state="unsaved" data-id="' + target +
-            '" title="Favorite This"><i class="icon-ok-circle"></i></a>';
+            '" title="Favorite This"><span class="glyphicon glyphicon-star"></span></a>';
         }
         $('title').text(laws[0].description + ' ' + laws[0].title);
         $('.well').html('<h3><span class="lawTitle">' + laws[0].description + '</span>' + fav + '</h3>' + laws[0].law_text);
@@ -151,7 +151,7 @@ var updateContent = function(State) {
         $(document).scrollTop(pos);
         break;
     default:
-        var menu = ' <ul class="nav nav-tabs nav-stacked display-rows"> <li><a class="nav-link" data-id="RS 000014" href="#"><i class="icon-chevron-right"></i> Title 14</a></li> <li><a class="nav-link" data-id="RS 000015" href="#"><i class="icon-chevron-right"></i> Title 15</a></li> <li><a class="nav-link" data-id="RS 000032" href="#"><i class="icon-chevron-right"></i> Title 32</a></li> <li><a class="nav-link" data-id="RS 000040" href="#"><i class="icon-chevron-right"></i> Title 40</a></li> <li><a class="nav-link" data-id="RS 000046" href="#"><i class="icon-chevron-right"></i> Title 46</a></li> <li><a class="nav-link" data-id="RS 000056" href="#"><i class="icon-chevron-right"></i> Title 56</a></li> <li><a class="nav-link" data-id="CCRP" href="#"><i class="icon-chevron-right"></i> Code of Criminal Procedure </a></li> <li><a class="nav-link" data-id="CE" href="#"><i class="icon-chevron-right"></i> Code of Evidence </a></li> <li><a class="nav-link" data-id="CHC" href="#"><i class="icon-chevron-right"></i> Childrens Code</a></li> <li><a class="nav-link" data-id="CONST" href="#"><i class="icon-chevron-right"></i> Constitution</a></li> </ul>';
+        var menu = ' <ul class="nav nav-tabs nav-stacked display-rows"> <li><a class="nav-link" data-id="RS 000014" href="#"><span class="glyphicon glyphicon-chevron-right"></i> Title 14</a></li> <li><a class="nav-link" data-id="RS 000015" href="#"><span class="glyphicon glyphicon-chevron-right"></i> Title 15</a></li> <li><a class="nav-link" data-id="RS 000032" href="#"><span class="glyphicon glyphicon-chevron-right"></i> Title 32</a></li> <li><a class="nav-link" data-id="RS 000040" href="#"><span class="glyphicon glyphicon-chevron-right"></i> Title 40</a></li> <li><a class="nav-link" data-id="RS 000046" href="#"><span class="glyphicon glyphicon-chevron-right"></i> Title 46</a></li> <li><a class="nav-link" data-id="RS 000056" href="#"><span class="glyphicon glyphicon-chevron-right"></i> Title 56</a></li> <li><a class="nav-link" data-id="CCRP" href="#"><span class="glyphicon glyphicon-chevron-right"></i> Code of Criminal Procedure </a></li> <li><a class="nav-link" data-id="CE" href="#"><span class="glyphicon glyphicon-chevron-right"></i> Code of Evidence </a></li> <li><a class="nav-link" data-id="CHC" href="#"><span class="glyphicon glyphicon-chevron-right"></i> Childrens Code</a></li> <li><a class="nav-link" data-id="CONST" href="#"><span class="glyphicon glyphicon-chevron-right"></i> Constitution</a></li> </ul>';
         $('.well').html(menu);
         $(document).scrollTop(pos);
     }
@@ -189,7 +189,7 @@ $(document).ready(function () {
             var title = $(this).prev().html();
             localStorage.setItem(target, title);
             $('.alert').html('Saved to favorites.').show();
-            $('.favorite').html('<i class="icon-ok-sign"></i>');
+            $('.favorite').html('<span class="glyphicon glyphicon-star"></span');
             $(this).attr('data-state', 'saved');
             updateFavoritesList();
         }
@@ -197,7 +197,7 @@ $(document).ready(function () {
             localStorage.removeItem(target);
             $(this).attr('data-state', 'unsaved');
             $('.alert').html('Removed from favorites.').show();
-            $('.favorite').html('<i class="icon-ok-circle"></i>');
+            $('.favorite').html('<span class="glyphicon glyphicon-star-empty"></span');
             updateFavoritesList();
         }
     });

@@ -217,10 +217,14 @@ $(document).ready(function () {
         History.pushState({type: 'home', id: null, pos: scroll}, 'Home', '/');
     });
 
-    //Handle swipes
-    //$('.main').wipetouch({
-    //    wipeLeft: function (result) {History.go(1); },
-    //    wipeRight: function (result) {History.back(); }
-    //});
-
+    $('.main').swipe({
+        swipe:function(event, direction, distance, duration, fingerCount) {
+            if (direction === 'right'){
+                History.back();
+            }
+            if (direction === 'left'){
+                History.go(1);
+            }
+        }
+    });
 });

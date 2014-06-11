@@ -166,6 +166,7 @@ $(document).ready(function () {
     //Handle clicks
     $('.main').on('click', 'a.nav-link', function (event) {
         event.preventDefault();
+        waiting();
         var target = $(this).attr('data-id');
         var scroll = $(document).scrollTop();
         History.pushState({type: 'list', id: target}, target, '?target=' + target + '&view=list');
@@ -173,6 +174,7 @@ $(document).ready(function () {
 
     $('.main').on('click', 'a.law-link', function (event) {
         event.preventDefault();
+        waiting();
         setCurrentPosition();
         var target = $(this).attr('data-id');
         History.pushState({type: 'law', id: target}, target, '?target=' + target + '&view=law');
@@ -180,6 +182,7 @@ $(document).ready(function () {
 
     $('.search-btn').click(function (event) {
         event.preventDefault();
+        waiting();
         var target = $(this).prev().val();
         var scroll = $(document).scrollTop();
         History.pushState({type: 'search', id: target}, target, '?target=' + target + '&view=search');
@@ -208,6 +211,7 @@ $(document).ready(function () {
 
     $('.navbar-headnav').on('click', 'a.fav-link', function (event) {
         event.preventDefault();
+        waiting();
         setCurrentPosition();
         var target = $(this).attr('data-id');
         History.pushState({type: 'law', id: target}, target, '?target=' + target + '&view=law');
@@ -216,6 +220,7 @@ $(document).ready(function () {
 
     $('.navbar-headnav').on('click', 'a.fav-all', function (event) {
         event.preventDefault();
+        waiting();
         setCurrentPosition();
         History.pushState({type: 'favorites', id: null}, 'Favorites', '?view=favorites');
         $('.collapse').collapse('hide');
@@ -223,6 +228,7 @@ $(document).ready(function () {
 
     $('.navbar-headnav').on('click', 'a.go-home', function (event) {
         event.preventDefault();
+        waiting();
         var scroll = '0';
         History.pushState({type: 'home', id: null, pos: scroll}, 'Home', '/');
     });

@@ -56,7 +56,6 @@ var updateContent = function(State) {
         items += '</div>';
         $('.panel').html(items);
         $(document).scrollTop(pos);
-        alert($('.main').height());
         break;
     case 'law':
         laws = jlinq.from(myData).equals('id', target).select();
@@ -111,7 +110,6 @@ var updateContent = function(State) {
         var menu = ' <div class="list-group"> <a class="nav-link list-group-item list-group-item " data-id="RS 000014" href="#"><span class="glyphicon glyphicon-chevron-right"></i> Title 14</a> <a class="nav-link list-group-item" data-id="RS 000015" href="#"><span class="glyphicon glyphicon-chevron-right"></i> Title 15</a> <a class="nav-link list-group-item" data-id="RS 000032" href="#"><span class="glyphicon glyphicon-chevron-right"></i> Title 32</a> <a class="nav-link list-group-item" data-id="RS 000040" href="#"><span class="glyphicon glyphicon-chevron-right"></i> Title 40</a> <a class="nav-link list-group-item" data-id="RS 000046" href="#"><span class="glyphicon glyphicon-chevron-right"></i> Title 46</a> <a class="nav-link list-group-item" data-id="RS 000056" href="#"><span class="glyphicon glyphicon-chevron-right"></i> Title 56</a> <a class="nav-link list-group-item" data-id="CCRP" href="#"><span class="glyphicon glyphicon-chevron-right"></i> Code of Criminal Procedure </a> <a class="nav-link list-group-item" data-id="CE" href="#"><span class="glyphicon glyphicon-chevron-right"></i> Code of Evidence </a> <a class="nav-link list-group-item" data-id="CHC" href="#"><span class="glyphicon glyphicon-chevron-right"></i> Childrens Code</a> <a class="nav-link list-group-item" data-id="CONST" href="#"><span class="glyphicon glyphicon-chevron-right"></i> Constitution</a> </div>';
         $('.panel').html(menu);
         $(document).scrollTop(pos);
-        alert($('.main').height());
     }
 },
 

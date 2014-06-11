@@ -159,6 +159,7 @@ waiting = function (){
 $(document).ready(function () {
     //Handle History
     History.Adapter.bind(window, 'statechange', function () {
+        console.log('statechange');
         waiting();
         updateContent(History.getState());
         updateFavoritesList();
@@ -167,7 +168,6 @@ $(document).ready(function () {
     //Handle clicks
     $('.main').on('click', 'a.nav-link', function (event) {
         event.preventDefault();
-        waiting();
         var target = $(this).attr('data-id');
         var scroll = $(document).scrollTop();
         History.pushState({type: 'list', id: target}, target, '?target=' + target + '&view=list');
@@ -175,7 +175,6 @@ $(document).ready(function () {
 
     $('.main').on('click', 'a.law-link', function (event) {
         event.preventDefault();
-        waiting();
         setCurrentPosition();
         var target = $(this).attr('data-id');
         History.pushState({type: 'law', id: target}, target, '?target=' + target + '&view=law');
@@ -183,7 +182,6 @@ $(document).ready(function () {
 
     $('.search-btn').click(function (event) {
         event.preventDefault();
-        waiting();
         var target = $(this).prev().val();
         var scroll = $(document).scrollTop();
         History.pushState({type: 'search', id: target}, target, '?target=' + target + '&view=search');
@@ -212,7 +210,6 @@ $(document).ready(function () {
 
     $('.navbar-headnav').on('click', 'a.fav-link', function (event) {
         event.preventDefault();
-        waiting();
         setCurrentPosition();
         var target = $(this).attr('data-id');
         History.pushState({type: 'law', id: target}, target, '?target=' + target + '&view=law');
@@ -221,7 +218,6 @@ $(document).ready(function () {
 
     $('.navbar-headnav').on('click', 'a.fav-all', function (event) {
         event.preventDefault();
-        waiting();
         setCurrentPosition();
         History.pushState({type: 'favorites', id: null}, 'Favorites', '?view=favorites');
         $('.collapse').collapse('hide');
@@ -229,7 +225,6 @@ $(document).ready(function () {
 
     $('.navbar-headnav').on('click', 'a.go-home', function (event) {
         event.preventDefault();
-        waiting();
         var scroll = '0';
         History.pushState({type: 'home', id: null, pos: scroll}, 'Home', '/');
     });
@@ -243,12 +238,12 @@ $(document).ready(function () {
                 History.go(1);
             }
         },
-        swipeStatus: function (event, phase, direction, distance, duration, fingerCount){
-            if (phase === 'start' && (direction === 'left' || direction === 'right')){
-                waiting();
-            }
+        //swipeStatus: function (event, phase, direction, distance, duration, fingerCount){
+        //    if (phase === 'start' && (direction === 'left' || direction === 'right')){
+        //        //waiting();
+        //    }
 
-        },
+        //},
         allowPageScroll: 'vertical'
     });
 });

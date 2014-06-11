@@ -234,20 +234,20 @@ $(document).ready(function () {
         History.pushState({type: 'home', id: null, pos: scroll}, 'Home', '/');
     });
 
-    //$('body').swipe({
-    //    swipe:function(event, direction, distance, duration, fingerCount) {
-    //        if (direction === 'right'){
-    //            History.back();
-    //        }
-    //        if (direction === 'left'){
-    //            History.go(1);
-    //        }
-    //    },
-    //    swipeStatus: function (event, phase, direction, distance, duration, fingerCount){
-    //        if (phase === 'start' && (direction === 'left' || direction === 'right')){
-    //            waiting();
-    //        }
+    $('.main').swipe({
+        swipe:function(event, direction, distance, duration, fingerCount) {
+            if (direction === 'right'){
+                History.back();
+            }
+            if (direction === 'left'){
+                History.go(1);
+            }
+        },
+        swipeStatus: function (event, phase, direction, distance, duration, fingerCount){
+            if (phase === 'start' && (direction === 'left' || direction === 'right')){
+                waiting();
+            }
 
-    //    }
-    //});
+        }
+    });
 });

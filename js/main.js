@@ -218,9 +218,9 @@ $(document).ready(function () {
     });
 
     //Handle swipes
-    $('.main').wipetouch({
-        wipeLeft: function (result) {History.go(1); },
-        wipeRight: function (result) {History.back(); }
-    });
+    //$('.main').wipetouch({
+    //    wipeLeft: function (result) {History.go(1); },
+    //    wipeRight: function (result) {History.back(); }
+    //});
 
 });

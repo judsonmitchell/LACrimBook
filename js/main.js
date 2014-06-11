@@ -217,8 +217,6 @@ $(document).ready(function () {
         History.pushState({type: 'home', id: null, pos: scroll}, 'Home', '/');
     });
 
-    myScroll = new IScroll('#scroller');
-    
     //Handle swipes
     $('.main').wipetouch({
         wipeLeft: function (result) {History.go(1); },

@@ -38,13 +38,23 @@ $.ajax({url: 'data/data.json', dataType: 'json', beforeSend: function () { $('.p
 
 //Change content depending on state
 var updateContent = function(State) {
-    var target = State.data.id;
-    var view = State.data.type;
-    var pos = State.data.pos;
-    var items;
-    var laws;
+    var target = State.data.id,
+        view = State.data.type,
+        pos = State.data.pos,
+        items,
+        laws,
+        loc = window.location.toString().queryStringToJSON();
+
     //Ensure that any alert messages are hidden
     $('.alert').hide();
+
+    //Clear the search term
+    console.log(loc);
+    if (loc.view === 'search'){
+        $('input').val(loc.target);
+    } else {
+        $('input').val('');
+    }
 
     switch (view) {
     case 'list':
@@ -85,7 +95,6 @@ var updateContent = function(State) {
         });
         items += '</div>';
         $('.panel').html(items);
-        $('input').val(target);
         $(document).scrollTop(pos);
         break;
     case 'favorites':

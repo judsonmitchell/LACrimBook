@@ -230,9 +230,8 @@ $(document).ready(function () {
             }
         },
         swipeStatus: function (event, phase, direction, distance, duration, fingerCount){
-            if (phase === 'move'){
+            if (phase === 'move' && (direction === 'left' || direction === 'right')){
                 $('.main').css({'opacity':'.3'});
-                console.log('move');
             }
 
         }

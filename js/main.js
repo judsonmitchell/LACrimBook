@@ -111,6 +111,9 @@ var updateContent = function(State) {
         $('.panel').html(menu);
         $(document).scrollTop(pos);
     }
+
+    //Opacity is brought down to signal acknowledgment of swipe; bring it back up when page changes
+    $('.main').css({'opacity':'1'});
 },
 
 setCurrentPosition = function () {
@@ -225,6 +228,12 @@ $(document).ready(function () {
             if (direction === 'left'){
                 History.go(1);
             }
+        },
+        swipeStatus: function (event, phase, direction, distance, duration, fingerCount){
+            if (phase === 'move'){
+                $('.main').css({'opacity':'.3'});
+            }
+
         }
     });
 });

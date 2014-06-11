@@ -151,7 +151,8 @@ updateFavoritesList = function () {
 
 waiting = function (){
 
-    $('.waiting').height($('.main').height());
+    console.log('waiting is triggered');
+    $('.waiting').height($('.main').css('height'));
     $('.waiting').show();
 };
 

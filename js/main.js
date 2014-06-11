@@ -114,7 +114,6 @@ var updateContent = function(State) {
 
     //Opacity is brought down to signal acknowledgment of swipe; bring it back up when page changes
     $('.waiting').hide();
-    $('.main').swipe('enable');
 },
 
 setCurrentPosition = function () {
@@ -160,7 +159,6 @@ waiting = function (){
 $(document).ready(function () {
     //Handle History
     History.Adapter.bind(window, 'statechange', function () {
-        $('.main').swipe('disable');
         waiting();
         updateContent(History.getState());
         updateFavoritesList();
@@ -250,6 +248,7 @@ $(document).ready(function () {
                 waiting();
             }
 
-        }
+        },
+        allowPageScroll: 'vertical'
     });
 });

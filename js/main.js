@@ -45,6 +45,7 @@ var updateContent = function(State) {
     var laws;
     //Ensure that any alert messages are hidden
     $('.alert').hide();
+    $('.loading').show();
 
     switch (view) {
     case 'list':
@@ -228,12 +229,12 @@ $(document).ready(function () {
             if (direction === 'left'){
                 History.go(1);
             }
-        },
-        swipeStatus: function (event, phase, direction, distance, duration, fingerCount){
-            if (phase === 'move' && (direction === 'left' || direction === 'right')){
-                $('.loading').show();
-            }
-
         }
+        //swipeStatus: function (event, phase, direction, distance, duration, fingerCount){
+        //    if (phase === 'move' && (direction === 'left' || direction === 'right')){
+        //        //$('.loading').show();
+        //    }
+
+        //}
     });
 });

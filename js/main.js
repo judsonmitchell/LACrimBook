@@ -217,7 +217,7 @@ $(document).ready(function () {
         History.pushState({type: 'home', id: null, pos: scroll}, 'Home', '/');
     });
 
-    $('.main').swipe({
+    $('body').swipe({
         swipe:function(event, direction, distance, duration, fingerCount) {
             if (direction === 'right'){
                 History.back();

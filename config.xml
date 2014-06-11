@@ -23,5 +23,7 @@
     <preference name="android-targetSdkVersion" value="14" />
 
     <preference name="fullscreen" value="true" />           <!-- all: hides the status bar at the top of the screen -->
+    <preference name="webviewbounce" value="false" />           <!-- ios: control whether the screen 'bounces' when scrolled beyond the top -->
+
 
 </widget>

@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# version 2.0
+# version 3.0
 
 favicon.ico
 apple-touch-icon-114x114-precomposed.png
@@ -18,7 +18,7 @@ js/vendor/jlinq.js
 js/vendor/jquery.history.js
 js/queryStringToJson.js
 js/snippet.js
-js/vendor/jquery.wipetouch.js
+js/vendor/jquery.touchSwipe.min.js
 fonts/glyphicons-halflings-regular.eot
 fonts/glyphicons-halflings-regular.svg
 fonts/glyphicons-halflings-regular.ttf

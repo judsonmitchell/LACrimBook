@@ -152,7 +152,7 @@ updateFavoritesList = function () {
 waiting = function (){
 
     console.log('waiting is triggered');
-    $('.waiting').height($('.main').css('height'));
+    $('.waiting').css('height',$('.main').css('height'));
     $('.waiting').show();
 };
 
@@ -244,7 +244,7 @@ $(document).ready(function () {
             }
         },
         swipeStatus: function (event, phase, direction, distance, duration, fingerCount){
-            if (phase === 'move' && (direction === 'left' || direction === 'right')){
+            if (phase === 'start' && (direction === 'left' || direction === 'right')){
                 waiting();
             }
 

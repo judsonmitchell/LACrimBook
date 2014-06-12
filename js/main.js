@@ -265,11 +265,3 @@ $(document).ready(function () {
     });
 });
 
-document.addEventListener('deviceready', function () {
-
-    //iOS Specific
-    if (typeof StatusBar !== 'undefined'){
-        console.log('we have status bar');
-        StatusBar.styleLightContent();
-    }
-}, false);

@@ -3,7 +3,7 @@
         xmlns:gap   = "http://phonegap.com/ns/1.0"
         id          = "org.loyolalawtech.crimbook"
         versionCode = "3"
-        version     = "2.1.3">
+        version     = "2.1.4">
 
     <!-- versionCode is optional and Android only -->
 
@@ -25,6 +25,7 @@
     <preference name="fullscreen" value="true" />           <!-- all: hides the status bar at the top of the screen -->
     <preference name="webviewbounce" value="false" />           <!-- ios: control whether the screen 'bounces' when scrolled beyond the top -->
 
+    <icon src="icon.png" />
     <icon src="res/icon/icon.png" />
     <icon src="res/icon/android/icon-36-ldpi.png"   gap:platform="android"    gap:density="ldpi" />
     <icon src="res/icon/android/icon-48-mdpi.png"   gap:platform="android"    gap:density="mdpi" />

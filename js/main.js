@@ -19,7 +19,7 @@ window.addEventListener('load', function () {
 
 //iOS Specific
 if (typeof StatusBar !== 'undefined'){
-    StatusBar.styleLightContent();
+    StatusBar.styleBlackTranslucent();
 }
 
 //Get the data

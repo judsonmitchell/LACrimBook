@@ -17,10 +17,6 @@ window.addEventListener('load', function () {
 
 }, false);
 
-//iOS Specific
-if (typeof StatusBar !== 'undefined'){
-    StatusBar.hide();
-}
 
 //Get the data
 var myData,
@@ -268,3 +264,9 @@ $(document).ready(function () {
         allowPageScroll: 'vertical'
     });
 });
+
+//iOS Specific
+if (typeof StatusBar !== 'undefined'){
+    console.log('we have status bar');
+    StatusBar.styleLightContent();
+}

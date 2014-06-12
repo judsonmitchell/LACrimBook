@@ -49,7 +49,6 @@ var updateContent = function(State) {
     $('.alert').hide();
 
     //Clear the search term
-    console.log(loc);
     if (loc.view === 'search'){
         $('input').val(loc.target);
     } else {
@@ -84,7 +83,7 @@ var updateContent = function(State) {
         $(document).scrollTop(0);
         break;
     case 'search':
-        laws = jlinq.from(myData).contains('law_text', target).select();
+        laws = jlinq.from(myData).contains('description', target).or().contains('law_text', target).or().contains('title', target).select();
         items = '<div class="list-group">';
         $.each(laws, function (key, value) {
             //var snippet = getExcerpt(value.law_text, target, 5);
@@ -170,7 +169,6 @@ updateFavoritesList = function () {
 
 setWaiting = function (){
 
-    console.log('waiting is triggered');
     $('.waiting').css('height',$('.main').css('height'));
     $('.waiting').show();
 };
@@ -178,7 +176,6 @@ setWaiting = function (){
 $(document).ready(function () {
     //Handle History
     History.Adapter.bind(window, 'statechange', function () {
-        console.log('statechange');
         setWaiting();
         updateContent(History.getState());
         updateFavoritesList();

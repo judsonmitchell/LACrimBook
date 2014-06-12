@@ -17,6 +17,11 @@ window.addEventListener('load', function () {
 
 }, false);
 
+//iOS Specific
+if (typeof StatusBar !== 'undefined'){
+    StatusBar.styleLightContent();
+}
+
 //Get the data
 var myData,
     State,

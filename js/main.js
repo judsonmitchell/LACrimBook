@@ -265,8 +265,11 @@ $(document).ready(function () {
     });
 });
 
-//iOS Specific
-if (typeof StatusBar !== 'undefined'){
-    console.log('we have status bar');
-    StatusBar.styleLightContent();
-}
+document.addEventListener('deviceready', function () {
+
+    //iOS Specific
+    if (typeof StatusBar !== 'undefined'){
+        console.log('we have status bar');
+        StatusBar.styleLightContent();
+    }
+}, false);

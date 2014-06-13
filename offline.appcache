@@ -1,13 +1,7 @@
 CACHE MANIFEST
-# version 3.0
+# version 6
 
 favicon.ico
-apple-touch-icon-114x114-precomposed.png
-apple-touch-icon-144x144-precomposed.png
-apple-touch-icon-57x57-precomposed.png
-apple-touch-icon-72x72-precomposed.png
-apple-touch-icon.png
-apple-touch-icon-precomposed.png
 css/bootstrap3.css
 css/main.css
 js/vendor/modernizr-2.6.2-respond-1.1.0.min.js
@@ -31,9 +25,13 @@ http://themes.googleusercontent.com/static/fonts/opensans/v6/k3k702ZOKiLJc3WVjup
 about.html
 img/mitchell.jpg
 img/florman.jpg
+img/header-icon.png
+img/spinner.gif
 
 NETWORK:
-#https://google-analytics.com/ga.js
+https://google-analytics.com/ga.js
+http://www.google-analytics.com/ga.js
+http://themes.googleusercontent.com/static/fonts/opensans/v8/cJZKeOuBrn4kERxqtaUH3bO3LdcAZYWl9Si6vvxL-qU.woff
 
 FALLBACK:
 

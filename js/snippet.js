@@ -1,6 +1,7 @@
 Array.prototype.firstOccurence = function(term) {
+    var regex = new RegExp('\\b' + term + '\\b');
     for (var i=0; i<this.length; i++) {
-        if (this[i].toLowerCase().indexOf(term) !== -1 ) {  // still can use idnexOf on a string, right? :)
+        if (this[i].toLowerCase().search(regex) !== -1 ) {  // still can use idnexOf on a string, right? :)
             return parseInt(i,10);  // we need an integer, not a string as i is
         }
     }

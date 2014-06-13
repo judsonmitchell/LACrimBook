@@ -1,5 +1,4 @@
 
-
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
@@ -39,5 +38,36 @@ body {background-color:#f5f5f5}
 }
 
 
+
+/* Extra small devices (phones, less than 768px) */
+/* No media query since this is the default in Bootstrap */
+
+/* Large desktops and laptops */
+@media (min-width: 1200px) {
+    .main{min-height:600px}
+}
+
+/* Portrait tablets and medium desktops */
+@media (min-width: 992px) and (max-width: 1199px) {
+
+    .main{min-height:680px}
+}
+
+/* Portrait tablets and small desktops */
+@media (min-width: 768px) and (max-width: 991px) {
+
+    .main{min-height:460px}
+}
+
+/* Landscape phones and portrait tablets */
+@media (max-width: 767px) {
+
+    .main{min-height:800px}
+}
+
+/* Landscape phones and smaller */
+@media (max-width: 480px) {
+
+}
 
 

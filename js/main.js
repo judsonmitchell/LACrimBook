@@ -38,7 +38,7 @@ $.ajax({url: 'data/data.json', dataType: 'json', beforeSend: function () { $('.p
 });
 
 //Change content depending on state
-var updateContent = function(State) {
+var updateContent = function(State,callback) {
     var target = State.data.id,
         view = State.data.type,
         pos = State.data.pos,
@@ -64,8 +64,10 @@ var updateContent = function(State) {
             items += '<a class="law-link list-group-item" href="#" data-id="' + laws[i].id + '">' + laws[i].title + ' ' + laws[i].description + '</a>';
         }
         items += '</div>';
-        $('.panel').html(items);
-        $(document).scrollTop(pos);
+        $('.panel').html(items).promise().done(function () {
+            $(document).scrollTop(pos);
+            $('.waiting').hide();
+        });
         break;
     case 'law':
         laws = jlinq.from(myData).equals('id', target).select();
@@ -80,8 +82,12 @@ var updateContent = function(State) {
             '" title="Favorite This"><span class="glyphicon glyphicon-star-empty"></span></a>';
         }
         $('title').text(laws[0].description + ' ' + laws[0].title);
-        $('.panel').css({'padding':'10px'}).html('<h3><span class="lawTitle">' + laws[0].description + '</span>' + fav + '</h3>' + laws[0].law_text);
-        $(document).scrollTop(0);
+        $('.panel').css({'padding':'10px'})
+        .html('<h3><span class="lawTitle">' + laws[0].description + '</span>' + fav + '</h3>' + laws[0].law_text)
+        .promise().done(function () {
+            $(document).scrollTop(0);
+            $('.waiting').hide();
+        });
         break;
     case 'search':
         var regex = new RegExp('\\b' + target + '\\b');
@@ -104,8 +110,10 @@ var updateContent = function(State) {
             }
         }
         items += '</div>';
-        $('.panel').html(items);
-        $(document).scrollTop(pos);
+        $('.panel').html(items).promise().done(function () {
+            $(document).scrollTop(pos);
+            $('.waiting').hide();
+        });
         break;
     case 'favorites':
         items = ' <div class="list-group display-rows">';
@@ -122,8 +130,10 @@ var updateContent = function(State) {
         }
 
         items += '</div>';
-        $('.panel').html(items);
-        $(document).scrollTop(pos);
+        $('.panel').html(items).promise().done(function () {
+            $(document).scrollTop(pos);
+            $('.waiting').hide();
+        });
         break;
     default:
         var menu = ' <div class="list-group"> <a class="nav-link list-group-item list-group-item " data-id="RS 000014" href="#">' +
@@ -137,12 +147,13 @@ var updateContent = function(State) {
         '<span class="glyphicon glyphicon-chevron-right"></i> Code of Evidence </a> <a class="nav-link list-group-item" data-id="CHC" href="#">' +
         '<span class="glyphicon glyphicon-chevron-right"></i> Childrens Code</a> <a class="nav-link list-group-item" data-id="CONST" href="#">' +
         '<span class="glyphicon glyphicon-chevron-right"></i> Constitution</a> </div>';
-        $('.panel').html(menu);
-        $(document).scrollTop(pos);
+        $('.panel').html(menu).promise().done(function () {
+            $(document).scrollTop(pos);
+            $('.waiting').hide();
+        });
     }
 
     //Opacity is brought down to signal acknowledgment of swipe; bring it back up when page changes
-    $('.waiting').hide();
 },
 
 setCurrentPosition = function () {

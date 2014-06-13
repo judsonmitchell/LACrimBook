@@ -86,13 +86,22 @@ var updateContent = function(State) {
     case 'search':
         laws = jlinq.from(myData).contains('description', target).or().contains('law_text', target).or().contains('title', target).select();
         items = '<div class="list-group">';
-        $.each(laws, function (key, value) {
-            //var snippet = getExcerpt(value.law_text, target, 5);
-            //var snippet = "Working on generating statute preview.  Check back soon.";
-            items += '<a class="law-link list-group-item" href="#" data-id="' + value.id +
-            '">' + value.title + ' ' + value.description + '</a>';
-            //'<p>...' + snippet + '...</p>';
-        });
+        if (!laws.length){
+            items += '<a class="list-group-item">No results found.</a>';
+        } else {
+            $.each(laws, function (key, value) {
+                var snippet = getExcerpt(value.law_text, target, 15);
+                if (snippet){
+                    //var snippet = "Working on generating statute preview.  Check back soon.";
+                    items += '<a class="law-link list-group-item" href="#" data-id="' + value.id +
+                    '">' + value.title + ' ' + value.description +
+                    '<p class="preview">...' + snippet + '...</p>' + '</a>' ;
+                } else {
+                    items += '<a class="law-link list-group-item" href="#" data-id="' + value.id +
+                    '">' + value.title + ' ' + value.description + '</a>' ;
+                }
+            });
+        }
         items += '</div>';
         $('.panel').html(items);
         $(document).scrollTop(pos);
@@ -124,8 +133,8 @@ var updateContent = function(State) {
         '<span class="glyphicon glyphicon-chevron-right"></i> Title 46</a> <a class="nav-link list-group-item" data-id="RS 000056" href="#">' +
         '<span class="glyphicon glyphicon-chevron-right"></i> Title 56</a> <a class="nav-link list-group-item" data-id="CCRP" href="#">' +
         '<span class="glyphicon glyphicon-chevron-right"></i> Code of Criminal Procedure </a> <a class="nav-link list-group-item" data-id="CE" href="#">' +
-        '<span class="glyphicon glyphicon-chevron-right"></i> Code of Evidence </a> <a class="nav-link list-group-item" data-id="CHC" href="#">' + 
-        '<span class="glyphicon glyphicon-chevron-right"></i> Childrens Code</a> <a class="nav-link list-group-item" data-id="CONST" href="#">' + 
+        '<span class="glyphicon glyphicon-chevron-right"></i> Code of Evidence </a> <a class="nav-link list-group-item" data-id="CHC" href="#">' +
+        '<span class="glyphicon glyphicon-chevron-right"></i> Childrens Code</a> <a class="nav-link list-group-item" data-id="CONST" href="#">' +
         '<span class="glyphicon glyphicon-chevron-right"></i> Constitution</a> </div>';
         $('.panel').html(menu);
         $(document).scrollTop(pos);

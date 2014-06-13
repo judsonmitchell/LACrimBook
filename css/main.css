@@ -28,9 +28,15 @@ body {background-color:#f5f5f5}
     background-position:center;
 }
 
+.preview {
+    /* margin-left: 15px; */
+    color:gray;
+}
 
-
-
+.highlight {
+    background-color: yellow;
+    font-weight: bold;
+}
 
 
 

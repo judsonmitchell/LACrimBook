@@ -60,9 +60,9 @@ var updateContent = function(State) {
     case 'list':
         items = ' <div class="list-group display-rows">';
         laws = jlinq.from(myData).starts('sortcode', target + ' ').select();
-        $.each(laws, function (key, value) {
-            items += '<a class="law-link list-group-item" href="#" data-id="' + value.id + '">' + value.title + ' ' + value.description + '</a>';
-        });
+        for (var i = 0, l = laws.length; i < l; i ++) {
+            items += '<a class="law-link list-group-item" href="#" data-id="' + laws[i].id + '">' + laws[i].title + ' ' + laws[i].description + '</a>';
+        }
         items += '</div>';
         $('.panel').html(items);
         $(document).scrollTop(pos);
@@ -90,18 +90,18 @@ var updateContent = function(State) {
         if (!laws.length){
             items += '<a class="list-group-item">No results found.</a>';
         } else {
-            $.each(laws, function (key, value) {
-                var snippet = getExcerpt(value.law_text, target, 15);
+            for (i = 0, l = laws.length; i < l; i ++) {
+                var snippet = getExcerpt(laws[i].law_text, target, 15);
                 if (snippet){
                     //var snippet = "Working on generating statute preview.  Check back soon.";
-                    items += '<a class="law-link list-group-item" href="#" data-id="' + value.id +
-                    '">' + value.title + ' ' + value.description +
+                    items += '<a class="law-link list-group-item" href="#" data-id="' + laws[i].id +
+                    '">' + laws[i].title + ' ' + laws[i].description +
                     '<p class="preview">...' + snippet + '...</p>' + '</a>' ;
                 } else {
-                    items += '<a class="law-link list-group-item" href="#" data-id="' + value.id +
-                    '">' + value.title + ' ' + value.description + '</a>' ;
+                    items += '<a class="law-link list-group-item" href="#" data-id="' + laws[i].id +
+                    '">' + laws[i].title + ' ' + laws[i].description + '</a>' ;
                 }
-            });
+            }
         }
         items += '</div>';
         $('.panel').html(items);
@@ -265,12 +265,6 @@ $(document).ready(function () {
                 History.go(1);
             }
         },
-        //swipeStatus: function (event, phase, direction, distance, duration, fingerCount){
-        //    if (phase === 'start' && (direction === 'left' || direction === 'right')){
-        //        //waiting();
-        //    }
-
-        //},
         allowPageScroll: 'vertical'
     });
 });

@@ -3,6 +3,7 @@
    Author's custom styles
    ========================================================================== */
 body {background-color:#f5f5f5}
+.main {position: relative}
 .space-right {margin-right: 8px;}
 .navbar-brand {height:55px}
 .main{min-height:340px}
@@ -23,7 +24,7 @@ body {background-color:#f5f5f5}
     opacity: .5;
     background-image: url('../img/spinner.gif');
     background-repeat: no-repeat;
-    background-attachment:fixed;
+    background-attachment:local;
     background-position:center;
 }
 

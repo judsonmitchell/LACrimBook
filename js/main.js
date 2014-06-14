@@ -193,6 +193,9 @@ $(document).ready(function () {
         });
     });
 
+    //Set height of waiting window
+    $('.waiting').height($(window).height() - $('nav').height());
+
     //Handle clicks
     $('.main').on('click', 'a.nav-link', function (event) {
         event.preventDefault();

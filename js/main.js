@@ -180,7 +180,9 @@ updateFavoritesList = function (cb) {
 
 setWaiting = function (){
 
-    $('.waiting').css('height',$('.main').css('height'));
+    //Set height of waiting window
+    $('.waiting').height($(window).height() - $('nav').height());
+    $('.waiting').css('top',$(window).scrollTop() + $('nav').height() + 1);
     $('.waiting').show();
 };
 
@@ -192,9 +194,6 @@ $(document).ready(function () {
             $('.waiting').hide();
         });
     });
-
-    //Set height of waiting window
-    $('.waiting').height($(window).height() - $('nav').height());
 
     //Handle clicks
     $('.main').on('click', 'a.nav-link', function (event) {

@@ -212,6 +212,7 @@ $(document).ready(function () {
     //Handle clicks
     $('.main').on('click', 'a.nav-link', function (event) {
         event.preventDefault();
+        console.log('click fired');
         var target = $(this).attr('data-id');
         var scroll = $(document).scrollTop();
         History.pushState({type: 'list', id: target}, target, '?target=' + target + '&view=list');
@@ -219,6 +220,7 @@ $(document).ready(function () {
 
     $('.main').on('click', 'a.law-link', function (event) {
         event.preventDefault();
+        console.log('click fired');
         setCurrentPosition();
         var target = $(this).attr('data-id');
         History.pushState({type: 'law', id: target}, target, '?target=' + target + '&view=law');
@@ -226,6 +228,7 @@ $(document).ready(function () {
 
     $('.search-btn').click(function (event) {
         event.preventDefault();
+        console.log('click fired');
         var target = $(this).prev().val();
         $(document).scrollTop('0');
         History.pushState({type: 'search', id: target}, target, '?target=' + target + '&view=search');
@@ -233,6 +236,7 @@ $(document).ready(function () {
 
     $('.main').on('click', 'a.favorite', function (event) {
         event.preventDefault();
+        console.log('click fired');
         var target = $(this).attr('data-id');
         var saveState = $(this).attr('data-state');
         if (saveState === 'unsaved') {
@@ -254,6 +258,7 @@ $(document).ready(function () {
 
     $('.navbar-headnav').on('click', 'a.fav-link', function (event) {
         event.preventDefault();
+        console.log('click fired');
         setCurrentPosition();
         var target = $(this).attr('data-id');
         History.pushState({type: 'law', id: target}, target, '?target=' + target + '&view=law');
@@ -264,6 +269,7 @@ $(document).ready(function () {
 
     $('.navbar-headnav').on('click', 'a.fav-all', function (event) {
         event.preventDefault();
+        console.log('click fired');
         setCurrentPosition();
         History.pushState({type: 'favorites', id: null}, 'Favorites', '?view=favorites');
         if ($('.collapse').css('display') === 'block'){
@@ -273,13 +279,14 @@ $(document).ready(function () {
 
     $('.navbar-headnav').on('click', 'a.go-home', function (event) {
         event.preventDefault();
+        console.log('click fired');
         var scroll = '0';
         History.pushState({type: 'home', id: null, pos: scroll}, 'Home', '/');
     });
 
     $('.main').swipe({
         swipe:function(event, direction, distance, duration, fingerCount) {
-            console.log('setWaiting fired');
+            console.log('swipe fired');
             if (direction === 'right'){
                 History.back();
             }

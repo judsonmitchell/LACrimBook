@@ -21,7 +21,7 @@ body {background-color:#f5f5f5}
     top: 0px;
     right: 0px;
     opacity: .5;
-    background-image: url('../img/spinner.gif');
+    background-image: url('img/spinner.gif');
     background-repeat: no-repeat;
     background-attachment:fixed;
     background-position:center;

@@ -64,10 +64,8 @@ var updateContent = function(State,callback) {
             items += '<a class="law-link list-group-item" href="#" data-id="' + laws[i].id + '">' + laws[i].title + ' ' + laws[i].description + '</a>';
         }
         items += '</div>';
-        $('.panel').html(items).promise().done(function () {
-            $(document).scrollTop(pos);
-            $('.waiting').hide();
-        });
+        $('.panel').html(items);
+        $(document).scrollTop(pos);
         break;
     case 'law':
         laws = jlinq.from(myData).equals('id', target).select();
@@ -84,7 +82,6 @@ var updateContent = function(State,callback) {
         $('title').text(laws[0].description + ' ' + laws[0].title);
         $('.panel').css({'padding':'10px'}).html('<h3><span class="lawTitle">' + laws[0].description + '</span>' + fav + '</h3>' + laws[0].law_text);
         $(document).scrollTop(0);
-        $('.waiting').hide();
         break;
     case 'search':
         var regex = new RegExp('\\b' + target + '\\b');
@@ -107,10 +104,8 @@ var updateContent = function(State,callback) {
             }
         }
         items += '</div>';
-        $('.panel').html(items).promise().done(function () {
-            $(document).scrollTop(pos);
-            $('.waiting').hide();
-        });
+        $('.panel').html(items);
+        $(document).scrollTop(pos);
         break;
     case 'favorites':
         items = ' <div class="list-group display-rows">';
@@ -127,10 +122,8 @@ var updateContent = function(State,callback) {
         }
 
         items += '</div>';
-        $('.panel').html(items).promise().done(function () {
-            $(document).scrollTop(pos);
-            $('.waiting').hide();
-        });
+        $('.panel').html(items);
+        $(document).scrollTop(pos);
         break;
     default:
         var menu = ' <div class="list-group"> <a class="nav-link list-group-item list-group-item " data-id="RS 000014" href="#">' +
@@ -144,10 +137,8 @@ var updateContent = function(State,callback) {
         '<span class="glyphicon glyphicon-chevron-right"></i> Code of Evidence </a> <a class="nav-link list-group-item" data-id="CHC" href="#">' +
         '<span class="glyphicon glyphicon-chevron-right"></i> Childrens Code</a> <a class="nav-link list-group-item" data-id="CONST" href="#">' +
         '<span class="glyphicon glyphicon-chevron-right"></i> Constitution</a> </div>';
-        $('.panel').html(menu).promise().done(function () {
-            $(document).scrollTop(pos);
-            $('.waiting').hide();
-        });
+        $('.panel').html(menu);
+        $(document).scrollTop(pos);
     }
 
     //Opacity is brought down to signal acknowledgment of swipe; bring it back up when page changes
@@ -159,7 +150,7 @@ setCurrentPosition = function () {
     History.replaceState({type: currentView.view, id: currentView.target, pos: scroll}, currentView.target, '?target=' + currentView.target + '&view=' + currentView.view);
 },
 
-updateFavoritesList = function () {
+updateFavoritesList = function (cb) {
     if (localStorage.length > 0) {
         var favList = '',
         key,
@@ -183,6 +174,7 @@ updateFavoritesList = function () {
         }
 
         $('.dropdown-menu').html(favList);
+        cb();
     }
 },
 
@@ -196,7 +188,9 @@ $(document).ready(function () {
     //Handle History
     History.Adapter.bind(window, 'statechange', function () {
         updateContent(History.getState());
-        updateFavoritesList();
+        updateFavoritesList(function () {
+            $('.waiting').hide();
+        });
     });
 
     //Handle clicks

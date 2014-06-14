@@ -256,7 +256,9 @@ $(document).ready(function () {
         setWaiting();
         setCurrentPosition();
         History.pushState({type: 'favorites', id: null}, 'Favorites', '?view=favorites');
-        $('.collapse').collapse('hide');
+        if ($('.collapse').css('display') === 'block'){
+            $('.collapse').collapse('hide');
+        }
     });
 
     $('.navbar-headnav').on('click', 'a.go-home', function (event) {

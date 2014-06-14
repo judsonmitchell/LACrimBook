@@ -92,8 +92,9 @@ var updateContent = function(State,callback) {
         console.log('update content done');
         break;
     case 'search':
-        var regex = new RegExp('\\b' + target + '\\b');
-        laws = jlinq.from(myData).match('description', regex).or().match('law_text', regex).or().match('title', regex).select();
+        //var regex = new RegExp('\\b' + target + '\\b');
+        //laws = jlinq.from(myData).match('description', regex).or().match('law_text', regex).or().match('title', regex).select();
+        laws = jlinq.from(myData).contains('description', target).or().contains('law_text', target).or().contains('title', target).select();
         items = '<div class="list-group">';
         if (!laws.length){
             items += '<a class="list-group-item">No results found.</a>';
@@ -101,7 +102,6 @@ var updateContent = function(State,callback) {
             for (i = 0, l = laws.length; i < l; i ++) {
                 var snippet = getExcerpt(laws[i].law_text, target, 15);
                 if (snippet){
-                    //var snippet = "Working on generating statute preview.  Check back soon.";
                     items += '<a class="law-link list-group-item" href="#" data-id="' + laws[i].id +
                     '">' + laws[i].title + ' ' + laws[i].description +
                     '<p class="preview">...' + snippet + '...</p>' + '</a>' ;

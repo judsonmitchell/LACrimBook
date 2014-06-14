@@ -99,7 +99,8 @@ var updateContent = function(State,callback) {
             items += '<a class="list-group-item">No results found.</a>';
         } else {
             for (i = 0, l = laws.length; i < l; i ++) {
-                var snippet = getExcerpt(laws[i].law_text, target, 15);
+                //var snippet = getExcerpt(laws[i].law_text, target, 15);
+                var snippet = false;
                 if (snippet){
                     //var snippet = "Working on generating statute preview.  Check back soon.";
                     items += '<a class="law-link list-group-item" href="#" data-id="' + laws[i].id +

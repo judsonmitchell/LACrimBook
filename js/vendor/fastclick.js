@@ -281,7 +281,7 @@ FastClick.prototype.needsFocus = function(target) {
 FastClick.prototype.sendClick = function(targetElement, event) {
 	'use strict';
 	var clickEvent, touch;
-
+    console.log('fast click');
 	// On some Android devices activeElement needs to be blurred otherwise the synthetic click will have no effect (#24)
 	if (document.activeElement && document.activeElement !== targetElement) {
 		document.activeElement.blur();
@@ -799,6 +799,7 @@ FastClick.notNeeded = function(layer) {
  */
 FastClick.attach = function(layer, options) {
 	'use strict';
+    console.log('fast click attached');
 	return new FastClick(layer, options);
 };
 

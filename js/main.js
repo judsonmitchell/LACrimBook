@@ -178,7 +178,7 @@ updateFavoritesList = function () {
 };
 
 
-$(document).ready(function () {
+document.addEventListener('deviceready', function() {
     //Handle History
     History.Adapter.bind(window, 'statechange', function () {
         if (typeof spinnerplugin !== 'undefined'){

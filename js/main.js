@@ -182,7 +182,7 @@ document.addEventListener('deviceready', function() {
     //Handle History
     History.Adapter.bind(window, 'statechange', function () {
         if (typeof spinnerplugin !== 'undefined'){
-            spinnerplugin.show({fullscreen: false});
+            spinnerplugin.show({overlay: false, fullscreen: false});
         }
         updateContent(History.getState(), function () {
             updateFavoritesList();

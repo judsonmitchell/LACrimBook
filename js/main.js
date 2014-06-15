@@ -198,8 +198,6 @@ $(document).ready(function () {
     //Handle History
     History.Adapter.bind(window, 'statechange', function () {
         console.log('statechanged fired');
-        setWaiting();
-        console.log('setWaiting fired');
         updateContent(History.getState(), function () {
             updateFavoritesList(function () {
                 console.log('updateFavoritesList cb started');

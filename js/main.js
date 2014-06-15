@@ -17,14 +17,6 @@ window.addEventListener('load', function () {
 
 }, false);
 
-document.addEventListener('deviceready', onDeviceReady ,false);
-
-function onDeviceReady() {
-    console.log('device ready');
-    FastClick.attach(document.body)
-
-}
-
 //Get the data
 var myData,
     State,
@@ -302,6 +294,10 @@ $(document).ready(function () {
             }
         },
         allowPageScroll: 'vertical'
+    });
+
+    $(function() {
+        FastClick.attach(document.body);
     });
 });
 

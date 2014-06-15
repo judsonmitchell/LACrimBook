@@ -181,7 +181,7 @@ init = function () {
     //Handle History
     History.Adapter.bind(window, 'statechange', function () {
         if (typeof spinnerplugin !== 'undefined'){
-            spinnerplugin.show({overlay: false, fullscreen: false});
+            spinnerplugin.show({overlay: false, fullscreen: true});
         }
         updateContent(History.getState(), function () {
             updateFavoritesList();

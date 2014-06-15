@@ -175,10 +175,9 @@ updateFavoritesList = function () {
 
         $('.dropdown-menu').html(favList);
     }
-};
+},
 
-
-document.addEventListener('deviceready', function() {
+init = function () {
     //Handle History
     History.Adapter.bind(window, 'statechange', function () {
         if (typeof spinnerplugin !== 'undefined'){
@@ -275,4 +274,13 @@ document.addEventListener('deviceready', function() {
     $(function() {
         FastClick.attach(document.body);
     });
-});
+
+}
+
+if (window.cordova){
+    document.addEventListener('deviceready', init, false);
+} else {
+    $(document).ready(function () {
+        init();
+    });
+}

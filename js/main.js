@@ -181,10 +181,14 @@ updateFavoritesList = function () {
 $(document).ready(function () {
     //Handle History
     History.Adapter.bind(window, 'statechange', function () {
+        if (typeof spinnerplugin !== 'undefined'){
+            spinnerplugin.show();
+        }
         updateContent(History.getState(), function () {
-            updateFavoritesList(function () {
-                $('.waiting').hide();
-            });
+            updateFavoritesList();
+            if (typeof spinnerplugin !== 'undefined'){
+                spinnerplugin.hide();
+            }
         });
     });
 

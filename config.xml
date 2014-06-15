@@ -3,7 +3,7 @@
         xmlns:gap   = "http://phonegap.com/ns/1.0"
         id          = "org.loyolalawtech.crimbook"
         versionCode = "3"
-        version     = "2.3.1">
+        version     = "2.3.2">
 
     <!-- versionCode is optional and Android only -->
 
@@ -17,6 +17,7 @@
 
     <access origin="*"/>
     <gap:plugin name="com.phonegap.plugin.statusbar" version="1.1.0" />
+    <gap:plugin name="it.mobimentum.phonegapspinnerplugin" />
 
     <preference name="permissions" value="none" />
     <preference name="phonegap-version" value="3.4.0" />         

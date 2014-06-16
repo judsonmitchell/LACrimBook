@@ -85,9 +85,9 @@ var updateContent = function(State,callback) {
         $(document).scrollTop(0);
         break;
     case 'search':
-        var regex = new RegExp('\\b' + target + '\\b');
-        laws = jlinq.from(myData).match('law_text', regex).or().match('title', regex).select();
-        //laws = jlinq.from(myData).contains('description', target).or().contains('law_text', target).or().contains('title', target).select();
+        //var regex = new RegExp('\\b' + target + '\\b');
+        //laws = jlinq.from(myData).match('law_text', regex).or().match('title', regex).select();
+        laws = jlinq.from(myData).contains('law_text',' ' + target).or().contains('title', ' ' + target).select();
         items = '<div class="list-group">';
         if (!laws.length){
             items += '<a class="list-group-item">No results found.</a>';

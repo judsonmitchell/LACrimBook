@@ -119,7 +119,7 @@ var updateContent = function(State,callback) {
             }
         }
         else {
-            items += '<li>You don\'t have any favorited laws</li>';
+            items += '<a class="list-group-item">You don\'t have any favorited laws</a>';
         }
 
         items += '</div>';

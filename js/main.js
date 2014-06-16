@@ -86,8 +86,10 @@ var updateContent = function(State,callback) {
         break;
     case 'search':
         var regex = new RegExp('\\b' + target + '\\b');
+        console.markTimeline('querying jlinq');
         laws = jlinq.from(myData).match('law_text', regex).or().match('title', regex).select();
         //laws = jlinq.from(myData)).contains('law_text', target).or().contains('title', target).select();
+        console.markTimeline('starting items object');
         items = '<div class="list-group">';
         if (!laws.length){
             items += '<a class="list-group-item">No results found.</a>';
@@ -105,6 +107,7 @@ var updateContent = function(State,callback) {
             }
         }
         items += '</div>';
+        console.markTimeline('items object finished');
         $('.panel').html(items);
         $(document).scrollTop(pos);
         break;

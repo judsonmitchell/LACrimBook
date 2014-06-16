@@ -86,11 +86,14 @@ var updateContent = function(State,callback) {
         break;
     case 'search':
         var regex = new RegExp('\\b' + target + '\\b');
-        console.markTimeline('querying jlinq');
-        //laws = jlinq.from(myData).match('law_text', regex).or().match('title', regex).select();
+        console.timeStamp('querying jlinq');
+        //Too slow 7s on mobile
+        laws = jlinq.from(myData).match('law_text', regex).or().match('title', regex).select();
+        //Faster 5s
         //laws = jlinq.from(myData).contains('law_text', target).or().contains('title', target).select();
-        laws = jlinq.from(myData).contains('law_text', target).select();
-        console.markTimeline('starting items object');
+        //Fastest 2s
+        //laws = jlinq.from(myData).contains('law_text', target).select();
+        console.timeStamp('starting items object');
         items = '<div class="list-group">';
         if (!laws.length){
             items += '<a class="list-group-item">No results found.</a>';

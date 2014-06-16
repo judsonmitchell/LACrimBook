@@ -180,13 +180,16 @@ updateFavoritesList = function () {
 init = function () {
     //Handle History
     History.Adapter.bind(window, 'statechange', function () {
-        if (typeof spinnerplugin !== 'undefined'){
-            spinnerplugin.show({overlay: false, fullscreen: true});
+        //if (typeof spinnerplugin !== 'undefined'){
+        //    spinnerplugin.show({overlay: false, fullscreen: true});
+        //}
+        if (typeof window.plugins.spinnerDialog !== 'undefined'){
+            window.plugins.spinnerDialog.show();
         }
         updateContent(History.getState(), function () {
             updateFavoritesList();
-            if (typeof spinnerplugin !== 'undefined'){
-                spinnerplugin.hide();
+            if (typeof window.plugins.spinnerDialog !== 'undefined'){
+                window.plugins.spinnerDialog.hide();
             }
         });
     });

@@ -1,45 +1,11 @@
-// Check if a new cache is available on page load.
-window.addEventListener('load', function () {
-
-    window.applicationCache.addEventListener('updateready', function () {
-        if (window.applicationCache.status === window.applicationCache.UPDATEREADY) {
-        // Browser downloaded a new app cache.
-        // Swap it in and reload the page to get the new code.
-            window.applicationCache.swapCache();
-            if (confirm('A new version of LaCrimBook is available. Load it?')) {
-                window.location.reload();
-            }
-        }
-        else {
-        // Manifest didn't changed. Nothing new to server.
-        }
-    }, false);
-
-}, false);
 
 //Get the data
 var myData,
     State,
-    History = window.History;
-
-$.ajax({url: 'data/data.json', dataType: 'json', beforeSend: function () { $('.panel').hide(); }})
-.done(function (data) {
-    $('.loading').hide();
-    $('.panel').show();
-    myData = data;
-    State = History.getState();
-    var t = State.url.queryStringToJSON();
-    History.pushState({type: t.view, id: t.target}, $('title').text(), State.urlPath);
-    updateContent(History.getState(),function () {
-        updateFavoritesList();
-    });
-})
-.fail(function(jqXHR, textStatus, errorThrown){
-    $('.alert').html('Error Retrieving Laws:' + errorThrown).show();
-});
-
+    History = window.History,
+    index,
 //Change content depending on state
-var updateContent = function(State,callback) {
+updateContent = function(State,callback) {
     var target = State.data.id,
         view = State.data.type,
         pos = State.data.pos,
@@ -282,7 +248,54 @@ init = function () {
         FastClick.attach(document.body);
     });
 
-}
+};
+
+// Check if a new cache is available on page load.
+window.addEventListener('load', function () {
+
+    window.applicationCache.addEventListener('updateready', function () {
+        if (window.applicationCache.status === window.applicationCache.UPDATEREADY) {
+        // Browser downloaded a new app cache.
+        // Swap it in and reload the page to get the new code.
+            window.applicationCache.swapCache();
+            if (confirm('A new version of LaCrimBook is available. Load it?')) {
+                window.location.reload();
+            }
+        }
+        else {
+        // Manifest didn't change. Nothing new to server. Set up data
+        }
+    }, false);
+
+    $.ajax({url: 'data/data.json', dataType: 'json', beforeSend: function () { $('.panel').hide(); }})
+    .done(function(data){
+        myData = data;
+        $('.loading').hide();
+        $('.panel').show();
+        State = History.getState();
+        var t = State.url.queryStringToJSON();
+        History.pushState({type: t.view, id: t.target}, $('title').text(), State.urlPath);
+        updateContent(History.getState(),function () {
+            updateFavoritesList();
+        });
+    })
+    .always(function(data) {
+        //Try a lunr index
+        index = lunr(function() {
+            this.field('title', {boost: 10});
+            this.field('law_text');
+            this.ref('id');
+        });
+
+        for (var i = 0, l = data.length; i < l; i ++) {
+            index.add(data[i]);
+        }
+    })
+    .fail(function(jqXHR, textStatus, errorThrown){
+        $('.alert').html('Error Retrieving Laws:' + errorThrown).show();
+    });
+
+}, false);
 
 if (window.cordova){
     document.addEventListener('deviceready', init, false);

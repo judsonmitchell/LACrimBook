@@ -220,6 +220,7 @@ init = function () {
 
         db = window.openDatabase(dbName, '', 'La. Crim Book 6-2014',2 * 1024 * 1024);
 
+        console.log('PhoneGap:' + db.version);
         if (db.version !== latestDbVersion){
 
             db.changeVersion(db.version,latestDbVersion);

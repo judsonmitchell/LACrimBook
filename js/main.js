@@ -220,9 +220,9 @@ init = function () {
 
         db = window.openDatabase(dbName, '', 'La. Crim Book 6-2014',2 * 1024 * 1024);
 
-        console.log('PhoneGap:' + db.version);
         if (db.version !== latestDbVersion){
 
+            console.log('PhoneGap:' + db.version);
             db.changeVersion(db.version,latestDbVersion);
             db.transaction(function (tx) {
                 tx.executeSql('DROP TABLE laws',[], onTransact,onFail);

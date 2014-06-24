@@ -194,6 +194,66 @@ updateFavoritesList = function () {
 },
 
 init = function () {
+    $.ajax({url: 'data/data.json', data:'json', beforeSend: function () { $('.panel').hide(); }})
+    .done(function(data){
+        var lawData = data,
+        onSuccess = function () {
+            $('.loading').hide();
+            $('.panel').show();
+            State = History.getState();
+            var t = State.url.queryStringToJSON();
+            History.pushState({type: t.view, id: t.target}, $('title').text(), State.urlPath);
+            updateContent(History.getState(),function () {
+                updateFavoritesList();
+            });
+            console.log('transaction done.');
+        },
+        onFail = function (tx,err) {
+            console.log(err);
+        },
+        onTransact = function () {
+            console.log('transaction successful');
+        },
+        okInsert = function (tx, results) {
+            console.log('rowsAffected: ' + results.rowsAffected + ' -- should be 1');
+        };
+
+        db = window.openDatabase(dbName, '', 'La. Crim Book 6-2014',2 * 1024 * 1024);
+
+        if (db.version !== latestDbVersion){
+
+            db.changeVersion(db.version,latestDbVersion);
+            db.transaction(function (tx) {
+                tx.executeSql('DROP TABLE laws',[], onTransact,onFail);
+            });
+
+            db.transaction(function (tx) {
+                tx.executeSql('CREATE TABLE IF NOT EXISTS laws ( `id` INTEGER PRIMARY KEY AUTOINCREMENT,' +
+                '`docid` TEXT, `sortcode` TEXT, `title` TEXT, `description` TEXT, `law_text` TEXT); ',[], onTransact,onFail);
+            });
+
+            db.transaction(function (tx) {
+                var q = 'INSERT INTO laws (docid, sortcode,title,description,law_text) VALUES (?,?,?,?,?)';
+                for (var i = 0, l = lawData.length; i < l; i ++) {
+                    var obj = lawData[i];
+                    var arr = [];
+                    for (var key in obj) {
+                        if (obj.hasOwnProperty(key)) {
+                            var val = obj[key];
+                            arr.push(val);
+                        }
+                    }
+                    tx.executeSql(q, arr, okInsert, onFail);
+                }
+            },  onFail, onSuccess);
+        } else {
+            onSuccess();
+        }
+    })
+    .fail(function(jqXHR, textStatus, errorThrown){
+        $('.alert').html('Error Retrieving Laws:' + errorThrown).show();
+    });
+
     //Handle History
     History.Adapter.bind(window, 'statechange', function () {
         if (typeof spinnerplugin !== 'undefined'){
@@ -310,72 +370,7 @@ window.addEventListener('load', function () {
         }
     }, false);
 
-    $.ajax({url: 'data/data.json', data:'json', beforeSend: function () { $('.panel').hide(); }})
-    .done(function(data){
-        var lawData = data,
-        onSuccess = function () {
-            $('.loading').hide();
-            $('.panel').show();
-            State = History.getState();
-            var t = State.url.queryStringToJSON();
-            History.pushState({type: t.view, id: t.target}, $('title').text(), State.urlPath);
-            updateContent(History.getState(),function () {
-                updateFavoritesList();
-            });
-            console.log('transaction done.');
-        },
-        onFail = function (tx,err) {
-            console.log(err);
-        },
-        onTransact = function () {
-            console.log('transaction successful');
-        },
-        okInsert = function (tx, results) {
-            console.log('rowsAffected: ' + results.rowsAffected + ' -- should be 1');
-        };
-
-        db = window.openDatabase(dbName, '', 'La. Crim Book 6-2014',2 * 1024 * 1024);
-
-        if (db.version !== latestDbVersion){
-
-            db.changeVersion(db.version,latestDbVersion);
-            db.transaction(function (tx) {
-                tx.executeSql('DROP TABLE laws',[], onTransact,onFail);
-            });
-
-            db.transaction(function (tx) {
-                tx.executeSql('CREATE TABLE IF NOT EXISTS laws ( `id` INTEGER PRIMARY KEY AUTOINCREMENT,' +
-                '`docid` TEXT, `sortcode` TEXT, `title` TEXT, `description` TEXT, `law_text` TEXT); ',[], onTransact,onFail);
-            });
-
-            db.transaction(function (tx) {
-                var q = 'INSERT INTO laws (docid, sortcode,title,description,law_text) VALUES (?,?,?,?,?)';
-                for (var i = 0, l = lawData.length; i < l; i ++) {
-                    var obj = lawData[i];
-                    var arr = [];
-                    for (var key in obj) {
-                        if (obj.hasOwnProperty(key)) {
-                            var val = obj[key];
-                            arr.push(val);
-                        }
-                    }
-                    tx.executeSql(q, arr, okInsert, onFail);
-                }
-            },  onFail, onSuccess);
-        } else {
-            onSuccess();
-        }
-    })
-    .fail(function(jqXHR, textStatus, errorThrown){
-        $('.alert').html('Error Retrieving Laws:' + errorThrown).show();
-    });
 
 }, false);
 
-if (window.cordova){
-    document.addEventListener('deviceready', init, false);
-} else {
-    $(document).ready(function () {
-        init();
-    });
-}
+document.addEventListener('deviceready', init, false);

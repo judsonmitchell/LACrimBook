@@ -1,10 +1,21 @@
 //CrimBook with sqlite backend
-var myData,
-    State,
-    History = window.History,
+var State,
     db,
+    History = window.History,
     dbName = 'CrimLaws',
     latestDbVersion = '1.0', //Change this on update
+    lawSections = [          //Corresponds to West thumb index;
+    {'name':'Title 14', 'start': 'RS 000014' },
+    {'name':'Title 15', 'start': 'RS 000015' },
+    {'name':'Title 32', 'start': 'RS 000032' },
+    {'name':'Title 40', 'start': 'RS 000040' },
+    {'name':'Title 46', 'start': 'RS 000046' },
+    {'name':'Title 56', 'start': 'RS 000056' },
+    {'name':'Code of Criminal Procedure', 'start': 'CCRP' },
+    {'name':'Code of Evidence', 'start': 'CE' },
+    {'name':'Childrens Code', 'start': 'CHC' },
+    {'name':'Constitution', 'start': 'CONST' }
+],
 //Change content depending on state
 updateContent = function(State,callback) {
     var target = State.data.id,
@@ -119,17 +130,13 @@ updateContent = function(State,callback) {
         $(document).scrollTop(pos);
         break;
     default:
-        var menu = ' <div class="list-group"> <a class="nav-link list-group-item list-group-item " data-id="RS 000014" href="#">' +
-        '<span class="glyphicon glyphicon-chevron-right"></i> Title 14</a> <a class="nav-link list-group-item" data-id="RS 000015" href="#">' +
-        '<span class="glyphicon glyphicon-chevron-right"></i> Title 15</a> <a class="nav-link list-group-item" data-id="RS 000032" href="#">' +
-        '<span class="glyphicon glyphicon-chevron-right"></i> Title 32</a> <a class="nav-link list-group-item" data-id="RS 000040" href="#">' +
-        '<span class="glyphicon glyphicon-chevron-right"></i> Title 40</a> <a class="nav-link list-group-item" data-id="RS 000046" href="#">' +
-        '<span class="glyphicon glyphicon-chevron-right"></i> Title 46</a> <a class="nav-link list-group-item" data-id="RS 000056" href="#">' +
-        '<span class="glyphicon glyphicon-chevron-right"></i> Title 56</a> <a class="nav-link list-group-item" data-id="CCRP" href="#">' +
-        '<span class="glyphicon glyphicon-chevron-right"></i> Code of Criminal Procedure </a> <a class="nav-link list-group-item" data-id="CE" href="#">' +
-        '<span class="glyphicon glyphicon-chevron-right"></i> Code of Evidence </a> <a class="nav-link list-group-item" data-id="CHC" href="#">' +
-        '<span class="glyphicon glyphicon-chevron-right"></i> Childrens Code</a> <a class="nav-link list-group-item" data-id="CONST" href="#">' +
-        '<span class="glyphicon glyphicon-chevron-right"></i> Constitution</a> </div>';
+        var menu = ' <div class="list-group">';
+        for (var int = 0, l = lawSections.length; int < l; int ++) {
+            var v = lawSections[int];
+            menu += '<a class="nav-link list-group-item list-group-item " data-id="' + v.start + '" href="#">' +
+            '<span class="glyphicon glyphicon-chevron-right"></span>  ' + v.name + '</a>';
+        }
+        menu += '</div>';
         $('.panel').html(menu);
         $(document).scrollTop(pos);
     }

@@ -194,6 +194,7 @@ updateFavoritesList = function () {
 },
 
 init = function () {
+    console.log('init has fired');
     $.ajax({url: 'data/data.json', data:'json', beforeSend: function () { $('.panel').hide(); }})
     .done(function(data){
         var lawData = data,

@@ -206,7 +206,7 @@ init = function () {
             updateContent(History.getState(),function () {
                 updateFavoritesList();
             });
-            console.log('transaction done.');
+            console.log('transaction done test.');
         },
         onFail = function (tx,err) {
             console.log(err);

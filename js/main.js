@@ -194,7 +194,6 @@ updateFavoritesList = function () {
 },
 
 init = function () {
-    console.log('init has fired');
     $.ajax({url: 'data/data.json', data:'json', beforeSend: function () { $('.panel').hide(); }})
     .done(function(data){
         var lawData = data,
@@ -353,6 +352,7 @@ init = function () {
         FastClick.attach(document.body);
     });
 
+    console.log('init has fired');
 };
 
 // Check if a new cache is available on page load.

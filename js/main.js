@@ -1,9 +1,10 @@
-
-//Get the data
+//CrimBook with sqlite backend
 var myData,
     State,
     History = window.History,
-    index,
+    db,
+    dbName = 'CrimLaws',
+    latestDbVersion = '1.0', //Change this on update
 //Change content depending on state
 updateContent = function(State,callback) {
     var target = State.data.id,
@@ -269,8 +270,8 @@ window.addEventListener('load', function () {
 
     $.ajax({url: 'data/data.json', data:'json', beforeSend: function () { $('.panel').hide(); }})
     .done(function(data){
-        var lawData = data;
-        function onSuccess() {
+        var lawData = data,
+        onSuccess = function () {
             $('.loading').hide();
             $('.panel').show();
             State = History.getState();
@@ -280,45 +281,49 @@ window.addEventListener('load', function () {
                 updateFavoritesList();
             });
             console.log('transaction done.');
-        }
-        function onFail (tx,err) {
+        },
+        onFail = function (tx,err) {
             console.log(err);
-        }
-        function onTrFail (){
-            console.log('transaction failed');
-        }
-        function onTransact () {
+        },
+        onTransact = function () {
             console.log('transaction successful');
-        }
-        function okInsert (tx, results) {
+        },
+        okInsert = function (tx, results) {
             console.log('rowsAffected: ' + results.rowsAffected + ' -- should be 1');
-        }
-        function doInsert (tx){
+        };
 
-        }
+        db = window.openDatabase(dbName, '', 'La. Crim Book 6-2014',2 * 1024 * 1024);
 
-        var db = window.openDatabase('CrimLaws', '1.0', 'La. Crim Book 6-2014',2 * 1024 * 1024);
+        if (db.version !== latestDbVersion){
 
-        db.transaction(function (tx) {
-            tx.executeSql("CREATE TABLE IF NOT EXISTS laws ( `id` INTEGER PRIMARY KEY AUTOINCREMENT, `docid` TEXT, `sortcode` TEXT, `title` TEXT, `description` TEXT, `law_text` TEXT); ",[], onTransact,onFail);
-        });
-//here
-        db.transaction(function (tx) {
-            var q = 'INSERT INTO laws (docid, sortcode,title,description,law_text) VALUES (?,?,?,?,?)';
-            for (var i = 0, l = lawData.length; i < l; i ++) {
-                var obj = lawData[i];
-                var arr = [];
-                for (var key in obj) {
-                    if (obj.hasOwnProperty(key)) {
-                        var val = obj[key];
-                        // use val
-                        arr.push(val);
+            db.changeVersion(db.version,latestDbVersion);
+            db.transaction(function (tx) {
+                tx.executeSql('DROP TABLE laws',[], onTransact,onFail);
+            });
+
+            db.transaction(function (tx) {
+                tx.executeSql('CREATE TABLE IF NOT EXISTS laws ( `id` INTEGER PRIMARY KEY AUTOINCREMENT, `docid` TEXT, `sortcode` TEXT, `title` TEXT, `description` TEXT, `law_text` TEXT); ',[], onTransact,onFail);
+            });
+    //here
+            db.transaction(function (tx) {
+                var q = 'INSERT INTO laws (docid, sortcode,title,description,law_text) VALUES (?,?,?,?,?)';
+                for (var i = 0, l = lawData.length; i < l; i ++) {
+                    var obj = lawData[i];
+                    var arr = [];
+                    for (var key in obj) {
+                        if (obj.hasOwnProperty(key)) {
+                            var val = obj[key];
+                            // use val
+                            arr.push(val);
+                        }
                     }
+                    tx.executeSql(q, arr, okInsert, onFail);
                 }
-                tx.executeSql(q, arr, okInsert, onFail);
-            }
-        }, onSuccess, onTrFail);
-
+            },  onFail, onSuccess);
+        } else {
+            onSuccess();
+            
+        }
     })
     //end here
     .fail(function(jqXHR, textStatus, errorThrown){

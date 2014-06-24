@@ -218,7 +218,7 @@ init = function () {
             console.log('rowsAffected: ' + results.rowsAffected + ' -- should be 1');
         };
 
-        db = window.openDatabase(dbName, '', 'La. Crim Book 6-2014',2 * 1024 * 1024);
+        db = sqlitePlugin.openDatabase(dbName, '', 'La. Crim Book 6-2014',2 * 1024 * 1024);
 
         if (db.version !== latestDbVersion){
 

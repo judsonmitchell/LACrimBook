@@ -27,60 +27,96 @@ updateContent = function(State,callback) {
     switch (view) {
     case 'list':
         items = ' <div class="list-group display-rows">';
-        laws = jlinq.from(myData).starts('sortcode', target + ' ').select();
-        for (var i = 0, l = laws.length; i < l; i ++) {
-            items += '<a class="law-link list-group-item" href="#" data-id="' + laws[i].id + '">' + laws[i].title + ' ' + laws[i].description + '</a>';
-        }
-        items += '</div>';
-        $('.panel').html(items);
-        $(document).scrollTop(pos);
+        //laws = jlinq.from(myData).starts('sortcode', target + ' ').select();
+        db.readTransaction(function (tx){
+            tx.executeSql('SELECT id, title, description FROM laws WHERE sortcode LIKE ?;',[target + ' %'],function (tx,res){
+                var rows = res.rows;
+                for (var i = 0, l = rows.length; i < l; i ++) {
+                    items += '<a class="law-link list-group-item" href="#" data-id="' + rows.item(i).id + '">' + rows.item(i).title + ' ' + rows.item(i).description + '</a>';
+                }
+                items += '</div>';
+                $('.panel').html(items);
+                $(document).scrollTop(pos);
+            },function (tx, err){
+                $('.alert').html('Error: ' + err.message).show();
+            }), function onReadError(tx,err){
+                $('.alert').html('Error: ' + err.message).show();
+            };
+        });
         break;
     case 'law':
-        laws = jlinq.from(myData).equals('id', target).select();
+        //laws = jlinq.from(myData).equals('id', target).select();
         //check to see if this law has been favorited
-        var fav;
-        if (localStorage.getItem(target)){
-            fav = '<a href="#" class="favorite upper-right-corner" data-state="saved" data-id="' + target +
-            '" title="Favorite This"><span class="glyphicon glyphicon-star"></span></a>';
-        }
-        else {
-            fav = '<a href="#" class="favorite upper-right-corner" data-state="unsaved" data-id="' + target +
-            '" title="Favorite This"><span class="glyphicon glyphicon-star-empty"></span></a>';
-        }
-        $('title').text(laws[0].description + ' ' + laws[0].title);
-        $('.panel').css({'padding':'10px'}).html('<h3><span class="lawTitle">' + laws[0].description + '</span>' + fav + '</h3>' + laws[0].law_text);
-        $(document).scrollTop(0);
+        db.readTransaction(function (tx){
+            tx.executeSql('SELECT * FROM laws WHERE id = ?',[target],function (tx,res){
+                var fav;
+                if (localStorage.getItem(target)){
+                    fav = '<a href="#" class="favorite upper-right-corner" data-state="saved" data-id="' + target +
+                    '" title="Favorite This"><span class="glyphicon glyphicon-star"></span></a>';
+                }
+                else {
+                    fav = '<a href="#" class="favorite upper-right-corner" data-state="unsaved" data-id="' + target +
+                    '" title="Favorite This"><span class="glyphicon glyphicon-star-empty"></span></a>';
+                }
+                var rows = res.rows;
+                $('title').text(rows.item(0).description + ' ' + rows.item(0).title);
+                $('.panel').css({'padding':'10px'}).html('<h3><span class="lawTitle">' + rows.item(0).description + '</span>' + fav + '</h3>' + rows.item(0).law_text);
+                $(document).scrollTop(0);
+            }, function (tx,err){
+                $('.alert').html('Error: ' + err.message).show();
+            });
+        });
         break;
     case 'search':
-        var regex = new RegExp('\\b' + target + '\\b');
-        console.timeStamp('querying jlinq');
-        //Too slow 7s on mobile
-        laws = jlinq.from(myData).match('law_text', regex).or().match('title', regex).select();
-        //Faster 5s
-        //laws = jlinq.from(myData).contains('law_text', target).or().contains('title', target).select();
-        //Fastest 2s
-        //laws = jlinq.from(myData).contains('law_text', target).select();
-        console.timeStamp('starting items object');
-        items = '<div class="list-group">';
-        if (!laws.length){
-            items += '<a class="list-group-item">No results found.</a>';
-        } else {
-            for (i = 0, l = laws.length; i < l; i ++) {
-                var snippet = getExcerpt(laws[i].law_text, target, 15);
-                if (snippet){
-                    items += '<a class="law-link list-group-item" href="#" data-id="' + laws[i].id +
-                    '">' + laws[i].title + ' ' + laws[i].description +
-                    '<p class="preview">...' + snippet + '...</p>' + '</a>' ;
+        db.readTransaction(function (tx){
+            tx.executeSql('SELECT id, title, description, law_text FROM laws WHERE law_text  LIKE ? OR title LIKE ?;',['% ' + target + ' %', '% ' + target + ' %'],function (tx,res){
+                items = '<div class="list-group">';
+                var rows = res.rows;
+                if (rows.length < 1){
+                    items += '<a class="list-group-item">No results found.</a></div>';
+                    $('.panel').html(items);
+                    $(document).scrollTop(pos);
                 } else {
-                    items += '<a class="law-link list-group-item" href="#" data-id="' + laws[i].id +
-                    '">' + laws[i].title + ' ' + laws[i].description + '</a>' ;
+                    for (var i = 0, l = rows.length; i < l; i ++) {
+                        var snippet = getExcerpt(rows.item(i).law_text, target, 15);
+                        if (snippet){
+                            items += '<a class="law-link list-group-item" href="#" data-id="' + rows.item(i).id +
+                            '">' + rows.item(i).title + ' ' + rows.item(i).description +
+                            '<p class="preview">...' + snippet + '...</p>' + '</a>' ;
+                        } else {
+                            items += '<a class="law-link list-group-item" href="#" data-id="' + rows.item(i).id +
+                            '">' + rows.item(i).title + ' ' + rows.item(i).description + '</a>' ;
+                        }
+                    }
+                    items += '</div>';
+                    $('.panel').html(items);
+                    $(document).scrollTop(pos);
                 }
-            }
-        }
-        items += '</div>';
-        console.markTimeline('items object finished');
-        $('.panel').html(items);
-        $(document).scrollTop(pos);
+            },function (tx, err){
+                $('.alert').html('Error: ' + err.message).show();
+            }), function onReadError(tx,err){
+                $('.alert').html('Error: ' + err.message).show();
+            };
+        });
+        //above
+        //if (!laws.length){
+        //    items += '<a class="list-group-item">No results found.</a>';
+        //} else {
+        //    for (i = 0, l = laws.length; i < l; i ++) {
+        //        var snippet = getExcerpt(laws[i].law_text, target, 15);
+        //        if (snippet){
+        //            items += '<a class="law-link list-group-item" href="#" data-id="' + laws[i].id +
+        //            '">' + laws[i].title + ' ' + laws[i].description +
+        //            '<p class="preview">...' + snippet + '...</p>' + '</a>' ;
+        //        } else {
+        //            items += '<a class="law-link list-group-item" href="#" data-id="' + laws[i].id +
+        //            '">' + laws[i].title + ' ' + laws[i].description + '</a>' ;
+        //        }
+        //    }
+        //}
+        //items += '</div>';
+        //$('.panel').html(items);
+        //$(document).scrollTop(pos);
         break;
     case 'favorites':
         items = ' <div class="list-group display-rows">';
@@ -304,7 +340,7 @@ window.addEventListener('load', function () {
             db.transaction(function (tx) {
                 tx.executeSql('CREATE TABLE IF NOT EXISTS laws ( `id` INTEGER PRIMARY KEY AUTOINCREMENT, `docid` TEXT, `sortcode` TEXT, `title` TEXT, `description` TEXT, `law_text` TEXT); ',[], onTransact,onFail);
             });
-    //here
+
             db.transaction(function (tx) {
                 var q = 'INSERT INTO laws (docid, sortcode,title,description,law_text) VALUES (?,?,?,?,?)';
                 for (var i = 0, l = lawData.length; i < l; i ++) {
@@ -322,10 +358,9 @@ window.addEventListener('load', function () {
             },  onFail, onSuccess);
         } else {
             onSuccess();
-            
+
         }
     })
-    //end here
     .fail(function(jqXHR, textStatus, errorThrown){
         $('.alert').html('Error Retrieving Laws:' + errorThrown).show();
     });

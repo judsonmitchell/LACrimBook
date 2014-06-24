@@ -114,20 +114,37 @@ updateContent = function(State,callback) {
     case 'favorites':
         items = ' <div class="list-group display-rows">';
         if (localStorage.length > 0) {
-            for (var i = 0; i < localStorage.length; i++) {
-                var key = localStorage.key(i);
-                laws = jlinq.from(myData).equals('id', key).select();
-                items += '<a class="law-link list-group-item" href="#" data-id="' + laws[0].id + '">' + laws[0].description +
-                ' ' + laws[0].title + '</a>';
-            }
+            var q = 'SELECT * FROM laws WHERE id = ?',
+            getFavs = function (tx, res){
+                var rows = res.rows;
+                items += '<a class="law-link list-group-item" href="#" data-id="' + rows.item(0).id + '">' +
+                rows.item(0).title + ' ' + rows.item(0).description + '</a>';
+            },
+            favErr = function (tx, err){
+                $('.alert').html(err.messsage).show();
+            };
+            db.readTransaction(function (tx){
+                for (var i = 0; i < localStorage.length; i++) {
+                    var key = localStorage.key(i);
+                    tx.executeSql(q,[key],getFavs,favErr);
+                }
+            },
+            function fail(tx,err){
+                $('.alert').html(err.messsage).show();
+            },
+            function success(tx, res){
+                items += '</div>';
+                $('.panel').html(items);
+                $(document).scrollTop(pos);
+            });
         }
         else {
             items += '<a class="list-group-item">You don\'t have any favorited laws</a>';
+            items += '</div>';
+            $('.panel').html(items);
+            $(document).scrollTop(pos);
         }
 
-        items += '</div>';
-        $('.panel').html(items);
-        $(document).scrollTop(pos);
         break;
     default:
         var menu = ' <div class="list-group">';

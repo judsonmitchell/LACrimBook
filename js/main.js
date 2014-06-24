@@ -33,6 +33,7 @@ var myData,
     {'name':'Childrens Code', 'start': 'CHC' },
     {'name':'Constitution', 'start': 'CONST' }
 ];
+
 $.ajax({url: 'data/data.json', dataType: 'json', beforeSend: function () { $('.panel').hide(); }})
 .done(function (data) {
     $('.loading').hide();
@@ -145,17 +146,13 @@ var updateContent = function(State,callback) {
         $(document).scrollTop(pos);
         break;
     default:
-        var menu = ' <div class="list-group"> <a class="nav-link list-group-item list-group-item " data-id="RS 000014" href="#">' +
-        '<span class="glyphicon glyphicon-chevron-right"></i> Title 14</a> <a class="nav-link list-group-item" data-id="RS 000015" href="#">' +
-        '<span class="glyphicon glyphicon-chevron-right"></i> Title 15</a> <a class="nav-link list-group-item" data-id="RS 000032" href="#">' +
-        '<span class="glyphicon glyphicon-chevron-right"></i> Title 32</a> <a class="nav-link list-group-item" data-id="RS 000040" href="#">' +
-        '<span class="glyphicon glyphicon-chevron-right"></i> Title 40</a> <a class="nav-link list-group-item" data-id="RS 000046" href="#">' +
-        '<span class="glyphicon glyphicon-chevron-right"></i> Title 46</a> <a class="nav-link list-group-item" data-id="RS 000056" href="#">' +
-        '<span class="glyphicon glyphicon-chevron-right"></i> Title 56</a> <a class="nav-link list-group-item" data-id="CCRP" href="#">' +
-        '<span class="glyphicon glyphicon-chevron-right"></i> Code of Criminal Procedure </a> <a class="nav-link list-group-item" data-id="CE" href="#">' +
-        '<span class="glyphicon glyphicon-chevron-right"></i> Code of Evidence </a> <a class="nav-link list-group-item" data-id="CHC" href="#">' +
-        '<span class="glyphicon glyphicon-chevron-right"></i> Childrens Code</a> <a class="nav-link list-group-item" data-id="CONST" href="#">' +
-        '<span class="glyphicon glyphicon-chevron-right"></i> Constitution</a> </div>';
+        var menu = ' <div class="list-group">';
+        for (var int = 0, max = lawSections.length; int < max; int ++) {
+            var v = lawSections[int];
+            menu += '<a class="nav-link list-group-item list-group-item " data-id="' + v.start + '" href="#">' +
+            '<span class="glyphicon glyphicon-chevron-right"></span>  ' + v.name + '</a>';
+        }
+        menu += '</div>';
         $('.panel').html(menu);
         $(document).scrollTop(pos);
     }

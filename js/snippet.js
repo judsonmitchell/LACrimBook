@@ -1,26 +1,48 @@
-Array.prototype.firstOccurence = function(term) {
-    var regex = new RegExp('\\b' + term.toLowerCase() + '\\b');
-    for (var i=0; i<this.length; i++) {
-        if (this[i].toLowerCase().search(regex) !== -1 ) {  // still can use idnexOf on a string, right? :)
-            return parseInt(i,10);  // we need an integer, not a string as i is
-        }
-    }
-};
-
 function getExcerpt(text, searchTerm, precision) {
     // strip off HTML entities such as &nbsp;
-    var strip_entities = text.replace(/&(?!hellip)[a-z]+;/gim, '');
+    var stripEntities = text.replace(/&(?!hellip)[a-z]+;/gim, '');
 
     // strip off line breaks and carriage returns and extra potential spaces/tabs
-    var strip_breaks = strip_entities.replace(/\r+\s+\t+\r+/gim, '');
+    var stripBreaks = stripEntities.replace(/\r+\s+\t+\r+/gim, '');
 
     // strip html
-    var strip_html = strip_breaks.replace(/<[^<>]+>/g, ' ').replace(/\s{2,}/g, ' ');
+    var stripHtml = stripBreaks.replace(/<[^<>]+>/g, ' ').replace(/\s{2,}/g, ' ');
 
-    var words = strip_html.split(' '),
-    index = words.firstOccurence(searchTerm),
-    result = [], // resulting array that we will join back
+    var result = [], // resulting array that we will join back
     startIndex, stopIndex;
+
+    //Find first index of our search term
+    var regex = new RegExp('\\b' + searchTerm.toLowerCase() + '\\b'),
+    index = stripHtml.toLowerCase().search(regex),
+    charsArr = stripHtml.split(''),
+    counter = 0,
+    v;
+
+    //Find [precision] words backward
+    for (var i = index, l = 0; i > l; i-- ) {
+        v = charsArr[i];
+        if (v === ' '){ //we find a space
+            counter++;
+        }
+        if (counter === precision){
+            startIndex = i;
+            break;
+        }
+    }
+
+    counter = 0;
+
+    //Find [precision] words forward
+    for (i = index, l = charsArr.length; i < l; i++ ) {
+        v = charsArr[i];
+        if (v === ' '){ //we find a space
+            counter++;
+        }
+        if (counter === precision){
+            stopIndex = i;
+            break;
+        }
+    }
 
     //In case something goes wrong with finding first occurence, please don't
     //give us the whole statute
@@ -28,23 +50,22 @@ function getExcerpt(text, searchTerm, precision) {
         return;
     }
 
-    startIndex = index - precision;
-    if (startIndex < 0) {
+    if (startIndex === null){
         startIndex = 0;
     }
-
-    stopIndex = index + precision + 1;
-    if (stopIndex > words.length) {
-        stopIndex = words.length;
+    if (stopIndex === null){
+        stopIndex = charsArr.length;
     }
 
-    result = result.concat(words.slice(startIndex, index) );
-    result = result.concat(words.slice(index, stopIndex) );
-    var resultStr = result.join(' '); // join back
+    result = result.concat(charsArr.slice(startIndex, stopIndex) );
+
+    var resultStr = result.join(''); // join back
 
     //Highlight search term
-    var targetWord = words[index];
-    return resultStr.replace(targetWord, '<span class="highlight">' + targetWord + '</span>');
+    //var targetWord = words[index];
+    var caseInsens = new RegExp( '(' + searchTerm + ')', 'gi' );
+        // return line.replace( regex, "<b>$1</b>" );
+    return resultStr.replace(caseInsens, '<span class="highlight">$1</span>');
 
 }
 

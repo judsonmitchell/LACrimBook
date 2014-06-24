@@ -5,7 +5,7 @@ LACrimBook aims to replace West's big and expensive handbook of Louisiana
 criminal laws with a free, digital alternative.
 
 This branch contains the version intended for desktop browsers, using an in-memory
-data store (jlinq).  The main branch contains a version optimized for PhoneGap which 
+data store ([jlinq](http://hugoware.net/Projects/jlinq)).  The main branch contains a version optimized for PhoneGap which 
 uses web sql.
 
 The project uses many open source tools including:
@@ -14,7 +14,7 @@ The project uses many open source tools including:
 * [Twitter Bootstrap](https://github.com/twitter/bootstrap.git)
 * [Initializr](http://www.initializr.com/)
 
-View a working instance of this project [here](http://loyolalawtech.org/crimbook).
+View a working instance of this project [here](http://judsonmitchell.github.io/LACrimBook/).
 
 LACrimBook was created as a part of the [Technology and Legal Innovation](http://loyolalawtech.org) of 
 [Loyola College of Law, New Orleans](http://law.loyno.edu).

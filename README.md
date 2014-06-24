@@ -8,6 +8,8 @@ criminal laws with a free, digital alternative.
 large size (approx 7MBs) of the data, Web Sql is the only storage option available.  The desktop branch uses
 an in-memory datastore (jlinq).
 
+A desktop browser demo can be found [here](http://judsonmitchell.github.io/LACrimBook/).
+
 LACrimBook was created as a part of the [Technology and Legal Innovation Clinic](http://loyolalawtech.org) of [Loyola College of Law, New Orleans](http://law.loyno.edu).
 
 ##License (MIT)

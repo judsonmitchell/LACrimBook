@@ -20,8 +20,19 @@ window.addEventListener('load', function () {
 //Get the data
 var myData,
     State,
-    History = window.History;
-
+    History = window.History,
+    lawSections = [          //Corresponds to West thumb index;
+    {'name':'Title 14', 'start': 'RS 000014' },
+    {'name':'Title 15', 'start': 'RS 000015' },
+    {'name':'Title 32', 'start': 'RS 000032' },
+    {'name':'Title 40', 'start': 'RS 000040' },
+    {'name':'Title 46', 'start': 'RS 000046' },
+    {'name':'Title 56', 'start': 'RS 000056' },
+    {'name':'Code of Criminal Procedure', 'start': 'CCRP' },
+    {'name':'Code of Evidence', 'start': 'CE' },
+    {'name':'Childrens Code', 'start': 'CHC' },
+    {'name':'Constitution', 'start': 'CONST' }
+];
 $.ajax({url: 'data/data.json', dataType: 'json', beforeSend: function () { $('.panel').hide(); }})
 .done(function (data) {
     $('.loading').hide();

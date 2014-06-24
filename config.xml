@@ -18,7 +18,7 @@
     <access origin="*"/>
     <gap:plugin name="com.phonegap.plugin.statusbar" version="1.1.0" />
     <gap:plugin name="it.mobimentum.phonegapspinnerplugin" version="1.1.0"/>
-    <plugin name="Storage" value="org.apache.cordova.Storage" />
+    <gap:plugin value="org.apache.cordova.Storage" />
 
 
     <preference name="permissions" value="none" />

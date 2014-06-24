@@ -6,7 +6,7 @@ criminal laws with a free, digital alternative.
 
 **This branch** contains a Web SQL version of the CrimBook for usage with PhoneGap applications.  Because of the
 large size (approx 7MBs) of the data, Web Sql is the only storage option available.  The desktop branch uses
-an in-memory datastore (jlinq).
+an in-memory datastore ([jlinq](http://hugoware.net/Projects/jlinq)).
 
 A desktop browser demo can be found [here](http://judsonmitchell.github.io/LACrimBook/).
 

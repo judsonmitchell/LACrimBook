@@ -70,7 +70,7 @@ updateContent = function(State,callback) {
     case 'search':
         db.readTransaction(function (tx){
             tx.executeSql('SELECT id, title, description, law_text FROM laws WHERE law_text  LIKE ? OR title LIKE ?;',
-            ['% ' + target + ' %', '% ' + target + ' %'],function (tx,res){
+            ['% ' + target + ' %', '% ' + target],function (tx,res){
                 items = '<div class="list-group">';
                 var rows = res.rows;
                 if (rows.length < 1){

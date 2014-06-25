@@ -239,9 +239,10 @@ init = function () {
 
             db.transaction(function (tx) {
                 alert('here we are at the insert');
-                var q = 'INSERT INTO laws (docid, sortcode,title,description,law_text) VALUES (?,?,?,?,?)';
                 alert('lawData length ' + lawData.length);
+                var q = 'INSERT INTO laws (docid, sortcode,title,description,law_text) VALUES (?,?,?,?,?)';
                 for (var i = 0, l = lawData.length; i < l; i ++) {
+                    console.log('in loop');
                     var obj = lawData[i];
                     console.log(obj.hasOwnProperty());
                     var arr = [];

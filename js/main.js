@@ -212,8 +212,9 @@ init = function () {
         onFail = function (tx,err) {
             alert(err);
         },
-        onTransact = function () {
+        onTransact = function (tx) {
             alert('transaction successful');
+            console.log(tx);
         },
         okInsert = function (tx, results) {
             alert('rowsAffected: ' + results.rowsAffected + ' -- should be 1');

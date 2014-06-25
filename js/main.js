@@ -3,7 +3,7 @@ var State,
     db,
     History = window.History,
     dbName = 'CrimLaws',
-    latestDbVersion = '3.3', //Change this on update
+    latestDbVersion = '3.4', //Change this on update
     lawSections = [          //Corresponds to West thumb index;
     {'name':'Title 14', 'start': 'RS 000014' },
     {'name':'Title 15', 'start': 'RS 000015' },
@@ -218,7 +218,7 @@ init = function () {
             console.log(tx);
         },
         okInsert = function (tx, results) {
-            alert('rowsAffected: ' + results.rowsAffected + ' -- should be 1');
+            console.log('rowsAffected: ' + results.rowsAffected + ' -- should be 1');
         };
 
         db = window.openDatabase(dbName, '', 'La. Crim Book 6-2014',2 * 1024 * 1024);

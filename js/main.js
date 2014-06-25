@@ -3,7 +3,7 @@ var State,
     db,
     History = window.History,
     dbName = 'CrimLaws',
-    latestDbVersion = '3.1', //Change this on update
+    latestDbVersion = '3.2', //Change this on update
     lawSections = [          //Corresponds to West thumb index;
     {'name':'Title 14', 'start': 'RS 000014' },
     {'name':'Title 15', 'start': 'RS 000015' },
@@ -224,6 +224,8 @@ init = function () {
 
         alert('db version' + db.version);
         alert('latest db version' + latestDbVersion);
+        alert('lawData type ' + typeof lawData);
+        alert('lawData.length ' + lawData.length);
         if (db.version !== latestDbVersion){
 
             alert('PhoneGap:' + db.version);

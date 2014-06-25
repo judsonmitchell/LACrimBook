@@ -376,5 +376,5 @@ init = function () {
 //
 //
 //}, false);
-
-document.addEventListener('deviceready', init(), false);
+console.log('debug');
+document.addEventListener('deviceready', init, false);

@@ -3,7 +3,7 @@ var State,
     db,
     History = window.History,
     dbName = 'CrimLaws',
-    latestDbVersion = '1.8', //Change this on update
+    latestDbVersion = '1.9', //Change this on update
     lawSections = [          //Corresponds to West thumb index;
     {'name':'Title 14', 'start': 'RS 000014' },
     {'name':'Title 15', 'start': 'RS 000015' },
@@ -239,7 +239,7 @@ init = function () {
             db.transaction(function (tx) {
                 alert('here we are at the insert');
                 var q = 'INSERT INTO laws (docid, sortcode,title,description,law_text) VALUES (?,?,?,?,?)';
-                alert('lawData length ' + lawData.length;
+                alert('lawData length ' + lawData.length);
                 for (var i = 0, l = lawData.length; i < l; i ++) {
                     var obj = lawData[i];
                     var arr = [];

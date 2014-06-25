@@ -207,16 +207,16 @@ init = function () {
             updateContent(History.getState(),function () {
                 updateFavoritesList();
             });
-            console.log('transaction done test.');
+            alert('transaction done test.');
         },
         onFail = function (tx,err) {
-            console.log(err);
+            alert(err);
         },
         onTransact = function () {
-            console.log('transaction successful');
+            alert('transaction successful');
         },
         okInsert = function (tx, results) {
-            console.log('rowsAffected: ' + results.rowsAffected + ' -- should be 1');
+            alert('rowsAffected: ' + results.rowsAffected + ' -- should be 1');
         };
 
         db = window.openDatabase(dbName, '', 'La. Crim Book 6-2014',2 * 1024 * 1024);
@@ -227,10 +227,9 @@ init = function () {
 
             alert('PhoneGap:' + db.version);
             db.changeVersion(db.version,latestDbVersion);
-            alert(debug);
-            //db.transaction(function (tx) {
-            //    tx.executeSql('DROP TABLE laws',[], onTransact,onFail);
-            //});
+            db.transaction(function (tx) {
+                tx.executeSql('DROP TABLE laws',[], onTransact,onFail);
+            });
 
             db.transaction(function (tx) {
                 tx.executeSql('CREATE TABLE IF NOT EXISTS laws ( `id` INTEGER PRIMARY KEY AUTOINCREMENT,' +

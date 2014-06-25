@@ -284,9 +284,7 @@ init = function () {
     });
 
     $('form').on('submit', function (event) {
-        if (device.platform !== 'iOS'){ //I have no idea why this works to hide keyboard in iOS
-            event.preventDefault();
-        }
+        event.preventDefault();
         var target = $(this).find('.search-query').val();
         $(document).scrollTop('0');
         History.pushState({type: 'search', id: target}, target, '?target=' + target + '&view=search');

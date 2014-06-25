@@ -226,11 +226,11 @@ init = function () {
         if (db.version !== latestDbVersion){
 
             alert('PhoneGap:' + db.version);
-            var debug = db.changeVersion(db.version,latestDbVersion);
+            db.changeVersion(db.version,latestDbVersion);
             alert(debug);
-            db.transaction(function (tx) {
-                tx.executeSql('DROP TABLE laws',[], onTransact,onFail);
-            });
+            //db.transaction(function (tx) {
+            //    tx.executeSql('DROP TABLE laws',[], onTransact,onFail);
+            //});
 
             db.transaction(function (tx) {
                 tx.executeSql('CREATE TABLE IF NOT EXISTS laws ( `id` INTEGER PRIMARY KEY AUTOINCREMENT,' +

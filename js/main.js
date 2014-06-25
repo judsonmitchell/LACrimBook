@@ -177,15 +177,15 @@ updateFavoritesList = function () {
             for (i = 0; i < 5; i++) {
                 key = localStorage.key(i);
                 value = localStorage.getItem(key);
-                favList += '<li><a class="fav-link needsclick" href="#" data-id="' + key + '">' + value + '</a></li>';
+                favList += '<li><a class="fav-link" href="#" data-id="' + key + '">' + value + '</a></li>';
             }
-            favList += '<li class="divider"></li><li><a class="fav-all needsclick" href="#">View All</a></li>';
+            favList += '<li class="divider"></li><li><a class="fav-all" href="#">View All</a></li>';
         }
         else {
             for (i = 0; i < localStorage.length; i++) {
                 key = localStorage.key(i);
                 value = localStorage.getItem(key);
-                favList += '<li><a class="fav-link needsclick" href="#" data-id="' + key + '">' + value + '</a></li>';
+                favList += '<li><a class="fav-link" href="#" data-id="' + key + '">' + value + '</a></li>';
             }
         }
 
@@ -318,18 +318,18 @@ init = function () {
         setCurrentPosition();
         var target = $(this).attr('data-id');
         History.pushState({type: 'law', id: target}, target, '?target=' + target + '&view=law');
-        //if ($('.collapse').css('display') === 'block'){
-        //    $('.collapse').collapse('hide');
-        //}
+        if ($('.collapse').css('display') === 'block'){
+            $('.collapse').collapse('hide');
+        }
     });
 
     $('.navbar-headnav').on('click', 'a.fav-all', function (event) {
         event.preventDefault();
         setCurrentPosition();
         History.pushState({type: 'favorites', id: null}, 'Favorites', '?view=favorites');
-        //if ($('.collapse').css('display') === 'block'){
-        //    $('.collapse').collapse('hide');
-        //}
+        if ($('.collapse').css('display') === 'block'){
+            $('.collapse').collapse('hide');
+        }
     });
 
     $('.navbar-headnav').on('click', 'a.go-home', function (event) {

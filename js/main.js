@@ -284,7 +284,6 @@ init = function () {
     });
 
     $('form').on('submit', function (event) {
-        event.preventDefault();
         var target = $(this).find('.search-query').val();
         $(document).scrollTop('0');
         History.pushState({type: 'search', id: target}, target, '?target=' + target + '&view=search');

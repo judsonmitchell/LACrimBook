@@ -3,7 +3,7 @@ var State,
     db,
     History = window.History,
     dbName = 'CrimLaws',
-    latestDbVersion = '3.4', //Change this on update
+    latestDbVersion = '1.0', //Change this on update
     lawSections = [          //Corresponds to West thumb index;
     {'name':'Title 14', 'start': 'RS 000014' },
     {'name':'Title 15', 'start': 'RS 000015' },
@@ -194,10 +194,8 @@ updateFavoritesList = function () {
 },
 
 init = function () {
-    alert('init has fired');
     $.ajax({url: 'data/data.json', dataType:'json', beforeSend: function () { $('.panel').hide(); }})
     .done(function(data){
-        alert(typeof data);
         var lawData = data,
         onSuccess = function () {
             $('.loading').hide();
@@ -208,14 +206,12 @@ init = function () {
             updateContent(History.getState(),function () {
                 updateFavoritesList();
             });
-            alert('transaction done test.');
         },
         onFail = function (tx,err) {
-            alert(err);
+            $('.alert').html('DB Error: ' + err.message).show();
         },
         onTransact = function (tx) {
-            alert('transaction successful');
-            console.log(tx);
+            console.log('transaction successful');
         },
         okInsert = function (tx, results) {
             console.log('rowsAffected: ' + results.rowsAffected + ' -- should be 1');
@@ -223,13 +219,8 @@ init = function () {
 
         db = window.openDatabase(dbName, '', 'La. Crim Book 6-2014',2 * 1024 * 1024);
 
-        alert('db version' + db.version);
-        alert('latest db version' + latestDbVersion);
-        alert('lawData type ' + typeof lawData);
-        alert('lawData.length ' + lawData.length);
         if (db.version !== latestDbVersion){
 
-            alert('PhoneGap:' + db.version);
             db.changeVersion(db.version,latestDbVersion);
             db.transaction(function (tx) {
                 tx.executeSql('DROP TABLE laws',[], onTransact,onFail);
@@ -241,8 +232,6 @@ init = function () {
             });
 
             db.transaction(function (tx) {
-                alert('here we are at the insert');
-                alert('lawData length ' + lawData.length);
                 var q = 'INSERT INTO laws (docid, sortcode,title,description,law_text) VALUES (?,?,?,?,?)';
                 for (var i = 0, l = lawData.length; i < l; i ++) {
                     console.log('in loop');
@@ -365,23 +354,4 @@ init = function () {
 
 };
 
-// Check if a new cache is available on page load.
-//window.addEventListener('load', function () {
-//
-//    window.applicationCache.addEventListener('updateready', function () {
-//        if (window.applicationCache.status === window.applicationCache.UPDATEREADY) {
-//        // Browser downloaded a new app cache.
-//        // Swap it in and reload the page to get the new code.
-//            window.applicationCache.swapCache();
-//            if (confirm('A new version of LaCrimBook is available. Load it?')) {
-//                window.location.reload();
-//            }
-//        }
-//        else {
-//        // Manifest didn't change. Nothing new to server. Set up data
-//        }
-//    }, false);
-//
-//
-//}, false);
 document.addEventListener('deviceready', init, false);

@@ -283,10 +283,8 @@ init = function () {
         History.pushState({type: 'law', id: target}, target, '?target=' + target + '&view=law');
     });
 
-    $('.search-btn').click(function (event) {
-        if (device.platform !== 'iOS'){
-            event.preventDefault();
-        }
+    $('form').on('submit', function (event) {
+        event.preventDefault();
         var target = $(this).prev().val();
         $(document).scrollTop('0');
         History.pushState({type: 'search', id: target}, target, '?target=' + target + '&view=search');

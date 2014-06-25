@@ -283,7 +283,7 @@ init = function () {
         History.pushState({type: 'law', id: target}, target, '?target=' + target + '&view=law');
     });
 
-    $('form').submit(function (event) {
+    $('form').on('submit', function (event) {
         if (device.platform !== 'iOS'){
             event.preventDefault();
         }

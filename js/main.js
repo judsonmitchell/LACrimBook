@@ -1,4 +1,6 @@
 //CrimBook with sqlite backend
+document.addEventListener('deviceready', init, false);
+
 var State,
     db,
     History = window.History,
@@ -377,4 +379,3 @@ init = function () {
 //
 //}, false);
 
-document.addEventListener('deviceready', init, false);

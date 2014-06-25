@@ -352,9 +352,9 @@ init = function () {
         allowPageScroll: 'vertical'
     });
 
-    $(function() {
-        FastClick.attach(document.body);
-    });
+    //$(function() {
+    //    FastClick.attach(document.body);
+    //});
 
 };
 

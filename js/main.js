@@ -284,7 +284,9 @@ init = function () {
     });
 
     $('.search-btn').click(function (event) {
-        //event.preventDefault();
+        if (device.platform !== 'iOS'){
+            event.preventDefault();
+        }
         var target = $(this).prev().val();
         $(document).scrollTop('0');
         History.pushState({type: 'search', id: target}, target, '?target=' + target + '&view=search');

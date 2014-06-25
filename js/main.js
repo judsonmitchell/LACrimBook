@@ -221,11 +221,11 @@ init = function () {
 
         db = window.openDatabase(dbName, '', 'La. Crim Book 6-2014',2 * 1024 * 1024);
 
-        console.log('db version' + db.version);
-        console.log('latest db version' + latestDbVersion);
+        alert('db version' + db.version);
+        alert('latest db version' + latestDbVersion);
         if (db.version !== latestDbVersion){
 
-            console.log('PhoneGap:' + db.version);
+            alert('PhoneGap:' + db.version);
             db.changeVersion(db.version,latestDbVersion);
             db.transaction(function (tx) {
                 tx.executeSql('DROP TABLE laws',[], onTransact,onFail);

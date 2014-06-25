@@ -286,7 +286,6 @@ init = function () {
     $('form').on('submit', function (event) {
         if (device.platform !== 'iOS'){
             event.preventDefault();
-            alert(device.platform);
         }
         var target = $(this).find('.search-query').val();
         $(document).scrollTop('0');
@@ -334,7 +333,9 @@ init = function () {
     });
 
     $('.navbar-headnav').on('click', 'a.go-home', function (event) {
-        event.preventDefault();
+        if (device.platform !== 'iOS'){
+            event.preventDefault();
+        }
         var scroll = '0';
         History.pushState({type: 'home', id: null, pos: scroll}, 'Home', '/');
     });

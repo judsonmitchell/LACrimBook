@@ -3,7 +3,7 @@ var State,
     db,
     History = window.History,
     dbName = 'CrimLaws',
-    latestDbVersion = '1.0', //Change this on update
+    latestDbVersion = '1.1', //Change this on update
     lawSections = [          //Corresponds to West thumb index;
     {'name':'Title 14', 'start': 'RS 000014' },
     {'name':'Title 15', 'start': 'RS 000015' },
@@ -223,7 +223,7 @@ init = function () {
 
             db.changeVersion(db.version,latestDbVersion);
             db.transaction(function (tx) {
-                tx.executeSql('DROP TABLE laws',[], onTransact,onFail);
+                tx.executeSql('DROP TABLE IF EXISTS laws',[], onTransact,onFail);
             });
 
             db.transaction(function (tx) {

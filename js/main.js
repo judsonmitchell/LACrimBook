@@ -223,7 +223,8 @@ init = function () {
 
         console.log('db version' + db.version);
         console.log('latest db version' + latestDbVersion);
-        if (db.version !== latestDbVersion){
+        //if (db.version !== latestDbVersion){
+        if (latestDbVersion){
 
             console.log('PhoneGap:' + db.version);
             //db.changeVersion(db.version,latestDbVersion);

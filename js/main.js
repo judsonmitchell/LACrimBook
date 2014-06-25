@@ -356,23 +356,23 @@ init = function () {
 };
 
 // Check if a new cache is available on page load.
-window.addEventListener('load', function () {
-
-    window.applicationCache.addEventListener('updateready', function () {
-        if (window.applicationCache.status === window.applicationCache.UPDATEREADY) {
-        // Browser downloaded a new app cache.
-        // Swap it in and reload the page to get the new code.
-            window.applicationCache.swapCache();
-            if (confirm('A new version of LaCrimBook is available. Load it?')) {
-                window.location.reload();
-            }
-        }
-        else {
-        // Manifest didn't change. Nothing new to server. Set up data
-        }
-    }, false);
-
-
-}, false);
+//window.addEventListener('load', function () {
+//
+//    window.applicationCache.addEventListener('updateready', function () {
+//        if (window.applicationCache.status === window.applicationCache.UPDATEREADY) {
+//        // Browser downloaded a new app cache.
+//        // Swap it in and reload the page to get the new code.
+//            window.applicationCache.swapCache();
+//            if (confirm('A new version of LaCrimBook is available. Load it?')) {
+//                window.location.reload();
+//            }
+//        }
+//        else {
+//        // Manifest didn't change. Nothing new to server. Set up data
+//        }
+//    }, false);
+//
+//
+//}, false);
 
 document.addEventListener('deviceready', init, false);

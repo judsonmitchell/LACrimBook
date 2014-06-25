@@ -15,9 +15,9 @@ var State,
     {'name':'Code of Evidence', 'start': 'CE' },
     {'name':'Childrens Code', 'start': 'CHC' },
     {'name':'Constitution', 'start': 'CONST' }
-];
+],
 //Change content depending on state
-var updateContent = function(State,callback) {
+updateContent = function(State,callback) {
     var target = State.data.id,
         view = State.data.type,
         pos = State.data.pos,
@@ -191,31 +191,10 @@ updateFavoritesList = function () {
 
         $('.dropdown-menu').html(favList);
     }
-};
+},
 
-
-// Check if a new cache is available on page load.
-//window.addEventListener('load', function () {
-//
-//    window.applicationCache.addEventListener('updateready', function () {
-//        if (window.applicationCache.status === window.applicationCache.UPDATEREADY) {
-//        // Browser downloaded a new app cache.
-//        // Swap it in and reload the page to get the new code.
-//            window.applicationCache.swapCache();
-//            if (confirm('A new version of LaCrimBook is available. Load it?')) {
-//                window.location.reload();
-//            }
-//        }
-//        else {
-//        // Manifest didn't change. Nothing new to server. Set up data
-//        }
-//    }, false);
-//
-//
-//}, false);
-document.addEventListener('deviceready', init, false);
-function init(){
-    console.log('init has fired');
+init = function () {
+    alert('init has fired');
     $.ajax({url: 'data/data.json', data:'json', beforeSend: function () { $('.panel').hide(); }})
     .done(function(data){
         var lawData = data,
@@ -376,4 +355,25 @@ function init(){
         FastClick.attach(document.body);
     });
 
-}
+};
+
+// Check if a new cache is available on page load.
+//window.addEventListener('load', function () {
+//
+//    window.applicationCache.addEventListener('updateready', function () {
+//        if (window.applicationCache.status === window.applicationCache.UPDATEREADY) {
+//        // Browser downloaded a new app cache.
+//        // Swap it in and reload the page to get the new code.
+//            window.applicationCache.swapCache();
+//            if (confirm('A new version of LaCrimBook is available. Load it?')) {
+//                window.location.reload();
+//            }
+//        }
+//        else {
+//        // Manifest didn't change. Nothing new to server. Set up data
+//        }
+//    }, false);
+//
+//
+//}, false);
+document.addEventListener('deviceready', init, false);

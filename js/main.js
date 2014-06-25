@@ -15,9 +15,9 @@ var State,
     {'name':'Code of Evidence', 'start': 'CE' },
     {'name':'Childrens Code', 'start': 'CHC' },
     {'name':'Constitution', 'start': 'CONST' }
-],
+];
 //Change content depending on state
-updateContent = function(State,callback) {
+var updateContent = function(State,callback) {
     var target = State.data.id,
         view = State.data.type,
         pos = State.data.pos,
@@ -191,9 +191,30 @@ updateFavoritesList = function () {
 
         $('.dropdown-menu').html(favList);
     }
-},
+};
 
-init = function () {
+
+// Check if a new cache is available on page load.
+//window.addEventListener('load', function () {
+//
+//    window.applicationCache.addEventListener('updateready', function () {
+//        if (window.applicationCache.status === window.applicationCache.UPDATEREADY) {
+//        // Browser downloaded a new app cache.
+//        // Swap it in and reload the page to get the new code.
+//            window.applicationCache.swapCache();
+//            if (confirm('A new version of LaCrimBook is available. Load it?')) {
+//                window.location.reload();
+//            }
+//        }
+//        else {
+//        // Manifest didn't change. Nothing new to server. Set up data
+//        }
+//    }, false);
+//
+//
+//}, false);
+document.addEventListener('deviceready', init, false);
+function init(){
     console.log('init has fired');
     $.ajax({url: 'data/data.json', data:'json', beforeSend: function () { $('.panel').hide(); }})
     .done(function(data){
@@ -223,14 +244,13 @@ init = function () {
 
         console.log('db version' + db.version);
         console.log('latest db version' + latestDbVersion);
-        //if (db.version !== latestDbVersion){
-        if (latestDbVersion){
+        if (db.version !== latestDbVersion){
 
             console.log('PhoneGap:' + db.version);
-            //db.changeVersion(db.version,latestDbVersion);
-            //db.transaction(function (tx) {
-            //    tx.executeSql('DROP TABLE laws',[], onTransact,onFail);
-            //});
+            db.changeVersion(db.version,latestDbVersion);
+            db.transaction(function (tx) {
+                tx.executeSql('DROP TABLE laws',[], onTransact,onFail);
+            });
 
             db.transaction(function (tx) {
                 tx.executeSql('CREATE TABLE IF NOT EXISTS laws ( `id` INTEGER PRIMARY KEY AUTOINCREMENT,' +
@@ -356,25 +376,4 @@ init = function () {
         FastClick.attach(document.body);
     });
 
-};
-
-// Check if a new cache is available on page load.
-//window.addEventListener('load', function () {
-//
-//    window.applicationCache.addEventListener('updateready', function () {
-//        if (window.applicationCache.status === window.applicationCache.UPDATEREADY) {
-//        // Browser downloaded a new app cache.
-//        // Swap it in and reload the page to get the new code.
-//            window.applicationCache.swapCache();
-//            if (confirm('A new version of LaCrimBook is available. Load it?')) {
-//                window.location.reload();
-//            }
-//        }
-//        else {
-//        // Manifest didn't change. Nothing new to server. Set up data
-//        }
-//    }, false);
-//
-//
-//}, false);
-document.addEventListener('deviceready', init, false);
+}

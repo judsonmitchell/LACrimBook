@@ -248,7 +248,7 @@ init = function () {
                             arr.push(val);
                         }
                     }
-                    alert('here is array length ' + arr.length);
+                    alert('here is array ' + arr[0]);
                     tx.executeSql(q, arr, okInsert, onFail);
                 }
             },  onFail, onSuccess);

@@ -284,9 +284,7 @@ init = function () {
     });
 
     $('form').on('submit', function (event) {
-        if (device.platform !== 'iOS'){
-            event.preventDefault();
-        }
+        event.preventDefault();
         var target = $(this).find('.search-query').val();
         $(document).scrollTop('0');
         History.pushState({type: 'search', id: target}, target, '?target=' + target + '&view=search');
@@ -333,9 +331,7 @@ init = function () {
     });
 
     $('.navbar-headnav').on('click', 'a.go-home', function (event) {
-        if (device.platform !== 'iOS'){
-            event.preventDefault();
-        }
+        event.preventDefault();
         var scroll = '0';
         History.pushState({type: 'home', id: null, pos: scroll}, 'Home', '/');
     });

@@ -3,7 +3,7 @@ var State,
     db,
     History = window.History,
     dbName = 'CrimLaws',
-    latestDbVersion = '1.5', //Change this on update
+    latestDbVersion = '1.6', //Change this on update
     lawSections = [          //Corresponds to West thumb index;
     {'name':'Title 14', 'start': 'RS 000014' },
     {'name':'Title 15', 'start': 'RS 000015' },
@@ -248,6 +248,7 @@ init = function () {
                             arr.push(val);
                         }
                     }
+                    alert('here is array length ' + arr.length);
                     tx.executeSql(q, arr, okInsert, onFail);
                 }
             },  onFail, onSuccess);

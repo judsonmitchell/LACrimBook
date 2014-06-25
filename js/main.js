@@ -223,36 +223,36 @@ init = function () {
 
         console.log('db version' + db.version);
         console.log('latest db version' + latestDbVersion);
-        //if (db.version !== latestDbVersion){
+        if (db.version !== latestDbVersion){
 
-        console.log('PhoneGap:' + db.version);
-        db.changeVersion(db.version,latestDbVersion);
-        db.transaction(function (tx) {
-            tx.executeSql('DROP TABLE laws',[], onTransact,onFail);
-        });
+            console.log('PhoneGap:' + db.version);
+            //db.changeVersion(db.version,latestDbVersion);
+            //db.transaction(function (tx) {
+            //    tx.executeSql('DROP TABLE laws',[], onTransact,onFail);
+            //});
 
-        db.transaction(function (tx) {
-            tx.executeSql('CREATE TABLE IF NOT EXISTS laws ( `id` INTEGER PRIMARY KEY AUTOINCREMENT,' +
-            '`docid` TEXT, `sortcode` TEXT, `title` TEXT, `description` TEXT, `law_text` TEXT); ',[], onTransact,onFail);
-        });
+            db.transaction(function (tx) {
+                tx.executeSql('CREATE TABLE IF NOT EXISTS laws ( `id` INTEGER PRIMARY KEY AUTOINCREMENT,' +
+                '`docid` TEXT, `sortcode` TEXT, `title` TEXT, `description` TEXT, `law_text` TEXT); ',[], onTransact,onFail);
+            });
 
-        db.transaction(function (tx) {
-            var q = 'INSERT INTO laws (docid, sortcode,title,description,law_text) VALUES (?,?,?,?,?)';
-            for (var i = 0, l = lawData.length; i < l; i ++) {
-                var obj = lawData[i];
-                var arr = [];
-                for (var key in obj) {
-                    if (obj.hasOwnProperty(key)) {
-                        var val = obj[key];
-                        arr.push(val);
+            db.transaction(function (tx) {
+                var q = 'INSERT INTO laws (docid, sortcode,title,description,law_text) VALUES (?,?,?,?,?)';
+                for (var i = 0, l = lawData.length; i < l; i ++) {
+                    var obj = lawData[i];
+                    var arr = [];
+                    for (var key in obj) {
+                        if (obj.hasOwnProperty(key)) {
+                            var val = obj[key];
+                            arr.push(val);
+                        }
                     }
+                    tx.executeSql(q, arr, okInsert, onFail);
                 }
-                tx.executeSql(q, arr, okInsert, onFail);
-            }
-        },  onFail, onSuccess);
-        //} else {
-        //    onSuccess();
-        //}
+            },  onFail, onSuccess);
+        } else {
+            onSuccess();
+        }
     })
     .fail(function(jqXHR, textStatus, errorThrown){
         $('.alert').html('Error Retrieving Laws:' + errorThrown).show();

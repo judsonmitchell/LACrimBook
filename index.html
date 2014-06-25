@@ -8,6 +8,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>Louisiana Statutory Criminal Law</title>
+        <meta name="description" content="">
         <meta name="viewport" content="width=device-width, user-scalable = no">
 
         <link rel="stylesheet" href="css/bootstrap3.css">
@@ -31,15 +32,15 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand go-home" href="index.html"><img class="space-right" src="img/header-icon.png" />LACrimBook</a>
+                    <a class="navbar-brand go-home" href="index.html"><img class="space-right" src="img/header-icon.png">LACrimBook</a>
                 </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse"> 
                     <ul class="nav navbar-nav navbar-right">
                         <li class="active"><a class="go-home" href="#">Home</a></li>
-                        <li><a href="about.html">About</a></li>
+                        <li><a href="about.html" class="needsclick">About</a></li>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Favorites <b class="caret"></b></a>
+                            <a href="#" class="dropdown-toggle needsclick" data-toggle="dropdown">Favorites <b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li><a href="#">No Favorites Saved</a></li>
                                 <li class="divider"></li>
@@ -49,7 +50,7 @@
                     </ul>
                 </div><!--/.nav-collapse -->
                 <div class="search-form">
-                    <form role="form">
+                    <form>
                         <input type="text" class="input-sm search-query" placeholder="Search Statutes">
                         <button type="submit" class="btn btn-sm search-btn"><span class="glyphicon glyphicon-search"></span></button>
                     </form>
@@ -66,6 +67,7 @@
 
         <script src="phonegap.js"></script>
         <script src="js/vendor/bootstrap3.min.js"></script>
+        <script src="js/vendor/fastclick.js"></script>
         <script src="js/vendor/jquery.history.js"></script>
         <script src="js/queryStringToJson.js"></script>
         <script src="js/snippet.js"></script>

@@ -3,7 +3,7 @@ var State,
     db,
     History = window.History,
     dbName = 'CrimLaws',
-    latestDbVersion = '1.9', //Change this on update
+    latestDbVersion = '2.9', //Change this on update
     lawSections = [          //Corresponds to West thumb index;
     {'name':'Title 14', 'start': 'RS 000014' },
     {'name':'Title 15', 'start': 'RS 000015' },
@@ -243,6 +243,7 @@ init = function () {
                 alert('lawData length ' + lawData.length);
                 for (var i = 0, l = lawData.length; i < l; i ++) {
                     var obj = lawData[i];
+                    console.log(obj.hasOwnProperty());
                     var arr = [];
                     for (var key in obj) {
                         if (obj.hasOwnProperty(key)) {

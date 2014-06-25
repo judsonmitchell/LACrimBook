@@ -3,7 +3,7 @@ var State,
     db,
     History = window.History,
     dbName = 'CrimLaws',
-    latestDbVersion = '2.9', //Change this on update
+    latestDbVersion = '3.0', //Change this on update
     lawSections = [          //Corresponds to West thumb index;
     {'name':'Title 14', 'start': 'RS 000014' },
     {'name':'Title 15', 'start': 'RS 000015' },

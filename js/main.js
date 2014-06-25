@@ -3,7 +3,7 @@ var State,
     db,
     History = window.History,
     dbName = 'CrimLaws',
-    latestDbVersion = '3.2', //Change this on update
+    latestDbVersion = '3.3', //Change this on update
     lawSections = [          //Corresponds to West thumb index;
     {'name':'Title 14', 'start': 'RS 000014' },
     {'name':'Title 15', 'start': 'RS 000015' },
@@ -195,8 +195,9 @@ updateFavoritesList = function () {
 
 init = function () {
     alert('init has fired');
-    $.ajax({url: 'data/data.json', data:'json', beforeSend: function () { $('.panel').hide(); }})
+    $.ajax({url: 'data/data.json', dataType:'json', beforeSend: function () { $('.panel').hide(); }})
     .done(function(data){
+        alert(typeof data);
         var lawData = data,
         onSuccess = function () {
             $('.loading').hide();

@@ -2,6 +2,7 @@
 var State,
     db,
     History = window.History,
+    appName = 'LACrimBook',
     dbName = 'CrimLaws',
     latestDbVersion = '1.1', //Change this on update
     lawSections = [          //Corresponds to West thumb index;
@@ -35,6 +36,14 @@ updateContent = function(State,callback) {
         $('input').val('');
     }
 
+    if (loc.view === 'search' || loc.view === 'list' ||  loc.view === 'law' || loc.view ==='favorites') {
+        $('#app-name').text('');
+        $('.navbar-brand i').show();
+    } else {
+        $('#app-name').text(appName);
+        $('.navbar-brand i').hide();
+    }
+
     switch (view) {
     case 'list':
         items = ' <div class="list-group display-rows">';
@@ -62,11 +71,11 @@ updateContent = function(State,callback) {
                 var fav;
                 if (localStorage.getItem(target)){
                     fav = '<a href="#" class="favorite upper-right-corner" data-state="saved" data-id="' + target +
-                    '" title="Favorite This"><span class="glyphicon glyphicon-star"></span></a>';
+                    '" title="Favorite This"><i class="fa fa-star"></i></a>';
                 }
                 else {
                     fav = '<a href="#" class="favorite upper-right-corner" data-state="unsaved" data-id="' + target +
-                    '" title="Favorite This"><span class="glyphicon glyphicon-star-empty"></span></a>';
+                    '" title="Favorite This"><i class="fa fa-star-o"></i></a>';
                 }
                 var rows = res.rows;
                 $('title').text(rows.item(0).description + ' ' + rows.item(0).title);
@@ -151,7 +160,7 @@ updateContent = function(State,callback) {
         for (var int = 0, l = lawSections.length; int < l; int ++) {
             var v = lawSections[int];
             menu += '<a class="nav-link list-group-item list-group-item " data-id="' + v.start + '" href="#">' +
-            '<span class="glyphicon glyphicon-chevron-right"></span>  ' + v.name + '</a>';
+            '<i class="fa fa-angle-right pull-right"></i>  ' + v.name + '</a>';
         }
         menu += '</div>';
         $('.panel').html(menu);
@@ -298,7 +307,7 @@ init = function () {
             var title = $(this).prev().html();
             localStorage.setItem(target, title);
             $('.alert').html('Saved to favorites.').show();
-            $('.favorite').html('<span class="glyphicon glyphicon-star"></span');
+            $('.favorite').html('<i class="fa fa-star"></i');
             $(this).attr('data-state', 'saved');
             updateFavoritesList();
         }
@@ -306,7 +315,7 @@ init = function () {
             localStorage.removeItem(target);
             $(this).attr('data-state', 'unsaved');
             $('.alert').html('Removed from favorites.').show();
-            $('.favorite').html('<span class="glyphicon glyphicon-star-empty"></span');
+            $('.favorite').html('<i class="fa fa-star-o"></i');
             updateFavoritesList();
         }
     });
@@ -333,7 +342,8 @@ init = function () {
     $('.navbar-headnav').on('click', 'a.go-home', function (event) {
         event.preventDefault();
         var scroll = '0';
-        History.pushState({type: 'home', id: null, pos: scroll}, 'Home', '/');
+        //History.pushState({type: 'home', id: null, pos: scroll}, 'Home', '/');
+        History.back()
     });
 
     $('.main').swipe({
@@ -354,4 +364,5 @@ init = function () {
 
 };
 
-document.addEventListener('deviceready', init, false);
+//document.addEventListener('deviceready', init, false);
+$(document).ready(function() {init();});

@@ -383,6 +383,17 @@ init = function () {
         FastClick.attach(document.body);
     });
 
+    if (localStorage.getItem('lacrimbook-notice-2.6.0') === null){
+        $('#update-info').load('CHANGES');
+        $('#update-info').show();
+    }
+
+    $('body').on('click', '.update-dismiss', function (event) {
+        event.preventDefault();
+        $('#update-info').remove();
+        localStorage.setItem('lacrimbook-notice-2.6.0', true);
+    });
 };
 
-document.addEventListener('deviceready', init, false);
+//document.addEventListener('deviceready', init, false);
+$(document).ready(function () {init();});

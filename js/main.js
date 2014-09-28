@@ -43,6 +43,7 @@ updateContent = function(State,callback) {
     } else {
         $('#app-name').text(appName);
         $('.navbar-brand i').hide();
+        $(document).scrollTop(0); //Always scroll to top on main page
     }
 
     switch (view) {
@@ -221,7 +222,6 @@ browse = function (target, direction) {
     direction === 'forward' ?  target++ : target--;
     History.pushState({type: 'law', id: target}, target, '?target=' + target + '&view=law');
     pageDepth++;
-    console.log(pageDepth);
 },
 
 init = function () {
@@ -363,17 +363,16 @@ init = function () {
 
     $('.navbar-headnav').on('click', 'a.go-home', function (event) {
         event.preventDefault();
-        History.go(Math.abs(pageDepth) * -1);
+        //Use window.history here to avoid jquery.history plugin
+        window.history.go(Math.abs(pageDepth) * -1);
     });
 
     $('.main').swipe({
         swipe:function(event, direction, distance, duration, fingerCount) {
             if (direction === 'right'){
-                console.log('swipe right');
                 browse(getQueryVariable('target'),'backward');
             }
             if (direction === 'left'){
-                console.log('swipe left');
                 browse(getQueryVariable('target'),'forward');
             }
         },
@@ -384,8 +383,7 @@ init = function () {
         FastClick.attach(document.body);
     });
 
-    console.log('init done');
 };
 
-document.addEventListener('deviceready', init, false);
-//$(document).ready(function () {init();});
+//document.addEventListener('deviceready', init, false);
+$(document).ready(function () {init();});

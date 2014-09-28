@@ -384,6 +384,7 @@ init = function () {
         FastClick.attach(document.body);
     });
 
+    console.log('init done');
 };
 
 document.addEventListener('deviceready', init, false);

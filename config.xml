@@ -3,7 +3,7 @@
         xmlns:gap   = "http://phonegap.com/ns/1.0"
         id          = "org.loyolalawtech.crimbook"
         versionCode = "8"
-        version     = "2.5.0">
+        version     = "2.6.0">
 
     <!-- versionCode is optional and Android only -->
 

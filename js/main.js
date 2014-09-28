@@ -369,9 +369,11 @@ init = function () {
     $('.main').swipe({
         swipe:function(event, direction, distance, duration, fingerCount) {
             if (direction === 'right'){
+                console.log('swipe right');
                 browse(getQueryVariable('target'),'backward');
             }
             if (direction === 'left'){
+                console.log('swipe left');
                 browse(getQueryVariable('target'),'forward');
             }
         },

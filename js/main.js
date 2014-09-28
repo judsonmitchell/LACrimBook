@@ -5,6 +5,7 @@ var State,
     appName = 'LACrimBook',
     dbName = 'CrimLaws',
     latestDbVersion = '1.1', //Change this on update
+    pageDepth = 1,
     lawSections = [          //Corresponds to West thumb index;
     {'name':'Title 14', 'start': 'RS 000014' },
     {'name':'Title 15', 'start': 'RS 000015' },
@@ -57,6 +58,7 @@ updateContent = function(State,callback) {
                 items += '</div>';
                 $('.panel').html(items);
                 $(document).scrollTop(pos);
+                pageDepth = 1;
             },function (tx, err){
                 $('.alert').html('Error: ' + err.message).show();
             }), function onReadError(tx,err){
@@ -202,6 +204,26 @@ updateFavoritesList = function () {
     }
 },
 
+getQueryVariable = function (variable) {
+    var query = window.location.search.substring(1);
+    var vars = query.split('&');
+    for (var i = 0; i < vars.length; i++) {
+        var pair = vars[i].split('=');
+        if (decodeURIComponent(pair[0]) === variable) {
+            return decodeURIComponent(pair[1]);
+        }
+    }
+    console.log('Query variable %s not found', variable);
+},
+
+browse = function (target, direction) {
+
+    direction === 'forward' ?  target++ : target--;
+    History.pushState({type: 'law', id: target}, target, '?target=' + target + '&view=law');
+    pageDepth++;
+    console.log(pageDepth);
+},
+
 init = function () {
     $.ajax({url: 'data/data.json', dataType:'json', beforeSend: function () { $('.panel').hide(); }})
     .done(function(data){
@@ -341,18 +363,16 @@ init = function () {
 
     $('.navbar-headnav').on('click', 'a.go-home', function (event) {
         event.preventDefault();
-        var scroll = '0';
-        //History.pushState({type: 'home', id: null, pos: scroll}, 'Home', '/');
-        History.back()
+        History.go(Math.abs(pageDepth) * -1);
     });
 
     $('.main').swipe({
         swipe:function(event, direction, distance, duration, fingerCount) {
             if (direction === 'right'){
-                History.back();
+                browse(getQueryVariable('target'),'backward');
             }
             if (direction === 'left'){
-                History.go(1);
+                browse(getQueryVariable('target'),'forward');
             }
         },
         allowPageScroll: 'vertical'
@@ -365,3 +385,4 @@ init = function () {
 };
 
 document.addEventListener('deviceready', init, false);
+//$(document).ready(function () {init();});

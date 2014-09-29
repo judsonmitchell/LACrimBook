@@ -137,8 +137,10 @@ updateContent = function(State,callback) {
             };
             db.readTransaction(function (tx){
                 for (var i = 0; i < localStorage.length; i++) {
-                    var key = localStorage.key(i);
-                    tx.executeSql(q,[key],getFavs,favErr);
+                    if (!isNaN(localStorage.key(i))){
+                        var key = localStorage.key(i);
+                        tx.executeSql(q,[key],getFavs,favErr);
+                    }
                 }
             },
             function fail(tx,err){
@@ -187,17 +189,21 @@ updateFavoritesList = function () {
 
         if (localStorage.length > 4) {
             for (i = 0; i < 5; i++) {
-                key = localStorage.key(i);
-                value = localStorage.getItem(key);
-                favList += '<li><a class="fav-link" href="#" data-id="' + key + '">' + value + '</a></li>';
+                if (!isNaN(localStorage.key(i))){
+                    key = localStorage.key(i);
+                    value = localStorage.getItem(key);
+                    favList += '<li><a class="fav-link" href="#" data-id="' + key + '">' + value + '</a></li>';
+                }
             }
             favList += '<li class="divider"></li><li><a class="fav-all" href="#">View All</a></li>';
         }
         else {
             for (i = 0; i < localStorage.length; i++) {
-                key = localStorage.key(i);
-                value = localStorage.getItem(key);
-                favList += '<li><a class="fav-link" href="#" data-id="' + key + '">' + value + '</a></li>';
+                if (!isNaN(localStorage.key(i))){
+                    key = localStorage.key(i);
+                    value = localStorage.getItem(key);
+                    favList += '<li><a class="fav-link" href="#" data-id="' + key + '">' + value + '</a></li>';
+                }
             }
         }
 
@@ -396,3 +402,4 @@ init = function () {
 };
 
 document.addEventListener('deviceready', init, false);
+//$(document).ready(function () {init();});

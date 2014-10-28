@@ -1,7 +1,6 @@
-<h3>New in version 2.6.0</h3>
+<h3>New in version 2.7.0</h3>
 <ul>
-    <li>When you're reading a law, <strong>swipe</strong> right or left to browse to the next or previous laws, just like in the book!</li>
-    <li>To get back to the list of laws, touch the CrimBook icon at the top of the screen.</li>
+    <li>Updates laws to include changes through the 2014 legislative session.</li>
 </ul>
 <div id="update-action">
     <a class="btn btn-default update-dismiss">Dismiss</a> 

@@ -389,7 +389,7 @@ init = function () {
         FastClick.attach(document.body);
     });
 
-    if (localStorage.getItem('lacrimbook-notice-2.6.0') === null){
+    if (localStorage.getItem('lacrimbook-notice-2.7.0') === null){
         $('#update-info').load('CHANGES');
         $('#update-info').show();
     }

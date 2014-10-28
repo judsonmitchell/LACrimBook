@@ -4,7 +4,7 @@ var State,
     History = window.History,
     appName = 'LACrimBook',
     dbName = 'CrimLaws',
-    latestDbVersion = '1.1', //Change this on update
+    latestDbVersion = '2.0', //Change this on update
     pageDepth = 1,
     lawSections = [          //Corresponds to West thumb index;
     {'name':'Title 14', 'start': 'RS 000014' },

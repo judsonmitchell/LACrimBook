@@ -397,7 +397,7 @@ init = function () {
     $('body').on('click', '.update-dismiss', function (event) {
         event.preventDefault();
         $('#update-info').remove();
-        localStorage.setItem('lacrimbook-notice-2.6.0', true);
+        localStorage.setItem('lacrimbook-notice-2.7.0', true);
     });
 };
 

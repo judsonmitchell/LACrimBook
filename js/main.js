@@ -1,3 +1,4 @@
+/* globals jlinq, spinnerplugin, FastClick, getExcerpt */
 // Check if a new cache is available on page load.
 window.addEventListener('load', function () {
 
@@ -5,8 +6,8 @@ window.addEventListener('load', function () {
         if (window.applicationCache.status === window.applicationCache.UPDATEREADY) {
         // Browser downloaded a new app cache.
         // Swap it in and reload the page to get the new code.
-            window.applicationCache.swapCache();
             if (confirm('A new version of LaCrimBook is available. Load it?')) {
+                window.applicationCache.swapCache();
                 window.location.reload();
             }
         }
@@ -69,12 +70,13 @@ var updateContent = function(State,callback) {
         $('input').val('');
     }
 
-    switch (view) {
+    switch (removeSlash(view)) {
     case 'list':
         items = ' <div class="list-group display-rows">';
         laws = jlinq.from(myData).starts('sortcode', target + ' ').select();
         for (var i = 0, l = laws.length; i < l; i ++) {
-            items += '<a class="law-link list-group-item" href="#" data-id="' + laws[i].id + '">' + laws[i].title + ' ' + laws[i].description + '</a>';
+            items += '<a class="law-link list-group-item" href="#" data-id="' + laws[i].id + '"><span class="text-muted">' + 
+            laws[i].title + '</span>   ' + laws[i].description + '</a>';
         }
         items += '</div>';
         $('.panel').html(items);
@@ -92,8 +94,9 @@ var updateContent = function(State,callback) {
             fav = '<a href="#" class="favorite upper-right-corner" data-state="unsaved" data-id="' + target +
             '" title="Favorite This"><span class="glyphicon glyphicon-star-empty"></span></a>';
         }
-        $('title').text(laws[0].description + ' ' + laws[0].title);
-        $('.panel').css({'padding':'10px'}).html('<h3><span class="lawTitle">' + laws[0].description + '</span>' + fav + '</h3>' + laws[0].law_text);
+        $('title').text(laws[0].title + ' ' + laws[0].description);
+        $('.panel').css({'padding':'10px'}).html('<h3><span class="lawTitle">' + laws[0].title + ' '  +
+        laws[0].description + '</span>' + fav + '</h3>' + laws[0].law_text);
         $(document).scrollTop(0);
         break;
     case 'search':
@@ -130,11 +133,13 @@ var updateContent = function(State,callback) {
     case 'favorites':
         items = ' <div class="list-group display-rows">';
         if (localStorage.length > 0) {
-            for (var i = 0; i < localStorage.length; i++) {
+            for (i = 0; i < localStorage.length; i++) {
                 var key = localStorage.key(i);
-                laws = jlinq.from(myData).equals('id', key).select();
-                items += '<a class="law-link list-group-item" href="#" data-id="' + laws[0].id + '">' + laws[0].description +
-                ' ' + laws[0].title + '</a>';
+                if (!isNaN(key)){
+                    laws = jlinq.from(myData).equals('id', key).select();
+                    items += '<a class="law-link list-group-item" href="#" data-id="' + laws[0].id + '">' + laws[0].description +
+                    ' ' + laws[0].title + '</a>';
+                }
             }
         }
         else {
@@ -176,7 +181,9 @@ updateFavoritesList = function () {
             for (i = 0; i < 5; i++) {
                 key = localStorage.key(i);
                 value = localStorage.getItem(key);
-                favList += '<li><a class="fav-link" href="#" data-id="' + key + '">' + value + '</a></li>';
+                if (!isNaN(key)){
+                    favList += '<li><a class="fav-link" href="#" data-id="' + key + '">' + value + '</a></li>';
+                }
             }
             favList += '<li class="divider"></li><li><a class="fav-all" href="#">View All</a></li>';
         }
@@ -184,11 +191,22 @@ updateFavoritesList = function () {
             for (i = 0; i < localStorage.length; i++) {
                 key = localStorage.key(i);
                 value = localStorage.getItem(key);
-                favList += '<li><a class="fav-link" href="#" data-id="' + key + '">' + value + '</a></li>';
+                if (!isNaN(key)){
+                    favList += '<li><a class="fav-link" href="#" data-id="' + key + '">' + value + '</a></li>';
+                }
             }
         }
 
+        if ($('ul.dropdown-menu li').length === 0){
+            favList += '<li>No favorites yet.</li>';
+        }
+        
         $('.dropdown-menu').html(favList);
+    }
+},
+removeSlash = function (view){
+    if (typeof view !== 'undefined'){
+        return view.replace(/\/$/, '');
     }
 },
 
@@ -290,7 +308,7 @@ init = function () {
         FastClick.attach(document.body);
     });
 
-}
+};
 
 if (window.cordova){
     document.addEventListener('deviceready', init, false);

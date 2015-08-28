@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# version 11
+# version v2 2015-08-28 09:07:00 
 
 favicon.ico
 css/bootstrap3.css
@@ -28,7 +28,6 @@ img/florman.jpg
 img/header-icon.png
 
 NETWORK:
-https://google-analytics.com/ga.js
 http://www.google-analytics.com/ga.js
 http://themes.googleusercontent.com/static/fonts/opensans/v8/cJZKeOuBrn4kERxqtaUH3bO3LdcAZYWl9Si6vvxL-qU.woff
 

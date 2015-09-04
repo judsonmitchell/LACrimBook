@@ -1,4 +1,4 @@
-/* globals jlinq, spinnerplugin, FastClick, getExcerpt */
+/* globals jlinq, spinnerplugin, FastClick, getExcerpt, confirm */
 // Check if a new cache is available on page load.
 window.addEventListener('load', function () {
 
@@ -76,7 +76,7 @@ var updateContent = function(State,callback) {
         laws = jlinq.from(myData).starts('sortcode', target + ' ').select();
         for (var i = 0, l = laws.length; i < l; i ++) {
             items += '<a class="law-link list-group-item" href="#" data-id="' + laws[i].id + '"><span class="text-muted">' + 
-            laws[i].title + '</span>   ' + laws[i].description + '</a>';
+            laws[i].title + '</span>&nbsp;' + laws[i].description + '</a>';
         }
         items += '</div>';
         $('.panel').html(items);

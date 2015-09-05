@@ -2,8 +2,8 @@
     <widget xmlns   = "http://www.w3.org/ns/widgets"
         xmlns:gap   = "http://phonegap.com/ns/1.0"
         id          = "org.loyolalawtech.crimbook"
-        versionCode = "12"
-        version     = "2.7.1">
+        versionCode = "13"
+        version     = "2.8.0">
 
     <!-- versionCode is optional and Android only -->
 
@@ -21,7 +21,7 @@
     <gap:plugin name="org.apache.cordova.device" version="0.2.8" />
 
     <preference name="permissions" value="none" />
-    <preference name="phonegap-version" value="3.6.3" />         
+    <preference name="phonegap-version" value="3.7.0" />         
     <preference name="android-targetSdkVersion" value="14" />
     <preference name="BackupWebStorage" value="none"/> 
 

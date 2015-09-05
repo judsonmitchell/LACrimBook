@@ -20,6 +20,9 @@
     <gap:plugin name="it.mobimentum.phonegapspinnerplugin" version="1.1.0"/>
     <gap:plugin name="org.apache.cordova.device" version="0.2.8" />
 
+    <gap:config-file platform="ios" parent="CFBundleIdentifier" overwrite="true"> 
+        <string>org.loyolalawtech.crimbook</string>
+    </gap:config-file>
     <preference name="permissions" value="none" />
     <preference name="phonegap-version" value="3.7.0" />         
     <preference name="android-targetSdkVersion" value="14" />
@@ -74,7 +77,4 @@
     <gap:splash src="res/screen/ios/screen-ipad-portrait-2x.png"      gap:platform="ios"     width="1536" height="2008" />
     <gap:splash src="res/screen/ios/screen-ipad-landscape-2x.png"      gap:platform="ios"     width="2008" height="1536" />
 
-    <gap:config-file platform="ios" parent="CFBundleIdentifier" overwrite="true"> 
-        <string>org.loyolalawtech.crimbook</string>
-    </gap:config-file>
 </widget>

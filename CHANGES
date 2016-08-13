@@ -2,7 +2,7 @@
 <ul>
     <li>Legislative update for 2016</li>
     <li>Want to support the development of LACrimbook? 
-    Please <a style="color:red" onclick="navigator.app.loadUrl('https://www.paypal.me/judsonmitchell', { openExternal:true });"> donate</a> !</li>
+    Please <a style="color:red" onclick="window.open('https://www.paypal.me/judsonmitchell', '_system');"> donate</a> !</li>
 </ul>
 <div id="update-action">
     <a class="btn btn-default update-dismiss">Dismiss</a> 

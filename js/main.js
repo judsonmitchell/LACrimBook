@@ -5,7 +5,7 @@ var State,
     History = window.History,
     appName = 'LACrimBook',
     dbName = 'CrimLaws',
-    latestDbVersion = '3.1', //Change this on update
+    latestDbVersion = '3.2', //Change this on update
     pageDepth = 1,
     lawSections = [          //Corresponds to West thumb index;
     {'name':'Title 14', 'start': 'RS 000014' },
@@ -390,7 +390,7 @@ init = function () {
         FastClick.attach(document.body);
     });
 
-    if (localStorage.getItem('lacrimbook-notice-2.8.1') === null){
+    if (localStorage.getItem('lacrimbook-notice-2.9.1') === null){
         $('#update-info').load('CHANGES');
         $('#update-info').show();
     }
@@ -398,9 +398,9 @@ init = function () {
     $('body').on('click', '.update-dismiss', function (event) {
         event.preventDefault();
         $('#update-info').remove();
-        localStorage.setItem('lacrimbook-notice-2.8.1', true);
+        localStorage.setItem('lacrimbook-notice-2.9.1', true);
     });
 };
 
-//document.addEventListener('deviceready', init, false);
-$(document).ready(function () {init();});
+document.addEventListener('deviceready', init, false);
+//$(document).ready(function () {init();});

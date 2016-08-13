@@ -24,7 +24,6 @@
 
     <preference name="permissions" value="none" />
     <preference name="phonegap-version" value="cli-6.3.0" />         
-    <preference name="android-targetSdkVersion" value="14" />
     <preference name="BackupWebStorage" value="none"/> 
 
     <preference name="fullscreen" value="false" />           <!-- all: hides the status bar at the top of the screen -->

@@ -1,7 +1,8 @@
 <h3>New in version 2.9.1</h3>
 <ul>
     <li>Legislative update for 2016</li>
-    <li>Want to support the development of LACrimbook? Please <a href="https://www.paypal.me/judsonmitchell"> donate</a> !</li>
+    <li>Want to support the development of LACrimbook? 
+    Please <a style="color:red" href="https://www.paypal.me/judsonmitchell"> donate</a> !</li>
 </ul>
 <div id="update-action">
     <a class="btn btn-default update-dismiss">Dismiss</a> 

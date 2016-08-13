@@ -19,7 +19,7 @@
     <gap:plugin name="com.phonegap.plugin.statusbar" version="1.1.0" />
     <gap:plugin name="it.mobimentum.phonegapspinnerplugin" version="1.1.0"/>
     <gap:plugin name="org.apache.cordova.device" />
-    <plugin name="org.apache.cordova.inappbrowser" source="pgb"/>
+    <gap:plugin name="org.apache.cordova.inappbrowser" source="pgb"/>
 
     <preference name="permissions" value="none" />
     <preference name="phonegap-version" value="cli-6.3.0" />         

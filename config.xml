@@ -2,7 +2,7 @@
     <widget xmlns   = "http://www.w3.org/ns/widgets"
         xmlns:gap   = "http://phonegap.com/ns/1.0"
         id          = "org.loyolalawtech.crimbook"
-        versionCode = "18"
+        versionCode = "19"
         version     = "2.10.1">
 
     <!-- versionCode is optional and Android only -->

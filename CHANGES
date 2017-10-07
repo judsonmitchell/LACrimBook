@@ -1,5 +1,5 @@
 <h3>New in version 2.11.0</h3>
-    <p>New quick scroll buttons make it easier to locate laws.</p>
+    <p style="margin:20px;text-align:center;">New quick jump buttons make it easier to get to the section you want.</p>
 <div id="update-action">
     <a class="btn btn-default update-dismiss">Dismiss</a> 
 </div>

@@ -67,6 +67,7 @@ updateContent = function(State,callback) {
                 $('.alert').html('Error: ' + err.message).show();
             };
         });
+        $('#quick-scroll').show();
         break;
     case 'law':
         //check to see if this law has been favorited
@@ -90,6 +91,7 @@ updateContent = function(State,callback) {
                 $('.alert').html('Error: ' + err.message).show();
             });
         });
+        $('#quick-scroll').hide();
         break;
     case 'search':
         db.readTransaction(function (tx){
@@ -123,6 +125,7 @@ updateContent = function(State,callback) {
                 $('.alert').html('Error: ' + err.message).show();
             };
         });
+        $('#quick-scroll').hide();
         break;
     case 'favorites':
         items = ' <div class="list-group display-rows">';
@@ -160,6 +163,7 @@ updateContent = function(State,callback) {
             $(document).scrollTop(pos);
         }
 
+        $('#quick-scroll').hide();
         break;
     default:
         var menu = ' <div class="list-group">';
@@ -171,6 +175,7 @@ updateContent = function(State,callback) {
         menu += '</div>';
         $('.panel').html(menu);
         $(document).scrollTop(pos);
+        $('#quick-scroll').hide();
     }
     callback();
 },
@@ -399,6 +404,14 @@ init = function () {
         event.preventDefault();
         $('#update-info').remove();
         localStorage.setItem('lacrimbook-notice-2.10.2', true);
+    });
+    
+    $('#scroll-btn-up').on('click', function(event){
+        alert('up');
+    });
+
+    $('#scroll-btn-down').on('click', function(event){
+        alert('down');
     });
 };
 

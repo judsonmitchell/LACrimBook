@@ -67,7 +67,16 @@ updateContent = function(State,callback) {
                 $('.alert').html('Error: ' + err.message).show();
             };
         });
+
+        //Set initial values for quick scroll
         $('#quick-scroll').show();
+        $('#scroll-btn-up').hide();
+        if (pos > 0){
+            $('#scroll-btn-up').show();
+        }
+        //if($(window).scrollTop() + $(window).height() !== $(document).height()) {
+            //$('#scroll-btn-up').show();
+        //}
         break;
     case 'law':
         //check to see if this law has been favorited
@@ -395,7 +404,7 @@ init = function () {
         FastClick.attach(document.body);
     });
 
-    if (localStorage.getItem('lacrimbook-notice-2.10.2') === null){
+    if (localStorage.getItem('lacrimbook-notice-2.11.0') === null){
         $('#update-info').load('CHANGES');
         $('#update-info').show();
     }
@@ -403,15 +412,28 @@ init = function () {
     $('body').on('click', '.update-dismiss', function (event) {
         event.preventDefault();
         $('#update-info').remove();
-        localStorage.setItem('lacrimbook-notice-2.10.2', true);
+        localStorage.setItem('lacrimbook-notice-2.11.0', true);
     });
     
     $('#scroll-btn-up').on('click', function(event){
-        alert('up');
+        var scrollPos = $(document).scrollTop();
+        $(document).scrollTop(scrollPos - 3500);
+        if($(window).scrollTop() + $(window).height() !== $(document).height()) {
+            $('#scroll-btn-down').show();
+        }
+
+        if ($(window).scrollTop() === 0){
+            $(this).hide();
+        }
     });
 
     $('#scroll-btn-down').on('click', function(event){
-        alert('down');
+        var scrollPos = $(document).scrollTop();
+        $(document).scrollTop(scrollPos + 3500);
+        $('#scroll-btn-up').show();
+        if($(window).scrollTop() + $(window).height() === $(document).height()) {
+            $(this).hide();
+        }
     });
 };
 

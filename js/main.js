@@ -74,9 +74,6 @@ updateContent = function(State,callback) {
         if (pos > 0){
             $('#scroll-btn-up').show();
         }
-        //if($(window).scrollTop() + $(window).height() !== $(document).height()) {
-            //$('#scroll-btn-up').show();
-        //}
         break;
     case 'law':
         //check to see if this law has been favorited
@@ -437,5 +434,5 @@ init = function () {
     });
 };
 
-//document.addEventListener('deviceready', init, false);
-$(document).ready(function () {init();});
+document.addEventListener('deviceready', init, false);
+//$(document).ready(function () {init();});

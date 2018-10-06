@@ -2,8 +2,8 @@
     <widget xmlns   = "http://www.w3.org/ns/widgets"
         xmlns:gap   = "http://phonegap.com/ns/1.0"
         id          = "org.loyolalawtech.crimbook"
-        versionCode = "20"
-        version     = "2.10.2">
+        versionCode = "21"
+        version     = "2.11.0">
 
     <!-- versionCode is optional and Android only -->
 

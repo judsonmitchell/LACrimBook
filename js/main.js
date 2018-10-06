@@ -5,7 +5,7 @@ var State,
     History = window.History,
     appName = 'LACrimBook',
     dbName = 'CrimLaws',
-    latestDbVersion = '3.4', //Change this on update
+    latestDbVersion = '4.1', //Change this on update
     pageDepth = 1,
     lawSections = [          //Corresponds to West thumb index;
     {'name':'Title 14', 'start': 'RS 000014' },
@@ -390,7 +390,7 @@ init = function () {
         FastClick.attach(document.body);
     });
 
-    if (localStorage.getItem('lacrimbook-notice-2.10.2') === null){
+    if (localStorage.getItem('lacrimbook-notice-2.11.0') === null){
         $('#update-info').load('CHANGES');
         $('#update-info').show();
     }
@@ -398,8 +398,25 @@ init = function () {
     $('body').on('click', '.update-dismiss', function (event) {
         event.preventDefault();
         $('#update-info').remove();
-        localStorage.setItem('lacrimbook-notice-2.10.2', true);
+        localStorage.setItem('lacrimbook-notice-2.11.0', true);
     });
+
+    //In the future, we hope to distribute this app as a PWA only, bypassing
+    //app stores completely. This will check to see if that has happened
+    //and notify the user.
+
+    $.ajax({
+        url: 'https://loyolalawtech.org/notices/deprecation.html', 
+        beforeSend: function (){ 
+            $('.panel').hide(); }
+        })
+        .error(function(){
+            return;
+        })
+        .done(function(data){
+            $('#update-info').html(data);
+            $('#update-info').show();
+        });
 };
 
 //document.addEventListener('deviceready', init, false);

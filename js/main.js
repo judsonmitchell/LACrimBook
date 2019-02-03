@@ -126,7 +126,6 @@ var updateContent = function(State,callback) {
             }
         }
         items += '</div>';
-        console.markTimeline('items object finished');
         $('.panel').html(items);
         $(document).scrollTop(pos);
         break;

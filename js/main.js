@@ -272,9 +272,7 @@ init = function () {
             db.transaction(function (tx) {
                 var q = 'INSERT INTO laws (docid, sortcode,title,description,law_text) VALUES (?,?,?,?,?)';
                 for (var i = 0, l = lawData.length; i < l; i ++) {
-                    console.log('in loop');
                     var obj = lawData[i];
-                    console.log(obj.hasOwnProperty());
                     var arr = [];
                     for (var key in obj) {
                         if (obj.hasOwnProperty(key)) {
@@ -405,19 +403,19 @@ init = function () {
     //app stores completely. This will check to see if that has happened
     //and notify the user.
 
-    $.ajax({
-        url: 'https://loyolalawtech.org/notices/deprecation.html', 
-        beforeSend: function (){ 
-            $('.panel').hide(); }
-        })
-        .error(function(){
-            return;
-        })
-        .done(function(data){
-            $('#update-info').html(data);
-            $('#update-info').show();
-        });
+    //$.ajax({
+        //url: 'https://loyolalawtech.org/notices/deprecation.html', 
+        //beforeSend: function (){ 
+            //$('.panel').hide(); }
+        //})
+        //.error(function(){
+            //return;
+        //})
+        //.done(function(data){
+            //$('#update-info').html(data);
+            //$('#update-info').show();
+        //});
 };
 
-document.addEventListener('deviceready', init, false);
-//$(document).ready(function () {init();});
+//document.addEventListener('deviceready', init, false);
+$(document).ready(function () {init();});

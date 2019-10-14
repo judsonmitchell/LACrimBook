@@ -3,7 +3,7 @@ const CACHE_NAME = 'static-cache-v1.2';
 const FILES_TO_CACHE = [
     'index.html',
     'service-worker.js',
-    'favicon.ico',
+    'manifest.json',
     'css/bootstrap3.css',
     'css/main.css',
     'js/vendor/jquery-1.9.0.min.js',

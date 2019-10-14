@@ -29,6 +29,12 @@ const FILES_TO_CACHE = [
     'img/mitchell.jpg',
     'img/florman.jpg',
     'img/header-icon.png',
+    'res/icon/pwa/icon-128.png',
+    'res/icon/pwa/icon-144.png',
+    'res/icon/pwa/icon-152.png',
+    'res/icon/pwa/icon-192.png',
+    'res/icon/pwa/icon-256.png',
+    'res/icon/pwa/icon-512.png'
 ];
 
 self.addEventListener('install', (evt) => {

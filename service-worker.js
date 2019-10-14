@@ -10,7 +10,7 @@ const FILES_TO_CACHE = [
     'js/vendor/bootstrap3.min.js',
     'js/main.js',
     'js/vendor/jlinq.js',
-    'js/vendor/fastclick.js',
+    //'js/vendor/fastclick.js',
     'js/vendor/jquery.history.js',
     'js/queryStringToJson.js',
     'js/snippet.js',

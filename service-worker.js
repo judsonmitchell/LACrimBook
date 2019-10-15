@@ -1,4 +1,4 @@
-const CACHE_NAME = 'static-cache-v1.4';
+const CACHE_NAME = 'static-cache-v1.5';
 
 const FILES_TO_CACHE = [
     'index.html',
@@ -12,15 +12,10 @@ const FILES_TO_CACHE = [
     'js/vendor/bootstrap3.min.js',
     'js/main.js',
     'js/vendor/jlinq.js',
-    //'js/vendor/fastclick.js',
     'js/vendor/jquery.history.js',
     'js/queryStringToJson.js',
     'js/snippet.js',
     'js/vendor/jquery.touchSwipe.min.js',
-    //'fonts/glyphicons-halflings-regular.eot',
-    //'fonts/glyphicons-halflings-regular.svg',
-    //'fonts/glyphicons-halflings-regular.ttf',
-    //'fonts/glyphicons-halflings-regular.woff',
     'data/data.json',
     'https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700',
     'https://themes.googleusercontent.com/static/fonts/opensans/v6/cJZKeOuBrn4kERxqtaUH3T8E0i7KZn-EPnyo3HZu7kw.woff',
@@ -39,7 +34,6 @@ const FILES_TO_CACHE = [
 
 self.addEventListener('install', (evt) => {
   console.log('[ServiceWorker] Install');
-  // CODELAB: Precache static resources here.
     evt.waitUntil(
         caches.open(CACHE_NAME).then((cache) => {
         console.log('[ServiceWorker] Pre-caching offline page');
@@ -51,14 +45,12 @@ self.addEventListener('install', (evt) => {
 
 self.addEventListener('activate', (evt) => {
   console.log('[ServiceWorker] Activate');
-  // CODELAB: Remove previous cached data from disk.
 
   self.clients.claim();
 });
 
 self.addEventListener('fetch', (evt) => {
   console.log('[ServiceWorker] Fetch', evt.request.url);
-  // CODELAB: Add fetch event handler here.
    console.log(evt.request.url);
 
     evt.respondWith(

@@ -53,9 +53,22 @@ self.addEventListener('fetch', (evt) => {
   console.log('[ServiceWorker] Fetch', evt.request.url);
    console.log(evt.request.url);
 
+    //evt.respondWith(
+        //caches.match(evt.request).then(function(response) {
+            //return response || fetch(evt.request);
+        //})
+    //);
+    if (evt.request.mode !== 'navigate') {
+    // Not a page navigation, bail.
+    return;
+    }
     evt.respondWith(
-        caches.match(evt.request).then(function(response) {
-            return response || fetch(evt.request);
-        })
+        fetch(evt.request)
+            .catch(() => {
+            return caches.open(CACHE_NAME)
+                .then((cache) => {
+                    return cache.match('index.html');
+                });
+            })
     );
 });

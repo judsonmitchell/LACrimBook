@@ -1,4 +1,4 @@
-const CACHE_NAME = 'static-cache-v3.0.0';
+const CACHE_NAME = 'static-cache-v3.0.1';
 
 const FILES_TO_CACHE = [
     'index.html',
@@ -16,9 +16,6 @@ const FILES_TO_CACHE = [
     'js/snippet.js',
     'js/vendor/jquery.touchSwipe.min.js',
     'data/data.json',
-    'https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700',
-    'https://themes.googleusercontent.com/static/fonts/opensans/v6/cJZKeOuBrn4kERxqtaUH3T8E0i7KZn-EPnyo3HZu7kw.woff',
-    'https://themes.googleusercontent.com/static/fonts/opensans/v6/k3k702ZOKiLJc3WVjuplzHhCUOGz7vYGh680lGh-uXM.woff',
     'about.html',
     'img/mitchell.jpg',
     'img/florman.jpg',

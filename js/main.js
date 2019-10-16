@@ -1,12 +1,8 @@
-//CrimBook with sqlite backend
-/* global FastClick, spinnerplugin, getExcerpt */
-var State,
-    db,
+/* globals jlinq, getExcerpt, confirm */
+var myData,
+    State,
+    appName = "LACrimBook",
     History = window.History,
-    appName = 'LACrimBook',
-    dbName = 'CrimLaws',
-    latestDbVersion = '5.1', //Change this on update
-    pageDepth = 1,
     lawSections = [          //Corresponds to West thumb index;
     {'name':'Title 14', 'start': 'RS 000014' },
     {'name':'Title 15', 'start': 'RS 000015' },
@@ -18,7 +14,24 @@ var State,
     {'name':'Code of Evidence', 'start': 'CE' },
     {'name':'Childrens Code', 'start': 'CHC' },
     {'name':'Constitution', 'start': 'CONST' }
-],
+];
+
+//$.ajax({url: 'data/data.json', dataType: 'json', beforeSend: function () { $('.panel').hide(); }})
+//.done(function (data) {
+    //$('.loading').hide();
+    //$('.panel').show();
+    //myData = data;
+    //State = History.getState();
+    //var t = State.url.queryStringToJSON();
+    //History.pushState({type: t.view, id: t.target}, $('title').text(), State.urlPath);
+    //updateContent(History.getState(),function () {
+        //updateFavoritesList();
+    //});
+//})
+//.fail(function(jqXHR, textStatus, errorThrown){
+    //$('.alert').html('Error Retrieving Laws:' + errorThrown).show();
+//});
+
 //Change content depending on state
 updateContent = function(State,callback) {
     var target = State.data.id,
@@ -50,108 +63,73 @@ updateContent = function(State,callback) {
     switch (view) {
     case 'list':
         items = ' <div class="list-group display-rows">';
-        db.readTransaction(function (tx){
-            tx.executeSql('SELECT id, title, description FROM laws WHERE sortcode LIKE ?;',[target + ' %'],function (tx,res){
-                var rows = res.rows;
-                for (var i = 0, l = rows.length; i < l; i ++) {
-                    items += '<a class="law-link list-group-item" href="#" data-id="' + rows.item(i).id +
-                    '">' + rows.item(i).title + ' ' + rows.item(i).description + '</a>';
-                }
-                items += '</div>';
-                $('.panel').html(items);
-                $(document).scrollTop(pos);
-                pageDepth = 1;
-            },function (tx, err){
-                $('.alert').html('Error: ' + err.message).show();
-            }), function onReadError(tx,err){
-                $('.alert').html('Error: ' + err.message).show();
-            };
-        });
+        laws = jlinq.from(myData).starts('sortcode', target + ' ').select();
+        for (var i = 0, l = laws.length; i < l; i ++) {
+            items += '<a class="law-link list-group-item" href="#" data-id="' + laws[i].id + '"><span class="text-muted">' + 
+            laws[i].title + '</span>&nbsp;' + laws[i].description + '</a>';
+        }
+        items += '</div>';
+        $('.panel').html(items);
+        $(document).scrollTop(pos);
         break;
     case 'law':
+        laws = jlinq.from(myData).equals('id', target).select();
         //check to see if this law has been favorited
-        db.readTransaction(function (tx){
-            tx.executeSql('SELECT * FROM laws WHERE id = ?',[target],function (tx,res){
-                var fav;
-                if (localStorage.getItem(target)){
-                    fav = '<a href="#" class="favorite upper-right-corner" data-state="saved" data-id="' + target +
-                    '" title="Favorite This"><i class="fa fa-star"></i></a>';
-                }
-                else {
-                    fav = '<a href="#" class="favorite upper-right-corner" data-state="unsaved" data-id="' + target +
-                    '" title="Favorite This"><i class="fa fa-star-o"></i></a>';
-                }
-                var rows = res.rows;
-                $('title').text(rows.item(0).description + ' ' + rows.item(0).title);
-                $('.panel').css({'padding':'10px'}).html('<h3><span class="lawTitle">' + rows.item(0).description +
-                '</span>' + fav + '</h3>' + rows.item(0).law_text);
-                $(document).scrollTop(0);
-            }, function (tx,err){
-                $('.alert').html('Error: ' + err.message).show();
-            });
-        });
+        var fav;
+        if (localStorage.getItem(target)){
+            fav = '<a href="#" class="favorite upper-right-corner" data-state="saved" data-id="' + target +
+            '" title="Favorite This"><span class="fa fa-star"></span></a>';
+        }
+        else {
+            fav = '<a href="#" class="favorite upper-right-corner" data-state="unsaved" data-id="' + target +
+            '" title="Favorite This"><span class="fa fa-star-o"></span></a>';
+        }
+        $('title').text(laws[0].title + ' ' + laws[0].description);
+        $('.panel').css({'padding':'10px'}).html('<h3><span class="lawTitle">' + laws[0].title + ' '  +
+        laws[0].description + '</span>' + fav + '</h3>' + laws[0].law_text);
+        $(document).scrollTop(0);
         break;
     case 'search':
-        db.readTransaction(function (tx){
-            tx.executeSql('SELECT id, title, description, law_text FROM laws WHERE law_text  LIKE ? OR title LIKE ?;',
-            ['% ' + target + ' %', '% ' + target],function (tx,res){
-                items = '<div class="list-group">';
-                var rows = res.rows;
-                if (rows.length < 1){
-                    items += '<a class="list-group-item">No results found.</a></div>';
-                    $('.panel').html(items);
-                    $(document).scrollTop(pos);
+        var regex = new RegExp('\\b' + target + '\\b');
+        console.timeStamp('querying jlinq');
+        //Too slow 7s on mobile
+        laws = jlinq.from(myData).match('law_text', regex).or().match('title', regex).select();
+        //Faster 5s
+        //laws = jlinq.from(myData).contains('law_text', target).or().contains('title', target).select();
+        //Fastest 2s
+        //laws = jlinq.from(myData).contains('law_text', target).select();
+        console.timeStamp('starting items object');
+        items = '<div class="list-group">';
+        if (!laws.length){
+            items += '<a class="list-group-item">No results found.</a>';
+        } else {
+            for (i = 0, l = laws.length; i < l; i ++) {
+                var snippet = getExcerpt(laws[i].law_text, target, 15);
+                if (snippet){
+                    items += '<a class="law-link list-group-item" href="#" data-id="' + laws[i].id +
+                    '">' + laws[i].title + ' ' + laws[i].description +
+                    '<p class="preview">...' + snippet + '...</p>' + '</a>' ;
                 } else {
-                    for (var i = 0, l = rows.length; i < l; i ++) {
-                        var snippet = getExcerpt(rows.item(i).law_text, target, 15);
-                        if (snippet){
-                            items += '<a class="law-link list-group-item" href="#" data-id="' + rows.item(i).id +
-                            '">' + rows.item(i).title + ' ' + rows.item(i).description +
-                            '<p class="preview">...' + snippet + '...</p>' + '</a>' ;
-                        } else {
-                            items += '<a class="law-link list-group-item" href="#" data-id="' + rows.item(i).id +
-                            '">' + rows.item(i).title + ' ' + rows.item(i).description + '</a>' ;
-                        }
-                    }
-                    items += '</div>';
-                    $('.panel').html(items);
-                    $(document).scrollTop(pos);
+                    items += '<a class="law-link list-group-item" href="#" data-id="' + laws[i].id +
+                    '">' + laws[i].title + ' ' + laws[i].description + '</a>' ;
                 }
-            },function (tx, err){
-                $('.alert').html('Error: ' + err.message).show();
-            }), function onReadError(tx,err){
-                $('.alert').html('Error: ' + err.message).show();
-            };
-        });
+            }
+        }
+        items += '</div>';
+        $('.panel').html(items);
+        $(document).scrollTop(pos);
         break;
     case 'favorites':
         items = ' <div class="list-group display-rows">';
         if (localStorage.length > 0) {
-            var q = 'SELECT * FROM laws WHERE id = ?',
-            getFavs = function (tx, res){
-                var rows = res.rows;
-                items += '<a class="law-link list-group-item" href="#" data-id="' + rows.item(0).id + '">' +
-                rows.item(0).title + ' ' + rows.item(0).description + '</a>';
-            },
-            favErr = function (tx, err){
-                $('.alert').html(err.messsage).show();
-            };
-            db.readTransaction(function (tx){
-                for (var i = 0; i < localStorage.length; i++) {
-                    if (!isNaN(localStorage.key(i))){
-                        var key = localStorage.key(i);
-                        tx.executeSql(q,[key],getFavs,favErr);
-                    }
+            for (i = 0; i < localStorage.length; i++) {
+                var key = localStorage.key(i);
+                if (!isNaN(key)){
+                    laws = jlinq.from(myData).equals('id', key).select();
+                    items += '<a class="law-link list-group-item" href="#" data-id="' + laws[0].id + '">' + laws[0].description +
+                    ' ' + laws[0].title + '</a>';
                 }
-            },
-            function fail(tx,err){
-                $('.alert').html(err.messsage).show();
-            },
-            function success(tx, res){
-                items += '</div>';
-                $('.panel').html(items);
-                $(document).scrollTop(pos);
-            });
+            }
         }
         else {
             items += '<a class="list-group-item">You don\'t have any favorited laws</a>';
@@ -208,84 +186,44 @@ updateFavoritesList = function () {
             }
         }
 
+        if ($('ul.dropdown-menu li').length === 0){
+            favList += '<li>No favorites yet.</li>';
+        }
+        
         $('.dropdown-menu').html(favList);
     }
 },
-
-getQueryVariable = function (variable) {
-    var query = window.location.search.substring(1);
-    var vars = query.split('&');
-    for (var i = 0; i < vars.length; i++) {
-        var pair = vars[i].split('=');
-        if (decodeURIComponent(pair[0]) === variable) {
-            return decodeURIComponent(pair[1]);
-        }
+removeSlash = function (view){
+    if (typeof view !== 'undefined'){
+        return view.replace(/\/$/, '');
     }
     console.log('Query variable %s not found', variable);
 },
 
 browse = function (target, direction) {
-
     direction === 'forward' ?  target++ : target--;
     History.pushState({type: 'law', id: target}, target, '?target=' + target + '&view=law');
     pageDepth++;
 },
 
 init = function () {
-    $.ajax({url: 'data/data.json', dataType:'json', beforeSend: function () { $('.panel').hide(); }})
-    .done(function(data){
-        var lawData = data,
-        onSuccess = function () {
-            $('.loading').hide();
-            $('.panel').show();
-            State = History.getState();
-            var t = State.url.queryStringToJSON();
-            History.pushState({type: t.view, id: t.target}, $('title').text(), State.urlPath);
-            updateContent(History.getState(),function () {
-                updateFavoritesList();
-            });
-        },
-        onFail = function (tx,err) {
-            $('.alert').html('DB Error: ' + err.message).show();
-        },
-        onTransact = function (tx) {
-            console.log('transaction successful');
-        },
-        okInsert = function (tx, results) {
-            console.log('rowsAffected: ' + results.rowsAffected + ' -- should be 1');
-        };
-
-        db = window.openDatabase(dbName, '', 'La. Crim Book 6-2014',2 * 1024 * 1024);
-
-        if (db.version !== latestDbVersion){
-
-            db.changeVersion(db.version,latestDbVersion);
-            db.transaction(function (tx) {
-                tx.executeSql('DROP TABLE IF EXISTS laws',[], onTransact,onFail);
-            });
-
-            db.transaction(function (tx) {
-                tx.executeSql('CREATE TABLE IF NOT EXISTS laws ( `id` INTEGER PRIMARY KEY AUTOINCREMENT,' +
-                '`docid` TEXT, `sortcode` TEXT, `title` TEXT, `description` TEXT, `law_text` TEXT); ',[], onTransact,onFail);
-            });
-
-            db.transaction(function (tx) {
-                var q = 'INSERT INTO laws (docid, sortcode,title,description,law_text) VALUES (?,?,?,?,?)';
-                for (var i = 0, l = lawData.length; i < l; i ++) {
-                    var obj = lawData[i];
-                    var arr = [];
-                    for (var key in obj) {
-                        if (obj.hasOwnProperty(key)) {
-                            var val = obj[key];
-                            arr.push(val);
-                        }
-                    }
-                    tx.executeSql(q, arr, okInsert, onFail);
-                }
-            },  onFail, onSuccess);
-        } else {
-            onSuccess();
+    $.ajax({
+        url: 'data/data.json', 
+        dataType: 'json', 
+        beforeSend: function (){ 
+            $('.panel').hide(); 
         }
+    })
+    .done(function (data) {
+        $('.loading').hide();
+        $('.panel').show();
+        myData = data;
+        State = History.getState();
+        var t = State.url.queryStringToJSON();
+        History.pushState({type: t.view, id: t.target}, $('title').text(), State.urlPath);
+        updateContent(History.getState(),function () {
+            updateFavoritesList();
+        });
     })
     .fail(function(jqXHR, textStatus, errorThrown){
         $('.alert').html('Error Retrieving Laws:' + errorThrown).show();
@@ -367,9 +305,12 @@ init = function () {
     });
 
     $('.navbar-headnav').on('click', 'a.go-home', function (event) {
+        //event.preventDefault();
+        ////Use window.history here to avoid jquery.history plugin
+        //window.history.go(Math.abs(pageDepth) * -1);
         event.preventDefault();
-        //Use window.history here to avoid jquery.history plugin
-        window.history.go(Math.abs(pageDepth) * -1);
+        var scroll = '0';
+        History.pushState({type: 'home', id: null, pos: scroll}, 'Home', '/');
     });
 
     $('.main').swipe({
@@ -382,10 +323,6 @@ init = function () {
             }
         },
         allowPageScroll: 'vertical'
-    });
-
-    $(function() {
-        FastClick.attach(document.body);
     });
 
     if (localStorage.getItem('lacrimbook-notice-2.13.0') === null){
@@ -417,5 +354,6 @@ init = function () {
         //});
 };
 
-//document.addEventListener('deviceready', init, false);
-$(document).ready(function () {init();});
+$(document).ready(function() {
+    init();
+});

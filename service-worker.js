@@ -1,4 +1,4 @@
-const CACHE_NAME = 'static-cache-v1.6';
+const CACHE_NAME = 'static-cache-v1.7';
 
 const FILES_TO_CACHE = [
     'index.html',
@@ -53,14 +53,9 @@ self.addEventListener('fetch', (evt) => {
   console.log('[ServiceWorker] Fetch', evt.request.url);
    console.log(evt.request.url);
 
-    //evt.respondWith(
-        //caches.match(evt.request).then(function(response) {
-            //return response || fetch(evt.request);
-        //})
-    //);
     if (evt.request.mode !== 'navigate') {
-    // Not a page navigation, bail.
-    return;
+        // Not a page navigation, bail.
+        return;
     }
     evt.respondWith(
         fetch(evt.request)

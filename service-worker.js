@@ -1,10 +1,9 @@
-const CACHE_NAME = 'static-cache-v1.9';
+const CACHE_NAME = 'static-cache-v3.0.0';
 
 const FILES_TO_CACHE = [
     'index.html',
     'service-worker.js',
     'manifest.json',
-    './favicon.ico',
     'css/bootstrap3.css',
     'css/main.css',
     'js/vendor/jquery-1.9.0.min.js',

@@ -3,6 +3,7 @@ var myData,
     State,
     appName = "LACrimBook",
     History = window.History,
+    pageDepth = 1,
     lawSections = [          //Corresponds to West thumb index;
     {'name':'Title 14', 'start': 'RS 000014' },
     {'name':'Title 15', 'start': 'RS 000015' },
@@ -15,22 +16,6 @@ var myData,
     {'name':'Childrens Code', 'start': 'CHC' },
     {'name':'Constitution', 'start': 'CONST' }
 ];
-
-//$.ajax({url: 'data/data.json', dataType: 'json', beforeSend: function () { $('.panel').hide(); }})
-//.done(function (data) {
-    //$('.loading').hide();
-    //$('.panel').show();
-    //myData = data;
-    //State = History.getState();
-    //var t = State.url.queryStringToJSON();
-    //History.pushState({type: t.view, id: t.target}, $('title').text(), State.urlPath);
-    //updateContent(History.getState(),function () {
-        //updateFavoritesList();
-    //});
-//})
-//.fail(function(jqXHR, textStatus, errorThrown){
-    //$('.alert').html('Error Retrieving Laws:' + errorThrown).show();
-//});
 
 //Change content depending on state
 updateContent = function(State,callback) {
@@ -193,6 +178,17 @@ updateFavoritesList = function () {
         $('.dropdown-menu').html(favList);
     }
 },
+getQueryVariable = function (variable) {
+    var query = window.location.search.substring(1);
+    var vars = query.split('&');
+    for (var i = 0; i < vars.length; i++) {
+        var pair = vars[i].split('=');
+        if (decodeURIComponent(pair[0]) === variable) {
+            return decodeURIComponent(pair[1]);
+        }
+    }
+    console.log('Query variable %s not found', variable);
+},
 removeSlash = function (view){
     if (typeof view !== 'undefined'){
         return view.replace(/\/$/, '');
@@ -231,9 +227,6 @@ init = function () {
 
     //Handle History
     History.Adapter.bind(window, 'statechange', function () {
-        if (typeof spinnerplugin !== 'undefined'){
-            spinnerplugin.show({overlay: false, fullscreen: false});
-        }
         updateContent(History.getState(), function () {
             updateFavoritesList();
             if (typeof spinnerplugin !== 'undefined'){
@@ -305,12 +298,10 @@ init = function () {
     });
 
     $('.navbar-headnav').on('click', 'a.go-home', function (event) {
-        //event.preventDefault();
-        ////Use window.history here to avoid jquery.history plugin
-        //window.history.go(Math.abs(pageDepth) * -1);
         event.preventDefault();
+        //Use window.history here to avoid jquery.history plugin
+        window.history.go(Math.abs(pageDepth) * -1);
         var scroll = '0';
-        History.pushState({type: 'home', id: null, pos: scroll}, 'Home', '/');
     });
 
     $('.main').swipe({
@@ -325,7 +316,7 @@ init = function () {
         allowPageScroll: 'vertical'
     });
 
-    if (localStorage.getItem('lacrimbook-notice-2.13.0') === null){
+    if (localStorage.getItem('lacrimbook-notice-3.0') === null){
         $('#update-info').load('CHANGES');
         $('#update-info').show();
     }
@@ -333,7 +324,7 @@ init = function () {
     $('body').on('click', '.update-dismiss', function (event) {
         event.preventDefault();
         $('#update-info').remove();
-        localStorage.setItem('lacrimbook-notice-2.13.0', true);
+        localStorage.setItem('lacrimbook-notice-3.0', true);
     });
 
     //In the future, we hope to distribute this app as a PWA only, bypassing

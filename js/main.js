@@ -316,7 +316,7 @@ init = function () {
         allowPageScroll: 'vertical'
     });
 
-    if (localStorage.getItem('lacrimbook-notice-3.0') === null){
+    if (localStorage.getItem('lacrimbook-notice-3.1') === null){
         $('#update-info').load('CHANGES');
         $('#update-info').show();
     }
@@ -324,7 +324,7 @@ init = function () {
     $('body').on('click', '.update-dismiss', function (event) {
         event.preventDefault();
         $('#update-info').remove();
-        localStorage.setItem('lacrimbook-notice-3.0', true);
+        localStorage.setItem('lacrimbook-notice-3.1', true);
     });
 
     //In the future, we hope to distribute this app as a PWA only, bypassing

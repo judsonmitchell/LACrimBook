@@ -15,6 +15,11 @@
       "sizes": "152x152",
       "type": "image/png"
     }, {
+    }, {
+      "src": "res/icon/pwa/icon-180.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }, {
       "src": "res/icon/pwa/icon-192.png",
       "sizes": "192x192",
       "type": "image/png"

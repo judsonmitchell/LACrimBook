@@ -62,11 +62,15 @@ updateContent = function(State,callback) {
         //check to see if this law has been favorited
         var fav;
         if (localStorage.getItem(target)){
-            fav = '<a href="#" class="favorite upper-right-corner" data-state="saved" data-id="' + target +
+            fav = '<a href="#" class="sharer upper-right-corner-but-one" title="Share"' +
+            '><span class="fa fa-share-alt"></span></a>  ' +
+            '<a href="#" class="favorite upper-right-corner" data-state="saved" data-id="' + target +
             '" title="Favorite This"><span class="fa fa-star"></span></a>';
         }
         else {
-            fav = '<a href="#" class="favorite upper-right-corner" data-state="unsaved" data-id="' + target +
+            fav = '<a href="#" class="sharer upper-right-corner-but-one" title="Share"' +
+            '><span class="fa fa-share-alt"></span></a>  ' +
+            '<a href="#" class="favorite upper-right-corner" data-state="unsaved" data-id="' + target +
             '" title="Favorite This"><span class="fa fa-star-o"></span></a>';
         }
         $('title').text(laws[0].title + ' ' + laws[0].description);
@@ -304,6 +308,21 @@ init = function () {
         var scroll = '0';
     });
 
+    $('.main').on('click', 'a.sharer', function (event) {
+        event.preventDefault();
+            if (navigator.canShare) {
+                navigator.share({
+                    text: $('span.lawTitle').text(),
+                    title: 'LaCrimBook: ' + $('span.lawTitle').text(),
+                    url: window.location.href
+                })
+                .then(() => console.log('Share was successful.'))
+                .catch((error) => console.log('Sharing failed', error));
+                } else {
+                    alert(`Your system doesn't support sharing files.`);
+                }
+    });
+
     $('.main').swipe({
         swipe:function(event, direction, distance, duration, fingerCount) {
             if (direction === 'right'){
@@ -327,22 +346,6 @@ init = function () {
         localStorage.setItem('lacrimbook-notice-3.1', true);
     });
 
-    //In the future, we hope to distribute this app as a PWA only, bypassing
-    //app stores completely. This will check to see if that has happened
-    //and notify the user.
-
-    //$.ajax({
-        //url: 'https://loyolalawtech.org/notices/deprecation.html', 
-        //beforeSend: function (){ 
-            //$('.panel').hide(); }
-        //})
-        //.error(function(){
-            //return;
-        //})
-        //.done(function(data){
-            //$('#update-info').html(data);
-            //$('#update-info').show();
-        //});
 };
 
 $(document).ready(function() {

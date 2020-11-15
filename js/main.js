@@ -310,18 +310,23 @@ init = function () {
 
     $('.main').on('click', 'a.sharer', function (event) {
         event.preventDefault();
+        var lawShareTitle = $('span.lawTitle').text();
             if (navigator.canShare) {
                 navigator.share({
-                    text: $('span.lawTitle').text(),
-                    title: 'LaCrimBook: ' + $('span.lawTitle').text(),
+                    text: 'I\'ve shared a Louisiana law with you: ' +  $('span.lawTitle').text(),
+                    title: 'LaCrimBook: ' + lawShareTitle,
                     url: window.location.href
                 })
                 .then(() => console.log('Share was successful.'))
                 .catch((error) => console.log('Sharing failed', error));
                 } else {
-                    alert(`Your system doesn't support sharing files.`);
+                    //alert(`Your system doesn't support sharing files.`);
+                    var windowFeatures = "menubar=yes,location=yes,resizable=yes,scrollbars=yes,status=yes";
+                    var mailText = 'I\'ve shared a Louisiana Law with you: ' + lawShareTitle + ' ' + window.location.href;
+                    window.open('mailto:?subject=LACrimBook&body=' + mailText, 'LACrimBook Share', windowFeatures);
+                    }
                 }
-    });
+    );
 
     $('.main').swipe({
         swipe:function(event, direction, distance, duration, fingerCount) {
@@ -335,7 +340,7 @@ init = function () {
         allowPageScroll: 'vertical'
     });
 
-    if (localStorage.getItem('lacrimbook-notice-3.1') === null){
+    if (localStorage.getItem('lacrimbook-notice-3.2.0') === null){
         $('#update-info').load('CHANGES');
         $('#update-info').show();
     }

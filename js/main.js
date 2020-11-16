@@ -263,7 +263,7 @@ init = function () {
         var target = $(this).attr('data-id');
         var saveState = $(this).attr('data-state');
         if (saveState === 'unsaved') {
-            var title = $(this).prev().html();
+            var title = $(this).siblings('.lawTitle').text();
             localStorage.setItem(target, title);
             $('.alert').html('Saved to favorites.').show();
             $('.favorite').html('<i class="fa fa-star"></i');

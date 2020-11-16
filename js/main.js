@@ -308,7 +308,7 @@ init = function () {
     $('.main').on('click', 'a.sharer', function (event) {
         event.preventDefault();
         var lawShareTitle = $('span.lawTitle').text();
-            if (navigator.canShare) {
+            if (navigator.share) {
                 navigator.share({
                     text: 'I\'ve shared a Louisiana law with you: ' +  $('span.lawTitle').text(),
                     title: 'LaCrimBook: ' + lawShareTitle,

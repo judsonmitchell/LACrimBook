@@ -9,7 +9,7 @@ body {background-color:#f5f5f5}
 .main{min-height:340px}
 .panel {position:relative}
 .upper-right-corner {position:absolute; top: 5px; right: 5px}
-.upper-right-corner-but-one {position:absolute; top: 5px; right:35px}
+.upper-right-corner-but-one {position:absolute; top: 5px; right:45px}
 
 /* Nudge the search button */
 .search-form{margin-bottom:20px;vertical-align:top;}

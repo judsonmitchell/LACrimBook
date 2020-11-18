@@ -12,8 +12,14 @@ function getExcerpt(text, searchTerm, precision) {
     startIndex, stopIndex;
 
     //Find first index of our search term
-    var regex = new RegExp('\\b' + searchTerm.toLowerCase() + '\\b'),
-    index = stripHtml.toLowerCase().search(regex),
+    var regex; 
+
+    if (typeof(searchTerm) === 'number'){
+        regex = new RegExp('\\b' + searchTerm + '\\b')
+    } else {
+        regex = new RegExp('\\b' + searchTerm.toLowerCase() + '\\b')
+    }
+    var index = stripHtml.toLowerCase().search(regex),
     charsArr = stripHtml.split(''),
     counter = 0,
     v;

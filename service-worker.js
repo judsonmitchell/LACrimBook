@@ -48,19 +48,28 @@ self.addEventListener('activate', (evt) => {
 
 self.addEventListener('fetch', (evt) => {
   console.log('[ServiceWorker] Fetch', evt.request.url);
-   console.log(evt.request.url);
 
-    if (evt.request.mode !== 'navigate') {
-        // Not a page navigation, bail.
-        return;
-    }
-    evt.respondWith(
-        fetch(evt.request)
-            .catch(() => {
-            return caches.open(CACHE_NAME)
-                .then((cache) => {
-                    return cache.match('index.html');
-                });
-            })
-    );
+  evt.respondWith(
+    caches.match(evt.request)
+      .then(function(response) {
+        if (response) {
+          // If the file is in the cache, serve it
+          console.log('[ServiceWorker] Found ', evt.request.url, ' in cache');
+          return response;
+        }
+
+        // Otherwise, fetch the file from the network
+        console.log('[ServiceWorker] Network request for ', evt.request.url);
+        return fetch(evt.request)
+
+        // If the user is offline and the request was for a navigation request (page load)
+        // Then serve an offline page
+        .catch(function() {
+          if (evt.request.mode === 'navigate') {
+            return caches.match('index.html');
+          }
+        });
+      })
+  );
 });
+

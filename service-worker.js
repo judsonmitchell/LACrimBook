@@ -1,4 +1,4 @@
-const CACHE_NAME = 'static-cache-v3.4.0';
+const CACHE_NAME = 'static-cache-v3.4.1';
 
 const FILES_TO_CACHE = [
     'index.html',
@@ -52,7 +52,6 @@ self.addEventListener('activate', (evt) => {
         }));
         })
     );
-
   self.clients.claim();
 });
 

@@ -337,7 +337,7 @@ init = function () {
         allowPageScroll: 'vertical'
     });
 
-    if (localStorage.getItem('lacrimbook-notice-3.3.0') === null){
+    if (localStorage.getItem('lacrimbook-notice-3.4.0') === null){
         $('#update-info').load('CHANGES');
         $('#update-info').show();
     }
@@ -345,7 +345,7 @@ init = function () {
     $('body').on('click', '.update-dismiss', function (event) {
         event.preventDefault();
         $('#update-info').remove();
-        localStorage.setItem('lacrimbook-notice-3.3.0', true);
+        localStorage.setItem('lacrimbook-notice-3.4.0', true);
     });
 
 };
